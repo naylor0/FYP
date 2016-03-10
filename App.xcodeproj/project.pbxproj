@@ -15,6 +15,7 @@
 		EFA7AECE1C91C0DD001D1311 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EFA7AECC1C91C0DD001D1311 /* LaunchScreen.storyboard */; };
 		EFA7AED91C91C0DD001D1311 /* AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA7AED81C91C0DD001D1311 /* AppTests.swift */; };
 		EFA7AEE41C91C0DD001D1311 /* AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA7AEE31C91C0DD001D1311 /* AppUITests.swift */; };
+		EFA7AEF21C91C233001D1311 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA7AEF11C91C233001D1311 /* CollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		EFA7AEDF1C91C0DD001D1311 /* AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFA7AEE31C91C0DD001D1311 /* AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUITests.swift; sourceTree = "<group>"; };
 		EFA7AEE51C91C0DD001D1311 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EFA7AEF11C91C233001D1311 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 				EFA7AEC01C91C0DD001D1311 /* AppDelegate.swift */,
 				EFA7AEC21C91C0DD001D1311 /* ViewController.swift */,
 				EFA7AEC41C91C0DD001D1311 /* Main.storyboard */,
+				EFA7AEF11C91C233001D1311 /* CollectionViewCell.swift */,
 				EFA7AECA1C91C0DD001D1311 /* Assets.xcassets */,
 				EFA7AECC1C91C0DD001D1311 /* LaunchScreen.storyboard */,
 				EFA7AECF1C91C0DD001D1311 /* Info.plist */,
@@ -264,6 +267,7 @@
 			files = (
 				EFA7AEC31C91C0DD001D1311 /* ViewController.swift in Sources */,
 				EFA7AEC91C91C0DD001D1311 /* App.xcdatamodeld in Sources */,
+				EFA7AEF21C91C233001D1311 /* CollectionViewCell.swift in Sources */,
 				EFA7AEC11C91C0DD001D1311 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
