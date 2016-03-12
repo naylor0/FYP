@@ -33,12 +33,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         self.view.addSubview(boardCollection)
         self.view.addSubview(categoryCollection)
         self.view.addSubview(sentenceCollection)
+        
         boardCollection.layer.cornerRadius = 6
         categoryCollection.layer.cornerRadius = 6
         sentenceCollection.layer.cornerRadius = 6
+        
         boardCollection.layer.backgroundColor = UIColor.darkGrayColor().CGColor
         sentenceCollection.layer.backgroundColor = UIColor.darkGrayColor().CGColor
-        categoryCollection.layer.backgroundColor = UIColor.blackColor().CGColor
+        categoryCollection.layer.backgroundColor = UIColor.darkGrayColor().CGColor
         
         if self.loadSymbols() != nil {
             if let savedBoard = self.loadSymbols() {
