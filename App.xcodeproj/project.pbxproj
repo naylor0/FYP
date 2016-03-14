@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EF196F651C96CE2A003CD29E /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF196F641C96CE2A003CD29E /* Board.swift */; };
 		EF9CC5C71C94776300EAB475 /* Symbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9CC5C61C94776300EAB475 /* Symbol.swift */; };
 		EFA7AEC11C91C0DD001D1311 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA7AEC01C91C0DD001D1311 /* AppDelegate.swift */; };
 		EFA7AEC31C91C0DD001D1311 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA7AEC21C91C0DD001D1311 /* ViewController.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EF196F641C96CE2A003CD29E /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		EF9CC5C61C94776300EAB475 /* Symbol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Symbol.swift; path = ../Symbol.swift; sourceTree = "<group>"; };
 		EFA7AEBD1C91C0DD001D1311 /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFA7AEC01C91C0DD001D1311 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				EF9CC5C61C94776300EAB475 /* Symbol.swift */,
+				EF196F641C96CE2A003CD29E /* Board.swift */,
 				EFA7AEC01C91C0DD001D1311 /* AppDelegate.swift */,
 				EFA7AEC21C91C0DD001D1311 /* ViewController.swift */,
 				EFA7AEC41C91C0DD001D1311 /* Main.storyboard */,
@@ -270,6 +273,7 @@
 			files = (
 				EFA7AEC31C91C0DD001D1311 /* ViewController.swift in Sources */,
 				EF9CC5C71C94776300EAB475 /* Symbol.swift in Sources */,
+				EF196F651C96CE2A003CD29E /* Board.swift in Sources */,
 				EFA7AEC91C91C0DD001D1311 /* App.xcdatamodeld in Sources */,
 				EFA7AEF21C91C233001D1311 /* CollectionViewCell.swift in Sources */,
 				EFA7AEC11C91C0DD001D1311 /* AppDelegate.swift in Sources */,

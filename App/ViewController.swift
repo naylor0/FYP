@@ -11,9 +11,9 @@ import AVFoundation
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    var symbols = [Symbol]()
-    var categories = [Symbol]()
+    var categories = [Board]()
     var sentence = [Symbol]()
+    var currentBoard: Board?
     
     @IBOutlet weak var boardCollection: UICollectionView!
     @IBOutlet weak var sentenceCollection: UICollectionView!
@@ -42,17 +42,18 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         sentenceCollection.layer.backgroundColor = UIColor.darkGrayColor().CGColor
         categoryCollection.layer.backgroundColor = UIColor.darkGrayColor().CGColor
         
+        
         if self.loadSymbols() != nil {
             if let savedBoard = self.loadSymbols() {
-                symbols += savedBoard
+                currentBoard!.symbols += savedBoard
                 print("loaded from file")
             }
         }
         else {
-            ("not printed from file")
+            ("not loaded from file")
             // Load the sample data.
-            self.symbols = self.loadSampleBoard()!
             self.categories = self.loadSampleCategories()!
+            currentBoard = categories[0]
         }
 
     }
@@ -65,7 +66,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var noCells = 0
         if collectionView == self.boardCollection {
-            noCells = self.symbols.count
+            noCells = self.currentBoard!.symbols.count
         } else if collectionView == self.categoryCollection {
             noCells = self.categories.count
         } else if collectionView == self.sentenceCollection {
@@ -80,16 +81,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         if collectionView == self.boardCollection {
             cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! CollectionViewCell
-            cell.image?.image = self.symbols[indexPath.row].photo
-            cell.word?.text = self.symbols[indexPath.row].word
-            cell.backgroundColor = self.symbols[indexPath.row].bgColor
+            cell.image?.image = self.currentBoard!.symbols[indexPath.row].photo
+            cell.word?.text = self.currentBoard!.symbols[indexPath.row].word
+            cell.backgroundColor = self.currentBoard!.symbols[indexPath.row].bgColor
             cell.layer.masksToBounds = true;
             cell.layer.cornerRadius = 6
             
         } else if collectionView == self.categoryCollection {
             cell = collectionView.dequeueReusableCellWithReuseIdentifier("cat", forIndexPath: indexPath) as! CollectionViewCell
-            cell.image?.image = self.categories[indexPath.row].photo
-            cell.word?.text = self.categories[indexPath.row].word
+            cell.image?.image = self.categories[indexPath.row].icon.photo
+            cell.word?.text = self.categories[indexPath.row].name
             cell.backgroundColor = bgWhite
             cell.layer.masksToBounds = true;
             cell.layer.cornerRadius = 6
@@ -108,17 +109,22 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if collectionView == self.boardCollection {
-            sentence.append(self.symbols[indexPath.row])
-            self.speech = AVSpeechUtterance(string: self.symbols[indexPath.row].word)
+            sentence.append(self.currentBoard!.symbols[indexPath.row])
+            self.speech = AVSpeechUtterance(string: self.currentBoard!.symbols[indexPath.row].word)
             self.speech.rate = 0.3
             self.synth.speakUtterance(speech)
             self.sentenceCollection.reloadData()
             self.sentenceCollection.setNeedsDisplay()
         }
+        else if collectionView == self.categoryCollection {
+            currentBoard = self.categories[indexPath.row]
+            self.boardCollection.reloadData()
+            self.boardCollection.setNeedsDisplay()
+        }
     }
     
     func saveSymbols() {
-        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(symbols, toFile: Symbol.ArchiveURL.path!)
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(currentBoard!.symbols, toFile: Symbol.ArchiveURL.path!)
         if !isSuccessfulSave {
             print("Failed to save symbols...")
         }
@@ -128,26 +134,18 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         return NSKeyedUnarchiver.unarchiveObjectWithFile(Symbol.ArchiveURL.path!) as? [Symbol]
     }
     
-    func loadSampleBoard() -> [Symbol]? {
-        var sampleSymbols = [Symbol]()
-        
-        sampleSymbols.append(Symbol(word: "hi", photo: UIImage(named: "hi"), bgColor: bgRed)!)
-        sampleSymbols.append(Symbol(word: "how", photo: UIImage(named: "how"), bgColor: bgGreen)!)
-        sampleSymbols.append(Symbol(word: "is", photo: UIImage(named: "is"), bgColor: bgGreen)!)
-        sampleSymbols.append(Symbol(word: "weather", photo: UIImage(named: "weather"), bgColor: bgRed)!)
-        sampleSymbols.append(Symbol(word: "good", photo: UIImage(named: "good"), bgColor: bgRed)!)
-        sampleSymbols.append(Symbol(word: "bad", photo: UIImage(named: "bad"), bgColor: bgRed)!)
-        
-        return sampleSymbols
-    }
     
-    func loadSampleCategories() -> [Symbol]? {
-        var sampleCategories = [Symbol]()
+    func loadSampleCategories() -> [Board]? {
+        var sampleCategories = [Board]()
+        let symbols = [Symbol]()
         
-        sampleCategories.append(Symbol(word: "talk", photo: UIImage(named: "talk"), bgColor: bgWhite)!)
-        sampleCategories.append(Symbol(word: "news", photo: UIImage(named: "news"), bgColor: bgWhite)!)
-        sampleCategories.append(Symbol(word: "activities", photo: UIImage(named: "activities"), bgColor: bgWhite)!)
-        sampleCategories.append(Symbol(word: "weather", photo: UIImage(named: "weather"), bgColor: bgWhite)!)
+        sampleCategories.append(Board(symbols: symbols, icon: Symbol(word: "talk", photo: UIImage(named: "talk"), bgColor: bgWhite)!, name: "talk")!)
+        sampleCategories[0].loadSampleBoard()
+        sampleCategories.append(Board(symbols: symbols, icon: Symbol(word: "news", photo: UIImage(named: "news"), bgColor: bgWhite)!, name: "news")!)
+        sampleCategories.append(Board(symbols: symbols, icon: Symbol(word: "activities", photo: UIImage(named: "activities"), bgColor: bgWhite)!, name: "activities")!)
+        sampleCategories[2].loadSampleBoard()
+        sampleCategories.append(Board(symbols: symbols, icon: Symbol(word: "weather", photo: UIImage(named: "weather"), bgColor: bgWhite)!, name: "weather")!)
+        sampleCategories[3].loadSampleBoard()
         
         return sampleCategories
     }
