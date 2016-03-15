@@ -8,12 +8,14 @@
 
 import UIKit
 import AVFoundation
+import CoreData
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     var categories = [Board]()
     var sentence = [Symbol]()
     var currentBoard: Board?
+    var items = [NSManagedObject]()
     
     @IBOutlet weak var boardCollection: UICollectionView!
     @IBOutlet weak var sentenceCollection: UICollectionView!
@@ -42,18 +44,17 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         sentenceCollection.layer.backgroundColor = UIColor.darkGrayColor().CGColor
         categoryCollection.layer.backgroundColor = UIColor.darkGrayColor().CGColor
         
-        
-        if self.loadSymbols() != nil {
-            if let savedBoard = self.loadSymbols() {
-                currentBoard!.symbols += savedBoard
-                print("loaded from file")
-            }
+        loadAppData()
+        if categories.count != 0 {
+            currentBoard = categories[0]
+            print("Data loaded from DB.")
         }
         else {
-            ("not loaded from file")
             // Load the sample data.
             self.categories = self.loadSampleCategories()!
             currentBoard = categories[0]
+            print("Sample data loaded.")
+            saveAppData(categories)
         }
 
     }
@@ -123,15 +124,65 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     
-    func saveSymbols() {
-        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(currentBoard!.symbols, toFile: Symbol.ArchiveURL.path!)
-        if !isSuccessfulSave {
-            print("Failed to save symbols...")
+    func deleteAppBoards() {
+        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let context: NSManagedObjectContext = appDel.managedObjectContext
+        
+        let fetchRequest = NSFetchRequest(entityName: "BoardItem")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            try appDel.persistentStoreCoordinator.executeRequest(deleteRequest, withContext: context)
+            print("Boards deleted")
+        } catch let error as NSError {
+            // TODO: handle the error
         }
     }
     
-    func loadSymbols() -> [Symbol]? {
-        return NSKeyedUnarchiver.unarchiveObjectWithFile(Symbol.ArchiveURL.path!) as? [Symbol]
+    func saveAppData(categories: Array<Board>) {
+        // Retrieve context from delegate
+        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let context: NSManagedObjectContext = appDel.managedObjectContext
+        
+        // Add item to context
+        let entity = NSEntityDescription.entityForName("BoardItem", inManagedObjectContext: context)
+        
+        for board in categories {
+            var newBoard = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: context)
+            newBoard.setValue(board.icon.word, forKey: "icon")
+            newBoard.setValue(board.name, forKey: "name")
+            
+            do {
+                try context.save()
+                print(board.name + " saved")
+            }
+            catch {
+                print("Error saving data")
+            }
+        }
+        
+    }
+    
+    func loadAppData() {
+        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let context: NSManagedObjectContext = appDel.managedObjectContext
+        
+        do {
+            let request = NSFetchRequest(entityName: "BoardItem")
+            let results = try context.executeFetchRequest(request)
+            print(results.count)
+            if results.count > 0 {
+                for result in results as! [BoardItem] {
+                    var name = result.valueForKey("name")!
+                    var icon = result.valueForKey("icon")!
+                    print((name as! String) + (icon as! String))
+                }
+            }
+            
+        }
+        catch {
+            print("Error fetching data")
+        }
     }
     
     
@@ -151,7 +202,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
 
 
-}
+} // End View Controller
 
 // Taken from: http://stackoverflow.com/questions/24263007/how-to-use-hex-colour-values-in-swift-ios
 extension UIColor {
