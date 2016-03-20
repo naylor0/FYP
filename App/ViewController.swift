@@ -37,12 +37,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         self.view.addSubview(categoryCollection)
         self.view.addSubview(sentenceCollection)
         
-        boardCollection.layer.cornerRadius = 6
-        categoryCollection.layer.cornerRadius = 6
-        sentenceCollection.layer.cornerRadius = 6
+        categoryCollection.layer.borderWidth = 1.0
+        categoryCollection.layer.borderColor = UIColor.blackColor().CGColor
+        sentenceCollection.layer.borderWidth = 1.0
+        sentenceCollection.layer.borderColor = UIColor.blackColor().CGColor
+        boardCollection.layer.borderWidth = 1.0
+        boardCollection.layer.borderColor = UIColor.blackColor().CGColor
         
         boardCollection.layer.backgroundColor = UIColor.darkGrayColor().CGColor
-        sentenceCollection.layer.backgroundColor = UIColor.darkGrayColor().CGColor
+        sentenceCollection.layer.backgroundColor = UIColor.whiteColor().CGColor
         categoryCollection.layer.backgroundColor = UIColor.darkGrayColor().CGColor
         
         for symbol in symbolWords {
@@ -93,7 +96,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             cell.word?.text = self.currentBoard!.symbols[indexPath.row].word
             cell.backgroundColor = self.currentBoard!.symbols[indexPath.row].bgColor
             cell.layer.masksToBounds = true;
-            cell.layer.cornerRadius = 6
+            cell.layer.cornerRadius = 4
             
         } else if collectionView == self.categoryCollection {
             cell = collectionView.dequeueReusableCellWithReuseIdentifier("cat", forIndexPath: indexPath) as! CollectionViewCell
@@ -101,7 +104,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             cell.word?.text = self.categories[indexPath.row].name
             cell.backgroundColor = bgWhite
             cell.layer.masksToBounds = true;
-            cell.layer.cornerRadius = 6
+            cell.layer.cornerRadius = 4
             
         } else if collectionView == self.sentenceCollection {
             cell = collectionView.dequeueReusableCellWithReuseIdentifier("sen", forIndexPath: indexPath) as! CollectionViewCell
@@ -109,7 +112,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             cell.word?.text = self.sentence[indexPath.row].word
             cell.backgroundColor = self.sentence[indexPath.row].bgColor
             cell.layer.masksToBounds = true;
-            cell.layer.cornerRadius = 6
+            cell.layer.cornerRadius = 4
             
         }
         return cell
@@ -164,6 +167,20 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         return sampleCategories
     }
 
+    @IBAction func speakSentence(sender: AnyObject) {
+        for part in sentence {
+            self.speech = AVSpeechUtterance(string: part.word)
+            self.speech.rate = 0.5
+            self.synth.speakUtterance(speech)
+        }
+    }
+    
+    @IBAction func deleteSentence(sender: AnyObject) {
+        sentence.removeAll()
+        self.sentenceCollection.reloadData()
+        self.sentenceCollection.setNeedsDisplay()
+    }
+    
 
 } // End View Controller
 

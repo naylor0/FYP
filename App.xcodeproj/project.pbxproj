@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		EF196F651C96CE2A003CD29E /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF196F641C96CE2A003CD29E /* Board.swift */; };
 		EF43DC2B1C9EBA9400BBB091 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF43DC2A1C9EBA9400BBB091 /* SettingsViewController.swift */; };
+		EF9C7AD11C9EDE8E00E3CEE2 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C7AD01C9EDE8E00E3CEE2 /* TableViewCell.swift */; };
 		EF9CC5C71C94776300EAB475 /* Symbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9CC5C61C94776300EAB475 /* Symbol.swift */; };
 		EFA7AEC11C91C0DD001D1311 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA7AEC01C91C0DD001D1311 /* AppDelegate.swift */; };
 		EFA7AEC31C91C0DD001D1311 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA7AEC21C91C0DD001D1311 /* ViewController.swift */; };
@@ -40,6 +41,7 @@
 /* Begin PBXFileReference section */
 		EF196F641C96CE2A003CD29E /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		EF43DC2A1C9EBA9400BBB091 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		EF9C7AD01C9EDE8E00E3CEE2 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		EF9CC5C61C94776300EAB475 /* Symbol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Symbol.swift; path = ../Symbol.swift; sourceTree = "<group>"; };
 		EFA7AEBD1C91C0DD001D1311 /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFA7AEC01C91C0DD001D1311 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 				EF43DC291C9EB63100BBB091 /* Model */,
 				EF0CAB5E1C98357E00138F46 /* View Controllers */,
 				EFA7AEC41C91C0DD001D1311 /* Main.storyboard */,
+				EF9C7AD01C9EDE8E00E3CEE2 /* TableViewCell.swift */,
 				EFA7AEF11C91C233001D1311 /* CollectionViewCell.swift */,
 				EFA7AECA1C91C0DD001D1311 /* Assets.xcassets */,
 				EFA7AECC1C91C0DD001D1311 /* LaunchScreen.storyboard */,
@@ -292,6 +295,7 @@
 				EF196F651C96CE2A003CD29E /* Board.swift in Sources */,
 				EFA7AEF21C91C233001D1311 /* CollectionViewCell.swift in Sources */,
 				EFA7AEC11C91C0DD001D1311 /* AppDelegate.swift in Sources */,
+				EF9C7AD11C9EDE8E00E3CEE2 /* TableViewCell.swift in Sources */,
 				EF43DC2B1C9EBA9400BBB091 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
