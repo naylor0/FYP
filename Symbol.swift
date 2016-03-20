@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Foundation
+import CoreData
 
 class Symbol: NSObject, NSCoding {
     
@@ -16,14 +18,14 @@ class Symbol: NSObject, NSCoding {
     var photo: UIImage?
     var bgColor: UIColor
     
-    struct PropertyKey {
-        static let wordKey = "name"
-        static let photoKey = "photo"
-        static let bgColorKey = "bgColor"
-    }
-    
     static let DocumentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.URLByAppendingPathComponent("symbols")
+    
+    struct PropertyKey {
+        static let wordKey = "word"
+        static let photoKey = "photo"
+        static let bgColorKey = "color"
+    }
     
     
     // MARK: Initialization
@@ -35,6 +37,7 @@ class Symbol: NSObject, NSCoding {
         self.bgColor = bgColor
         
         super.init()
+
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
@@ -46,7 +49,6 @@ class Symbol: NSObject, NSCoding {
     required convenience init?(coder aDecoder: NSCoder) {
         let word = aDecoder.decodeObjectForKey(PropertyKey.wordKey) as! String
         
-        // Because photo is an optional property of Meal, use conditional cast.
         let photo = aDecoder.decodeObjectForKey(PropertyKey.photoKey) as! UIImage
         
         let bgColor = aDecoder.decodeObjectForKey(PropertyKey.bgColorKey) as! UIColor
@@ -54,5 +56,6 @@ class Symbol: NSObject, NSCoding {
         // Must call designated initializer.
         self.init(word: word, photo: photo, bgColor: bgColor)
     }
+    
     
 }

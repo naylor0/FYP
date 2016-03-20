@@ -15,7 +15,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var categories = [Board]()
     var sentence = [Symbol]()
     var currentBoard: Board?
-    var items = [NSManagedObject]()
+    var symbolWords = ["activities", "again", "around", "bad", "big", "bye", "colors", "come", "delete", "do you", "do", "down", "finished", "food", "forward", "funny", "games", "go away", "go", "good", "have", "he", "hello", "help", "here", "hi", "how are you", "how long", "how", "i am", "i", "in", "is", "it", "jump", "left", "less", "like", "make", "me", "more", "my", "news", "next", "not", "off", "on", "out", "people", "places", "play", "put down", "right", "run", "school", "see", "settings", "she", "small", "speak", "stop", "talk", "there", "think", "turn", "up", "walk", "want", "watch", "weather", "what", "where", "who", "why", "yes", "you", "yours"];
+    var allSymbols = [Symbol]()
     
     @IBOutlet weak var boardCollection: UICollectionView!
     @IBOutlet weak var sentenceCollection: UICollectionView!
@@ -44,19 +45,25 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         sentenceCollection.layer.backgroundColor = UIColor.darkGrayColor().CGColor
         categoryCollection.layer.backgroundColor = UIColor.darkGrayColor().CGColor
         
-        loadAppData()
-        if categories.count != 0 {
-            currentBoard = categories[0]
-            print("Data loaded from DB.")
+        for symbol in symbolWords {
+            allSymbols.append(preloadedSymbols(symbol))
         }
-        else {
-            // Load the sample data.
-            self.categories = self.loadSampleCategories()!
-            currentBoard = categories[0]
-            print("Sample data loaded.")
-            saveAppData(categories)
+        
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let documentDirectory = paths[0] as! String
+        let myFilePath = Board.ArchiveURL.path!
+        
+        let manager = NSFileManager.defaultManager()
+        if (manager.fileExistsAtPath(myFilePath)) {
+            self.categories = loadBoards()!
+            print("Loaded from archive")
+        } else {
+            self.categories = loadSampleBoards()!
+            print("Loaded sample boards")
+            saveBoards()
         }
-
+        currentBoard = self.categories[0]
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -112,7 +119,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         if collectionView == self.boardCollection {
             sentence.append(self.currentBoard!.symbols[indexPath.row])
             self.speech = AVSpeechUtterance(string: self.currentBoard!.symbols[indexPath.row].word)
-            self.speech.rate = 0.3
+            self.speech.rate = 0.4
             self.synth.speakUtterance(speech)
             self.sentenceCollection.reloadData()
             self.sentenceCollection.setNeedsDisplay()
@@ -124,69 +131,24 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     
-    func deleteAppBoards() {
-        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let context: NSManagedObjectContext = appDel.managedObjectContext
-        
-        let fetchRequest = NSFetchRequest(entityName: "BoardItem")
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-        
-        do {
-            try appDel.persistentStoreCoordinator.executeRequest(deleteRequest, withContext: context)
-            print("Boards deleted")
-        } catch let error as NSError {
-            // TODO: handle the error
+    func saveBoards() {
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(categories, toFile: Board.ArchiveURL.path!)
+        if !isSuccessfulSave {
+            print("Failed to save meals...")
         }
+        print("Saved Data")
     }
     
-    func saveAppData(categories: Array<Board>) {
-        // Retrieve context from delegate
-        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let context: NSManagedObjectContext = appDel.managedObjectContext
-        
-        // Add item to context
-        let entity = NSEntityDescription.entityForName("BoardItem", inManagedObjectContext: context)
-        
-        for board in categories {
-            var newBoard = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: context)
-            newBoard.setValue(board.icon.word, forKey: "icon")
-            newBoard.setValue(board.name, forKey: "name")
-            
-            do {
-                try context.save()
-                print(board.name + " saved")
-            }
-            catch {
-                print("Error saving data")
-            }
-        }
-        
+    func loadBoards() -> Array<Board>? {
+        return (NSKeyedUnarchiver.unarchiveObjectWithFile(Board.ArchiveURL.path!) as? [Board])!
     }
     
-    func loadAppData() {
-        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let context: NSManagedObjectContext = appDel.managedObjectContext
-        
-        do {
-            let request = NSFetchRequest(entityName: "BoardItem")
-            let results = try context.executeFetchRequest(request)
-            print(results.count)
-            if results.count > 0 {
-                for result in results as! [BoardItem] {
-                    var name = result.valueForKey("name")!
-                    var icon = result.valueForKey("icon")!
-                    print((name as! String) + (icon as! String))
-                }
-            }
-            
-        }
-        catch {
-            print("Error fetching data")
-        }
+    func preloadedSymbols(word: String) ->Symbol {
+        return Symbol(word: word, photo: UIImage(named: word), bgColor: bgWhite)!
     }
     
     
-    func loadSampleCategories() -> [Board]? {
+    func loadSampleBoards() -> [Board]? {
         var sampleCategories = [Board]()
         let symbols = [Symbol]()
         
@@ -197,7 +159,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         sampleCategories[2].loadSampleBoard()
         sampleCategories.append(Board(symbols: symbols, icon: Symbol(word: "weather", photo: UIImage(named: "weather"), bgColor: bgWhite)!, name: "weather")!)
         sampleCategories[3].loadSampleBoard()
-        
+        sampleCategories.append(Board(symbols: symbols, icon: Symbol(word: "food", photo: UIImage(named: "food"), bgColor: bgWhite)!, name: "food")!)
+        sampleCategories[4].loadSampleBoard()
         return sampleCategories
     }
 
