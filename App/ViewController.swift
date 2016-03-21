@@ -34,7 +34,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let manager = NSFileManager.defaultManager()
         if (manager.fileExistsAtPath(myFilePath)) {
             self.categories = loadBoards()!
-            print("Loaded boards from archive")
+            print(categories.count.description + " boards loaded from archive")
         }
         currentBoard = self.categories[0]
         self.boardCollection.reloadData()
@@ -65,7 +65,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let manager = NSFileManager.defaultManager()
         if (manager.fileExistsAtPath(myFilePath)) {
             self.categories = loadBoards()!
-            print("Loaded boards from archive")
+            print(categories.count.description + " loaded boards from archive")
         } else {
             self.categories = loadSampleBoards()!
             print("Loaded sample boards")
@@ -76,7 +76,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         myFilePath = Symbol.ArchiveURL.path!
         if (manager.fileExistsAtPath(myFilePath)) {
             self.allSymbols = loadSymbols()
-            print("Loaded symbols from archive")
+            print(self.allSymbols.count.description + " symbols loaded from archive")
         } else {
             loadSampleSymbols()
             print("Loaded sample symbols")
@@ -196,6 +196,21 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         sampleCategories[4].loadSampleBoard()
         return sampleCategories
     }
+
+    @IBAction func speakSentence(sender: AnyObject) {
+        for part in sentence {
+            self.speech = AVSpeechUtterance(string: part.word)
+            self.speech.rate = 0.5
+            self.synth.speakUtterance(speech)
+        }
+    }
+    
+    @IBAction func deleteSentence(sender: AnyObject) {
+        sentence.removeAll()
+        self.sentenceCollection.reloadData()
+        self.sentenceCollection.setNeedsDisplay()
+    }
+    
     
     func loadSampleSymbols() {
         allSymbols.append(Symbol(word: "activities", photo: UIImage(named: "activities"), bgColor: bgWhite)!)
@@ -271,20 +286,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         allSymbols.append(Symbol(word: "yes", photo: UIImage(named: "yes"), bgColor: bgGreen)!)
         allSymbols.append(Symbol(word: "you", photo: UIImage(named: "you"), bgColor: bgGreen)!)
         allSymbols.append(Symbol(word: "yours", photo: UIImage(named: "yours"), bgColor: bgGreen)!)
-    }
-
-    @IBAction func speakSentence(sender: AnyObject) {
-        for part in sentence {
-            self.speech = AVSpeechUtterance(string: part.word)
-            self.speech.rate = 0.5
-            self.synth.speakUtterance(speech)
-        }
-    }
-    
-    @IBAction func deleteSentence(sender: AnyObject) {
-        sentence.removeAll()
-        self.sentenceCollection.reloadData()
-        self.sentenceCollection.setNeedsDisplay()
     }
     
 

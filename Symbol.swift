@@ -21,23 +21,20 @@ class Symbol: NSObject, NSCoding {
     static let DocumentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.URLByAppendingPathComponent("symbols")
     
+    
     struct PropertyKey {
         static let wordKey = "word"
         static let photoKey = "photo"
         static let bgColorKey = "color"
     }
     
-    
     // MARK: Initialization
-    
     init?(word: String, photo: UIImage?, bgColor: UIColor) {
         // Initialize stored properties.
         self.word = word
         self.photo = photo
         self.bgColor = bgColor
-        
         super.init()
-
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
@@ -48,14 +45,9 @@ class Symbol: NSObject, NSCoding {
     
     required convenience init?(coder aDecoder: NSCoder) {
         let word = aDecoder.decodeObjectForKey(PropertyKey.wordKey) as! String
-        
         let photo = aDecoder.decodeObjectForKey(PropertyKey.photoKey) as! UIImage
-        
         let bgColor = aDecoder.decodeObjectForKey(PropertyKey.bgColorKey) as! UIColor
-        
-        // Must call designated initializer.
         self.init(word: word, photo: photo, bgColor: bgColor)
     }
-    
     
 }

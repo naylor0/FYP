@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		EF196F651C96CE2A003CD29E /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF196F641C96CE2A003CD29E /* Board.swift */; };
-		EF33A3871CA0529B0017127B /* SymbolsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF33A3861CA0529B0017127B /* SymbolsViewController.swift */; };
+		EF22904D1CA075970052F0C6 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF22904C1CA075970052F0C6 /* TableViewController.swift */; };
+		EF22904F1CA077F10052F0C6 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF22904E1CA077F10052F0C6 /* TableViewCell.swift */; };
+		EF2290521CA07B990052F0C6 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2290511CA07B990052F0C6 /* DetailViewController.swift */; };
 		EF43DC2B1C9EBA9400BBB091 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF43DC2A1C9EBA9400BBB091 /* SettingsViewController.swift */; };
 		EF6FE81D1CA0008700770D4F /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6FE81C1CA0008700770D4F /* EditViewController.swift */; };
 		EF9CC5C71C94776300EAB475 /* Symbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9CC5C61C94776300EAB475 /* Symbol.swift */; };
@@ -41,7 +43,9 @@
 
 /* Begin PBXFileReference section */
 		EF196F641C96CE2A003CD29E /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
-		EF33A3861CA0529B0017127B /* SymbolsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SymbolsViewController.swift; sourceTree = "<group>"; };
+		EF22904C1CA075970052F0C6 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		EF22904E1CA077F10052F0C6 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableViewCell.swift; path = ../TableViewCell.swift; sourceTree = "<group>"; };
+		EF2290511CA07B990052F0C6 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		EF43DC2A1C9EBA9400BBB091 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		EF6FE81C1CA0008700770D4F /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		EF9CC5C61C94776300EAB475 /* Symbol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Symbol.swift; path = ../Symbol.swift; sourceTree = "<group>"; };
@@ -91,10 +95,25 @@
 			children = (
 				EFA7AEC21C91C0DD001D1311 /* ViewController.swift */,
 				EF43DC2A1C9EBA9400BBB091 /* SettingsViewController.swift */,
+				EF22904C1CA075970052F0C6 /* TableViewController.swift */,
 				EF6FE81C1CA0008700770D4F /* EditViewController.swift */,
-				EF33A3861CA0529B0017127B /* SymbolsViewController.swift */,
+				EFA7AEF11C91C233001D1311 /* CollectionViewCell.swift */,
+				EF22904E1CA077F10052F0C6 /* TableViewCell.swift */,
+				EF2290511CA07B990052F0C6 /* DetailViewController.swift */,
 			);
 			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		EF2290501CA078BD0052F0C6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				EFA7AEC41C91C0DD001D1311 /* Main.storyboard */,
+				EFA7AEC01C91C0DD001D1311 /* AppDelegate.swift */,
+				EFA7AECA1C91C0DD001D1311 /* Assets.xcassets */,
+				EFA7AECC1C91C0DD001D1311 /* LaunchScreen.storyboard */,
+				EFA7AECF1C91C0DD001D1311 /* Info.plist */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		EF43DC291C9EB63100BBB091 /* Model */ = {
@@ -131,12 +150,7 @@
 			children = (
 				EF43DC291C9EB63100BBB091 /* Model */,
 				EF0CAB5E1C98357E00138F46 /* View Controllers */,
-				EFA7AEC41C91C0DD001D1311 /* Main.storyboard */,
-				EFA7AEC01C91C0DD001D1311 /* AppDelegate.swift */,
-				EFA7AEF11C91C233001D1311 /* CollectionViewCell.swift */,
-				EFA7AECA1C91C0DD001D1311 /* Assets.xcassets */,
-				EFA7AECC1C91C0DD001D1311 /* LaunchScreen.storyboard */,
-				EFA7AECF1C91C0DD001D1311 /* Info.plist */,
+				EF2290501CA078BD0052F0C6 /* Resources */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -293,13 +307,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF2290521CA07B990052F0C6 /* DetailViewController.swift in Sources */,
 				EF6FE81D1CA0008700770D4F /* EditViewController.swift in Sources */,
 				EFA7AEC31C91C0DD001D1311 /* ViewController.swift in Sources */,
 				EF9CC5C71C94776300EAB475 /* Symbol.swift in Sources */,
 				EF196F651C96CE2A003CD29E /* Board.swift in Sources */,
+				EF22904D1CA075970052F0C6 /* TableViewController.swift in Sources */,
+				EF22904F1CA077F10052F0C6 /* TableViewCell.swift in Sources */,
 				EFA7AEF21C91C233001D1311 /* CollectionViewCell.swift in Sources */,
 				EFA7AEC11C91C0DD001D1311 /* AppDelegate.swift in Sources */,
-				EF33A3871CA0529B0017127B /* SymbolsViewController.swift in Sources */,
 				EF43DC2B1C9EBA9400BBB091 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

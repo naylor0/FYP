@@ -28,7 +28,6 @@ class Board: NSObject, NSCoding {
     }
     
     init?(symbols: Array<Symbol>, icon: Symbol, name: String) {
-        // Initialize stored properties.
         self.symbols = symbols
         self.icon = icon
         self.name = name
@@ -48,13 +47,8 @@ class Board: NSObject, NSCoding {
     
     required convenience init?(coder aDecoder: NSCoder) {
         let symbols = aDecoder.decodeObjectForKey(PropertyKey.symbolsKey) as! Array<Symbol>
-        
-        // Because photo is an optional property of Meal, use conditional cast.
         let icon = aDecoder.decodeObjectForKey(PropertyKey.iconKey) as! Symbol
-        
         let name = aDecoder.decodeObjectForKey(PropertyKey.nameKey) as! String
-        
-        // Must call designated initializer.
         self.init(symbols: symbols, icon: icon, name: name)
     }
     
