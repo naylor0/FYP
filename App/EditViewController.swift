@@ -15,7 +15,8 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     var currentBoard: Board?
     var categories = [Board]()
-    private var longPressGesture: UILongPressGestureRecognizer!
+    private var longPressGesture1: UILongPressGestureRecognizer!
+    private var longPressGesture2: UILongPressGestureRecognizer!
     
     let bgRed = UIColor(netHex:0xFF9999)
     let bgGreen = UIColor(netHex:0xCCFF99)
@@ -29,7 +30,6 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.view.addSubview(categoryCollection)
         
         self.categories = loadBoards()!
-        print(categories.count)
         currentBoard = self.categories[0]
         
         categoryCollection.layer.borderWidth = 1.0
@@ -37,8 +37,10 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
         boardCollection.layer.borderWidth = 1.0
         boardCollection.layer.borderColor = UIColor.blackColor().CGColor
         
-        longPressGesture = UILongPressGestureRecognizer(target: self, action: "handleLongGesture:")
-        self.boardCollection.addGestureRecognizer(longPressGesture)
+        longPressGesture1 = UILongPressGestureRecognizer(target: self, action: "handleLongGesture1:")
+        longPressGesture2 = UILongPressGestureRecognizer(target: self, action: "handleLongGesture2:")
+        self.boardCollection.addGestureRecognizer(longPressGesture1)
+        self.categoryCollection.addGestureRecognizer(longPressGesture2)
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -84,9 +86,13 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
-        
-        let temp = currentBoard?.symbols.removeAtIndex(sourceIndexPath.item)
-        currentBoard?.symbols.insert(temp!, atIndex: destinationIndexPath.item)
+        if collectionView == self.boardCollection {
+            let temp = currentBoard?.symbols.removeAtIndex(sourceIndexPath.item)
+            currentBoard?.symbols.insert(temp!, atIndex: destinationIndexPath.item)
+        } else if collectionView == self.categoryCollection {
+            let temp = categories.removeAtIndex(sourceIndexPath.item)
+            categories.insert(temp, atIndex: destinationIndexPath.item)
+        }
     }
     
     func loadBoards() -> Array<Board>? {
@@ -114,7 +120,7 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func handleLongGesture(gesture: UILongPressGestureRecognizer) {
+    func handleLongGesture1(gesture: UILongPressGestureRecognizer) {
         
         switch(gesture.state) {
             
@@ -129,6 +135,23 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
             boardCollection.endInteractiveMovement()
         default:
             boardCollection.cancelInteractiveMovement()
+        }
+    }
+    func handleLongGesture2(gesture: UILongPressGestureRecognizer) {
+        
+        switch(gesture.state) {
+            
+        case UIGestureRecognizerState.Began:
+            guard let selectedIndexPath = self.categoryCollection.indexPathForItemAtPoint(gesture.locationInView(self.categoryCollection)) else {
+                break
+            }
+            categoryCollection.beginInteractiveMovementForItemAtIndexPath(selectedIndexPath)
+        case UIGestureRecognizerState.Changed:
+            categoryCollection.updateInteractiveMovementTargetPosition(gesture.locationInView(gesture.view!))
+        case UIGestureRecognizerState.Ended:
+            categoryCollection.endInteractiveMovement()
+        default:
+            categoryCollection.cancelInteractiveMovement()
         }
     }
 

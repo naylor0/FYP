@@ -34,7 +34,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let manager = NSFileManager.defaultManager()
         if (manager.fileExistsAtPath(myFilePath)) {
             self.categories = loadBoards()!
-            print("Loaded from archive")
+            print("Loaded boards from archive")
         }
         currentBoard = self.categories[0]
         self.boardCollection.reloadData()
@@ -62,10 +62,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         categoryCollection.layer.backgroundColor = UIColor.darkGrayColor().CGColor
         
         var myFilePath = Board.ArchiveURL.path!
-        var manager = NSFileManager.defaultManager()
+        let manager = NSFileManager.defaultManager()
         if (manager.fileExistsAtPath(myFilePath)) {
             self.categories = loadBoards()!
-            print("Loaded from archive")
+            print("Loaded boards from archive")
         } else {
             self.categories = loadSampleBoards()!
             print("Loaded sample boards")

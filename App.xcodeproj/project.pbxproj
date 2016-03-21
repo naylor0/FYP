@@ -89,10 +89,10 @@
 		EF0CAB5E1C98357E00138F46 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				EF33A3861CA0529B0017127B /* SymbolsViewController.swift */,
 				EFA7AEC21C91C0DD001D1311 /* ViewController.swift */,
 				EF43DC2A1C9EBA9400BBB091 /* SettingsViewController.swift */,
 				EF6FE81C1CA0008700770D4F /* EditViewController.swift */,
+				EF33A3861CA0529B0017127B /* SymbolsViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
