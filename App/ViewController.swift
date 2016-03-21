@@ -29,6 +29,20 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     let synth = AVSpeechSynthesizer()
     var speech = AVSpeechUtterance(string: "")
+    
+    override func viewWillAppear(animated: Bool) {
+        let myFilePath = Board.ArchiveURL.path!
+        let manager = NSFileManager.defaultManager()
+        if (manager.fileExistsAtPath(myFilePath)) {
+            self.categories = loadBoards()!
+            print("Loaded from archive")
+        }
+        currentBoard = self.categories[0]
+        self.boardCollection.reloadData()
+        self.boardCollection.setNeedsDisplay()
+        self.categoryCollection.reloadData()
+        self.categoryCollection.setNeedsDisplay()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,6 +106,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             cell.image?.image = self.currentBoard!.symbols[indexPath.row].photo
             cell.word?.text = self.currentBoard!.symbols[indexPath.row].word
             cell.backgroundColor = self.currentBoard!.symbols[indexPath.row].bgColor
+            //cell.layer.shadowColor
             cell.layer.masksToBounds = true;
             cell.layer.cornerRadius = 4
             
