@@ -52,10 +52,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             allSymbols.append(preloadedSymbols(symbol))
         }
         
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        let documentDirectory = paths[0] as! String
         let myFilePath = Board.ArchiveURL.path!
-        
         let manager = NSFileManager.defaultManager()
         if (manager.fileExistsAtPath(myFilePath)) {
             self.categories = loadBoards()!
