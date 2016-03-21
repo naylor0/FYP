@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		EF196F651C96CE2A003CD29E /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF196F641C96CE2A003CD29E /* Board.swift */; };
+		EF33A3871CA0529B0017127B /* SymbolsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF33A3861CA0529B0017127B /* SymbolsViewController.swift */; };
 		EF43DC2B1C9EBA9400BBB091 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF43DC2A1C9EBA9400BBB091 /* SettingsViewController.swift */; };
 		EF6FE81D1CA0008700770D4F /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6FE81C1CA0008700770D4F /* EditViewController.swift */; };
 		EF9CC5C71C94776300EAB475 /* Symbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9CC5C61C94776300EAB475 /* Symbol.swift */; };
@@ -40,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		EF196F641C96CE2A003CD29E /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		EF33A3861CA0529B0017127B /* SymbolsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SymbolsViewController.swift; sourceTree = "<group>"; };
 		EF43DC2A1C9EBA9400BBB091 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		EF6FE81C1CA0008700770D4F /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		EF9CC5C61C94776300EAB475 /* Symbol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Symbol.swift; path = ../Symbol.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 		EF0CAB5E1C98357E00138F46 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				EF33A3861CA0529B0017127B /* SymbolsViewController.swift */,
 				EFA7AEC21C91C0DD001D1311 /* ViewController.swift */,
 				EF43DC2A1C9EBA9400BBB091 /* SettingsViewController.swift */,
 				EF6FE81C1CA0008700770D4F /* EditViewController.swift */,
@@ -296,6 +299,7 @@
 				EF196F651C96CE2A003CD29E /* Board.swift in Sources */,
 				EFA7AEF21C91C233001D1311 /* CollectionViewCell.swift in Sources */,
 				EFA7AEC11C91C0DD001D1311 /* AppDelegate.swift in Sources */,
+				EF33A3871CA0529B0017127B /* SymbolsViewController.swift in Sources */,
 				EF43DC2B1C9EBA9400BBB091 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

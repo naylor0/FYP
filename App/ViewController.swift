@@ -15,7 +15,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var categories = [Board]()
     var sentence = [Symbol]()
     var currentBoard: Board?
-    var symbolWords = ["activities", "again", "around", "bad", "big", "bye", "colors", "come", "delete", "do you", "do", "down", "finished", "food", "forward", "funny", "games", "go away", "go", "good", "have", "he", "hello", "help", "here", "hi", "how are you", "how long", "how", "i am", "i", "in", "is", "it", "jump", "left", "less", "like", "make", "me", "more", "my", "news", "next", "not", "off", "on", "out", "people", "places", "play", "put down", "right", "run", "school", "see", "settings", "she", "small", "speak", "stop", "talk", "there", "think", "turn", "up", "walk", "want", "watch", "weather", "what", "where", "who", "why", "yes", "you", "yours"];
     var allSymbols = [Symbol]()
     
     @IBOutlet weak var boardCollection: UICollectionView!
@@ -62,12 +61,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         sentenceCollection.layer.backgroundColor = UIColor.whiteColor().CGColor
         categoryCollection.layer.backgroundColor = UIColor.darkGrayColor().CGColor
         
-        for symbol in symbolWords {
-            allSymbols.append(preloadedSymbols(symbol))
-        }
-        
-        let myFilePath = Board.ArchiveURL.path!
-        let manager = NSFileManager.defaultManager()
+        var myFilePath = Board.ArchiveURL.path!
+        var manager = NSFileManager.defaultManager()
         if (manager.fileExistsAtPath(myFilePath)) {
             self.categories = loadBoards()!
             print("Loaded from archive")
@@ -75,6 +70,17 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             self.categories = loadSampleBoards()!
             print("Loaded sample boards")
             saveBoards()
+        }
+        currentBoard = self.categories[0]
+        
+        myFilePath = Symbol.ArchiveURL.path!
+        if (manager.fileExistsAtPath(myFilePath)) {
+            self.allSymbols = loadSymbols()
+            print("Loaded symbols from archive")
+        } else {
+            loadSampleSymbols()
+            print("Loaded sample symbols")
+            saveSymbols()
         }
         currentBoard = self.categories[0]
         
@@ -151,7 +157,19 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         if !isSuccessfulSave {
             print("Failed to save meals...")
         }
-        print("Saved Data")
+        print("Saved boards")
+    }
+    
+    func saveSymbols() {
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(allSymbols, toFile: Symbol.ArchiveURL.path!)
+        if !isSuccessfulSave {
+            print("Failed to save meals...")
+        }
+        print("Saved symbols")
+    }
+    
+    func loadSymbols() -> Array<Symbol> {
+        return (NSKeyedUnarchiver.unarchiveObjectWithFile(Symbol.ArchiveURL.path!) as? [Symbol])!
     }
     
     func loadBoards() -> Array<Board>? {
@@ -177,6 +195,82 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         sampleCategories.append(Board(symbols: symbols, icon: Symbol(word: "food", photo: UIImage(named: "food"), bgColor: bgWhite)!, name: "food")!)
         sampleCategories[4].loadSampleBoard()
         return sampleCategories
+    }
+    
+    func loadSampleSymbols() {
+        allSymbols.append(Symbol(word: "activities", photo: UIImage(named: "activities"), bgColor: bgWhite)!)
+        allSymbols.append(Symbol(word: "again", photo: UIImage(named: "again"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "around", photo: UIImage(named: "around"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "bad", photo: UIImage(named: "bad"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "big", photo: UIImage(named: "big"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "bye", photo: UIImage(named: "bye"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "colors", photo: UIImage(named: "colors"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "come", photo: UIImage(named: "come"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "delete", photo: UIImage(named: "delete"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "do you", photo: UIImage(named: "do you"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "do", photo: UIImage(named: "do"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "down", photo: UIImage(named: "down"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "finished", photo: UIImage(named: "finished"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "food", photo: UIImage(named: "food"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "forward", photo: UIImage(named: "forward"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "funny", photo: UIImage(named: "funny"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "go away", photo: UIImage(named: "go away"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "go", photo: UIImage(named: "go"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "good", photo: UIImage(named: "good"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "have", photo: UIImage(named: "have"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "he", photo: UIImage(named: "he"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "hello", photo: UIImage(named: "hello"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "help", photo: UIImage(named: "help"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "hi", photo: UIImage(named: "hi"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "how are you", photo: UIImage(named: "how are you"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "how long", photo: UIImage(named: "how long"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "how", photo: UIImage(named: "how"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "i am", photo: UIImage(named: "i am"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "i", photo: UIImage(named: "i"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "in", photo: UIImage(named: "in"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "is", photo: UIImage(named: "is"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "it", photo: UIImage(named: "it"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "jump", photo: UIImage(named: "jump"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "left", photo: UIImage(named: "left"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "less", photo: UIImage(named: "less"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "like", photo: UIImage(named: "like"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "make", photo: UIImage(named: "make"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "me", photo: UIImage(named: "me"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "more", photo: UIImage(named: "more"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "my", photo: UIImage(named: "my"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "news", photo: UIImage(named: "news"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "next", photo: UIImage(named: "next"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "not", photo: UIImage(named: "not"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "off", photo: UIImage(named: "off"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "on", photo: UIImage(named: "on"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "out", photo: UIImage(named: "out"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "people", photo: UIImage(named: "people"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "places", photo: UIImage(named: "places"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "play", photo: UIImage(named: "play"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "put down", photo: UIImage(named: "put down"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "right", photo: UIImage(named: "right"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "run", photo: UIImage(named: "run"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "put down", photo: UIImage(named: "put down"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "school", photo: UIImage(named: "school"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "settings", photo: UIImage(named: "settings"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "small", photo: UIImage(named: "small"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "speak", photo: UIImage(named: "speak"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "stop", photo: UIImage(named: "stop"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "talk", photo: UIImage(named: "talk"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "there", photo: UIImage(named: "there"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "think", photo: UIImage(named: "think"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "turn", photo: UIImage(named: "turn"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "up", photo: UIImage(named: "up"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "walk", photo: UIImage(named: "walk"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "watch", photo: UIImage(named: "watch"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "weather", photo: UIImage(named: "weather"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "what", photo: UIImage(named: "what"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "where", photo: UIImage(named: "where"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "who", photo: UIImage(named: "who"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "why", photo: UIImage(named: "why"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "yes", photo: UIImage(named: "yes"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "you", photo: UIImage(named: "you"), bgColor: bgGreen)!)
+        allSymbols.append(Symbol(word: "yours", photo: UIImage(named: "yours"), bgColor: bgGreen)!)
     }
 
     @IBAction func speakSentence(sender: AnyObject) {
