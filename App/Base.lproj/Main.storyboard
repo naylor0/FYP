@@ -350,6 +350,17 @@
                                     <rect key="frame" x="0.0" y="20" width="1024" height="44"/>
                                 </variation>
                             </navigationBar>
+                            <searchBar contentMode="redraw" placeholder="search symbols" translatesAutoresizingMaskIntoConstraints="NO" id="WNh-np-agG">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <scopeButtonTitles>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                </scopeButtonTitles>
+                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="64" width="1024" height="44"/>
+                                </variation>
+                            </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QPk-NS-xGo">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -458,7 +469,10 @@
                                             </variation>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="addToBoard" destination="6jU-H0-vO6" id="Oai-wv-Hqx"/>
                                             <outlet property="colourButton" destination="1L0-JS-u8S" id="pL1-gk-fCc"/>
+                                            <outlet property="deleteSymbol" destination="cQy-UE-VxH" id="sTG-f5-naS"/>
+                                            <outlet property="editSymbol" destination="BuA-Qa-y9d" id="pt7-f6-Yrk"/>
                                             <outlet property="photo" destination="Ycl-el-2px" id="i5u-aW-5xs"/>
                                             <outlet property="textToSpeak" destination="9if-mS-zPK" id="Fff-Qk-Oge"/>
                                             <outlet property="word" destination="rRi-3D-Lec" id="PkG-Bm-ubZ"/>
@@ -473,27 +487,20 @@
                                     <outlet property="delegate" destination="0pR-iu-XHM" id="DDZ-Rw-5QP"/>
                                 </connections>
                             </tableView>
-                            <searchBar contentMode="redraw" placeholder="search symbols" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WNh-np-agG">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="0.0" y="64" width="1024" height="44"/>
-                                </variation>
-                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="nmB-CP-QIg"/>
-                                <exclude reference="QPk-NS-xGo"/>
                                 <exclude reference="WNh-np-agG"/>
+                                <exclude reference="QPk-NS-xGo"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=regular">
                             <mask key="subviews">
                                 <include reference="nmB-CP-QIg"/>
-                                <include reference="QPk-NS-xGo"/>
                                 <include reference="WNh-np-agG"/>
+                                <include reference="QPk-NS-xGo"/>
                             </mask>
                         </variation>
                     </view>

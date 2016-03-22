@@ -28,30 +28,13 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
        
         // Dispose of any resources that can be recreated.
-    }
-    
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-        searchActive = true;
-    }
-    
-    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-        searchActive = false;
-    }
-    
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        searchActive = false;
-    }
-    
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        searchActive = false;
     }
 
     // MARK: - Table view data source
@@ -76,16 +59,28 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
                 cell.word.text = filteredResults[indexPath.row].word
                 cell.photo.image = filteredResults[indexPath.row].photo
                 cell.colourButton.layer.backgroundColor = filteredResults[indexPath.row].bgColor.CGColor
+                cell.deleteSymbol.tag = indexPath.row
+                cell.deleteSymbol.addTarget(self, action: "deleteSymbol:", forControlEvents: UIControlEvents.TouchUpInside)
+                cell.addToBoard.tag = indexPath.row
+                cell.editSymbol.tag = indexPath.row
 
             } else{
                 cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! TableViewCell
                 cell.word.text = allSymbols[indexPath.row].word
                 cell.photo.image = allSymbols[indexPath.row].photo
                 cell.colourButton.layer.backgroundColor = allSymbols[indexPath.row].bgColor.CGColor
+                cell.deleteSymbol.tag = indexPath.row
+                cell.deleteSymbol.addTarget(self, action: "deleteSymbol:", forControlEvents: UIControlEvents.TouchUpInside)
 
             }
         }
         return cell
+    }
+    
+    func deleteSymbol (sender:UIButton) {
+        let index = sender.tag
+        allSymbols.removeAtIndex(index)
+        symbolsList.reloadData()
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
@@ -102,7 +97,22 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         self.symbolsList.reloadData()
     }
-
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        searchActive = true;
+    }
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        searchActive = false;
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchActive = false;
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchActive = false;
+    }
     
     func saveSymbols() {
         let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(allSymbols, toFile: Symbol.ArchiveURL.path!)
@@ -120,28 +130,10 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     @IBAction func DismissSave(sender: AnyObject) {
+        saveSymbols()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
 
     /*
     // Override to support rearranging the table view.
