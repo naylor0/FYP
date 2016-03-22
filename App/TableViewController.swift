@@ -8,18 +8,22 @@
 
 import UIKit
 
-class TableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class TableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
     @IBOutlet var symbolsList: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     var allSymbols = [Symbol]()
+    var filteredResults = [Symbol]()
+    var searchActive : Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        searchBar.delegate = self
         navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem()
         navigationItem.leftItemsSupplementBackButton = true
         
         allSymbols = loadSymbols()
+        
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -30,7 +34,24 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+       
         // Dispose of any resources that can be recreated.
+    }
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        searchActive = true;
+    }
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        searchActive = false;
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchActive = false;
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchActive = false;
     }
 
     // MARK: - Table view data source
@@ -40,20 +61,48 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allSymbols.count
+        if(searchActive) {
+            return filteredResults.count
+        }
+        return allSymbols.count;
     }
 
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = TableViewCell()
         if tableView == symbolsList {
-            cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! TableViewCell
-            cell.word.text = allSymbols[indexPath.row].word
-            cell.photo.image = allSymbols[indexPath.row].photo
-            cell.colourButton.layer.backgroundColor = allSymbols[indexPath.row].bgColor.CGColor
+            if (searchActive) {
+                cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! TableViewCell
+                cell.word.text = filteredResults[indexPath.row].word
+                cell.photo.image = filteredResults[indexPath.row].photo
+                cell.colourButton.layer.backgroundColor = filteredResults[indexPath.row].bgColor.CGColor
+
+            } else{
+                cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! TableViewCell
+                cell.word.text = allSymbols[indexPath.row].word
+                cell.photo.image = allSymbols[indexPath.row].photo
+                cell.colourButton.layer.backgroundColor = allSymbols[indexPath.row].bgColor.CGColor
+
+            }
         }
         return cell
     }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        filteredResults = allSymbols.filter({ (symbol) -> Bool in
+            let tmp: NSString = symbol.word
+            let range = tmp.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
+            return range.location != NSNotFound
+        })
+        if(filteredResults.count == 0){
+            searchActive = false;
+        } else {
+            searchActive = true;
+        }
+        self.symbolsList.reloadData()
+    }
+
     
     func saveSymbols() {
         let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(allSymbols, toFile: Symbol.ArchiveURL.path!)
