@@ -12,12 +12,15 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var detailImage: UIImageView!
     @IBOutlet weak var detailWord: UITextField!
     @IBOutlet weak var detailTextToSpeak: UITextField!
+    
     @IBOutlet weak var detailRedButton: UIButton!
     @IBOutlet weak var detailYellowButton: UIButton!
     @IBOutlet weak var detailGreenButton: UIButton!
     @IBOutlet weak var detailBlueButton: UIButton!
     @IBOutlet weak var detailOrangeButton: UIButton!
     @IBOutlet weak var detailWhiteButton: UIButton!
+    var colourArray = [UIButton]()
+    var currentSymbol: Symbol?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,8 +37,27 @@ class DetailViewController: UIViewController {
         detailOrangeButton.layer.borderWidth = 0.8
         detailYellowButton.layer.borderColor = UIColor.blackColor().CGColor
         detailYellowButton.layer.borderWidth = 0.8
-
-        // Do any additional setup after loading the view.
+        
+        colourArray.append(detailRedButton)
+        colourArray.append(detailBlueButton)
+        colourArray.append(detailGreenButton)
+        colourArray.append(detailWhiteButton)
+        colourArray.append(detailOrangeButton)
+        colourArray.append(detailYellowButton)
+        
+        if currentSymbol != nil {
+            self.title = self.currentSymbol!.word
+            self.detailImage.image = self.currentSymbol?.photo
+            self.detailWord.text = self.currentSymbol?.word
+            for button in colourArray {
+                if button.backgroundColor == currentSymbol?.bgColor {
+                    button.highlighted == true
+                }
+                else {
+                    button.highlighted == false
+                }
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,6 +65,7 @@ class DetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     @IBAction func saveSymbolDetail(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
 

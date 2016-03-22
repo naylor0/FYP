@@ -13,6 +13,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     @IBOutlet var symbolsList: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     var allSymbols = [Symbol]()
+    var allBoards = [Board]()
     var filteredResults = [Symbol]()
     var searchActive : Bool = false
 
@@ -23,7 +24,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         navigationItem.leftItemsSupplementBackButton = true
         
         allSymbols = loadSymbols()
-        
+        allBoards = loadBoards()!
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -59,28 +60,69 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
                 cell.word.text = filteredResults[indexPath.row].word
                 cell.photo.image = filteredResults[indexPath.row].photo
                 cell.colourButton.layer.backgroundColor = filteredResults[indexPath.row].bgColor.CGColor
+                cell.colourButton.layer.borderColor = UIColor.blackColor().CGColor
+                cell.colourButton.layer.borderWidth = 0.6
                 cell.deleteSymbol.tag = indexPath.row
-                cell.deleteSymbol.addTarget(self, action: "deleteSymbol:", forControlEvents: UIControlEvents.TouchUpInside)
+                cell.deleteSymbol.addTarget(self, action: #selector(TableViewController.deleteSymbol(_:)), forControlEvents: UIControlEvents.TouchUpInside)
                 cell.addToBoard.tag = indexPath.row
-                cell.editSymbol.tag = indexPath.row
+                cell.addToBoard.addTarget(self, action: #selector(TableViewController.addSymbolToBoard(_:)), forControlEvents: UIControlEvents.TouchUpInside)
 
             } else{
                 cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! TableViewCell
                 cell.word.text = allSymbols[indexPath.row].word
                 cell.photo.image = allSymbols[indexPath.row].photo
                 cell.colourButton.layer.backgroundColor = allSymbols[indexPath.row].bgColor.CGColor
+                cell.colourButton.layer.borderColor = UIColor.blackColor().CGColor
+                cell.colourButton.layer.borderWidth = 0.6
                 cell.deleteSymbol.tag = indexPath.row
-                cell.deleteSymbol.addTarget(self, action: "deleteSymbol:", forControlEvents: UIControlEvents.TouchUpInside)
+                cell.deleteSymbol.addTarget(self, action: #selector(TableViewController.deleteSymbol(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                cell.addToBoard.tag = indexPath.row
+                cell.addToBoard.addTarget(self, action: #selector(TableViewController.addSymbolToBoard(_:)), forControlEvents: UIControlEvents.TouchUpInside)
 
             }
         }
         return cell
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        performSegueWithIdentifier("editSymbol", sender: self)
+    }
+    
     func deleteSymbol (sender:UIButton) {
         let index = sender.tag
-        allSymbols.removeAtIndex(index)
-        symbolsList.reloadData()
+        let refreshAlert = UIAlertController(title: "Delete", message: "Symbol will be removed from library.", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: { (action: UIAlertAction!) in
+            self.allSymbols.removeAtIndex(index)
+            self.symbolsList.reloadData()
+        }))
+        
+        refreshAlert.addAction(UIAlertAction(title: "Delete and remove from boards", style: .Default, handler: { (action: UIAlertAction!) in
+            self.allSymbols.removeAtIndex(index)
+            self.symbolsList.reloadData()
+        }))
+        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
+            print("Cancelled")
+        }))
+        
+        presentViewController(refreshAlert, animated: true, completion: nil)
+        
+    }
+    
+    func addSymbolToBoard (sender:UIButton) {
+        let index = sender.tag
+        let refreshAlert = UIAlertController(title: "Add To Board", message: "Select board to add to:", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        for board in allBoards {
+            refreshAlert.addAction(UIAlertAction(title: board.name, style: .Default, handler: { (action: UIAlertAction!) in
+                board.symbols.append(self.allSymbols[index])
+            }))
+        }
+        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
+            print("Cancelled")
+        }))
+        presentViewController(refreshAlert, animated: true, completion: nil)
+        
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
@@ -122,8 +164,20 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         print("Saved symbols")
     }
     
+    func saveBoards() {
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(allBoards, toFile: Board.ArchiveURL.path!)
+        if !isSuccessfulSave {
+            print("Failed to save meals...")
+        }
+        print("Saved boards")
+    }
+    
     func loadSymbols() -> Array<Symbol> {
         return (NSKeyedUnarchiver.unarchiveObjectWithFile(Symbol.ArchiveURL.path!) as? [Symbol])!
+    }
+    
+    func loadBoards() -> Array<Board>? {
+        return (NSKeyedUnarchiver.unarchiveObjectWithFile(Board.ArchiveURL.path!) as? [Board])!
     }
     
     @IBAction func DismissCancel(sender: AnyObject) {
@@ -131,8 +185,37 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     @IBAction func DismissSave(sender: AnyObject) {
         saveSymbols()
+        saveBoards()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if segue.identifier == "editSymbol" {
+            
+            let index = self.symbolsList.indexPathForSelectedRow! as NSIndexPath
+            let viewController:DetailViewController = segue.destinationViewController as! DetailViewController
+            viewController.currentSymbol = self.allSymbols[index.row] as Symbol
+            self.symbolsList.deselectRowAtIndexPath(index, animated: true)
+            
+        }
+        
+    }
+    
+//    @IBAction func unwindToSymbolsList(sender: UIStoryboardSegue) {
+//        if let sourceViewController = sender.sourceViewController as? MealViewController, meal = sourceViewController.meal {
+//            if let selectedIndexPath = tableView.indexPathForSelectedRow {
+//                // Update an existing meal.
+//                meals[selectedIndexPath.row] = meal
+//                tableView.reloadRowsAtIndexPaths([selectedIndexPath], withRowAnimation: .None)
+//            } else {
+//                // Add a new meal.
+//                let newIndexPath = NSIndexPath(forRow: meals.count, inSection: 0)
+//                meals.append(meal)
+//                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
+//            }
+//        }
+//    }
 
 
     /*
