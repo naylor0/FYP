@@ -14,13 +14,8 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UINavigationC
     @IBOutlet weak var detailTextToSpeak: UITextField!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var navBar: UINavigationItem!
+    @IBOutlet weak var colourPicker: ColourControl!
     
-    @IBOutlet weak var detailRedButton: UIButton!
-    @IBOutlet weak var detailYellowButton: UIButton!
-    @IBOutlet weak var detailGreenButton: UIButton!
-    @IBOutlet weak var detailBlueButton: UIButton!
-    @IBOutlet weak var detailOrangeButton: UIButton!
-    @IBOutlet weak var detailWhiteButton: UIButton!
     
     var colourArray = [UIButton]()
     var symbol: Symbol?
@@ -36,30 +31,11 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UINavigationC
             navBar.title = symbol.word
             detailWord.text = symbol.word
             detailImage.image = symbol.photo
-            //detailTextToSpeak.text = symbol.word
+            colourPicker.colour = symbol.bgColor
         }
         
         // Enable the Save button only if the text field has a valid Meal name.
         checkValidSymbolName()
-        
-        detailBlueButton.layer.borderColor = UIColor.blackColor().CGColor
-        detailBlueButton.layer.borderWidth = 0.8
-        detailGreenButton.layer.borderColor = UIColor.blackColor().CGColor
-        detailGreenButton.layer.borderWidth = 0.8
-        detailRedButton.layer.borderColor = UIColor.blackColor().CGColor
-        detailRedButton.layer.borderWidth = 0.8
-        detailWhiteButton.layer.borderColor = UIColor.blackColor().CGColor
-        detailWhiteButton.layer.borderWidth = 0.8
-        detailOrangeButton.layer.borderColor = UIColor.blackColor().CGColor
-        detailOrangeButton.layer.borderWidth = 0.8
-        detailYellowButton.layer.borderColor = UIColor.blackColor().CGColor
-        detailYellowButton.layer.borderWidth = 0.8
-        colourArray.append(detailRedButton)
-        colourArray.append(detailBlueButton)
-        colourArray.append(detailGreenButton)
-        colourArray.append(detailWhiteButton)
-        colourArray.append(detailOrangeButton)
-        colourArray.append(detailYellowButton)
         
     }
 
@@ -98,7 +74,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UINavigationC
             let word = detailWord.text
             let image = detailImage.image
             //let speak = detailTextToSpeak.text
-            let colour = UIColor.whiteColor()
+            let colour = colourPicker.colour
             
             symbol = Symbol(word: word!, photo: image, bgColor: colour)
         }

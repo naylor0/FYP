@@ -14,14 +14,18 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
     @IBOutlet weak var categoryCollection: UICollectionView!
     
     var currentBoard: Board?
+    var currentBoardPos = 0
     var categories = [Board]()
+    var deleteSender = ""
     private var longPressGesture1: UILongPressGestureRecognizer!
     private var longPressGesture2: UILongPressGestureRecognizer!
     
-    let bgRed = UIColor(netHex:0xFF9999)
+    let bgRed = UIColor(netHex:0xFFCCCC)
     let bgGreen = UIColor(netHex:0xCCFF99)
     let bgYellow = UIColor(netHex: 0xFFFF66)
     let bgWhite = UIColor(netHex: 0xFFFFFF)
+    let bgOrange = UIColor(netHex: 0xFFCC66)
+    let bgBlue = UIColor(netHex: 0x99CCFF)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,6 +68,8 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
             cell.backgroundColor = self.currentBoard!.symbols[indexPath.row].bgColor
             cell.layer.masksToBounds = true;
             cell.layer.cornerRadius = 4
+            cell.delete.tag = indexPath.row
+            cell.delete.addTarget(self, action: #selector(EditViewController.deleteCell(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             
         } else if collectionView == self.categoryCollection {
             cell = collectionView.dequeueReusableCellWithReuseIdentifier("cat", forIndexPath: indexPath) as! CollectionViewCell
@@ -72,6 +78,10 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
             cell.backgroundColor = bgWhite
             cell.layer.masksToBounds = true;
             cell.layer.cornerRadius = 4
+            cell.layer.borderColor = UIColor.blackColor().CGColor
+            cell.layer.borderWidth = 0.6
+            cell.delete.tag = indexPath.row
+            cell.delete.addTarget(self, action: #selector(EditViewController.deleteCat(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             
         }
         return cell
@@ -80,6 +90,7 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if collectionView == self.categoryCollection {
             currentBoard = self.categories[indexPath.row]
+            currentBoardPos = indexPath.row
             self.boardCollection.reloadData()
             self.boardCollection.setNeedsDisplay()
         }
@@ -93,6 +104,25 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
             let temp = categories.removeAtIndex(sourceIndexPath.item)
             categories.insert(temp, atIndex: destinationIndexPath.item)
         }
+    }
+    
+    func deleteCell (sender:UIButton) {
+        let index = sender.tag
+        self.currentBoard!.symbols.removeAtIndex(index)
+        self.boardCollection.reloadData()
+        self.boardCollection.setNeedsDisplay()
+        
+    }
+    func deleteCat (sender:UIButton) {
+        let index = sender.tag
+        if index == currentBoardPos {
+            self.currentBoard!.symbols.removeAll()
+            self.boardCollection.reloadData()
+            self.boardCollection.setNeedsDisplay()
+        }
+        self.categories.removeAtIndex(index)
+        self.categoryCollection.reloadData()
+        self.categoryCollection.setNeedsDisplay()
     }
     
     func loadBoards() -> Array<Board>? {

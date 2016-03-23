@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EF116DBD1CA317BA002773CF /* ColourControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF116DBC1CA317BA002773CF /* ColourControl.swift */; };
 		EF196F651C96CE2A003CD29E /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF196F641C96CE2A003CD29E /* Board.swift */; };
 		EF22904D1CA075970052F0C6 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF22904C1CA075970052F0C6 /* TableViewController.swift */; };
 		EF22904F1CA077F10052F0C6 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF22904E1CA077F10052F0C6 /* TableViewCell.swift */; };
@@ -42,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EF116DBC1CA317BA002773CF /* ColourControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColourControl.swift; sourceTree = "<group>"; };
 		EF196F641C96CE2A003CD29E /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		EF22904C1CA075970052F0C6 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		EF22904E1CA077F10052F0C6 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableViewCell.swift; path = ../TableViewCell.swift; sourceTree = "<group>"; };
@@ -98,9 +100,10 @@
 				EF43DC2A1C9EBA9400BBB091 /* SettingsViewController.swift */,
 				EF22904C1CA075970052F0C6 /* TableViewController.swift */,
 				EF6FE81C1CA0008700770D4F /* EditViewController.swift */,
+				EF2290511CA07B990052F0C6 /* DetailViewController.swift */,
 				EFA7AEF11C91C233001D1311 /* CollectionViewCell.swift */,
 				EF22904E1CA077F10052F0C6 /* TableViewCell.swift */,
-				EF2290511CA07B990052F0C6 /* DetailViewController.swift */,
+				EF116DBC1CA317BA002773CF /* ColourControl.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 				EF22904D1CA075970052F0C6 /* TableViewController.swift in Sources */,
 				EF22904F1CA077F10052F0C6 /* TableViewCell.swift in Sources */,
 				EFA7AEF21C91C233001D1311 /* CollectionViewCell.swift in Sources */,
+				EF116DBD1CA317BA002773CF /* ColourControl.swift in Sources */,
 				EFA7AEC11C91C0DD001D1311 /* AppDelegate.swift in Sources */,
 				EF43DC2B1C9EBA9400BBB091 /* SettingsViewController.swift in Sources */,
 			);

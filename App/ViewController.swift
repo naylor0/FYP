@@ -21,10 +21,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var sentenceCollection: UICollectionView!
     @IBOutlet weak var categoryCollection: UICollectionView!
     
-    let bgRed = UIColor(netHex:0xFF9999)
+    let bgRed = UIColor(netHex:0xFFCCCC)
     let bgGreen = UIColor(netHex:0xCCFF99)
     let bgYellow = UIColor(netHex: 0xFFFF66)
     let bgWhite = UIColor(netHex: 0xFFFFFF)
+    let bgOrange = UIColor(netHex: 0xFFCC66)
+    let bgBlue = UIColor(netHex: 0x99CCFF)
     
     let synth = AVSpeechSynthesizer()
     var speech = AVSpeechUtterance(string: "")

@@ -11,5 +11,6 @@ import UIKit
 class CollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var word: UILabel!
+    @IBOutlet weak var delete: UIButton!
 
 }
