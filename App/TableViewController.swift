@@ -10,12 +10,16 @@ import UIKit
 
 class TableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
+    // MARK: - Properties
+    
+    @IBOutlet weak var addButton: UIBarButtonItem!
     @IBOutlet var symbolsList: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     var allSymbols = [Symbol]()
     var allBoards = [Board]()
     var filteredResults = [Symbol]()
     var searchActive : Bool = false
+    var selectedRow: TableViewCell?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,18 +29,8 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         allSymbols = loadSymbols()
         allBoards = loadBoards()!
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-       
-        // Dispose of any resources that can be recreated.
-    }
 
     // MARK: - Table view data source
 
@@ -85,7 +79,8 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        performSegueWithIdentifier("editSymbol", sender: self)
+        selectedRow = symbolsList.cellForRowAtIndexPath(indexPath) as! TableViewCell
+        performSegueWithIdentifier("EditSymbol", sender: self)
     }
     
     func deleteSymbol (sender:UIButton) {
@@ -96,11 +91,6 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             self.allSymbols.removeAtIndex(index)
             self.symbolsList.reloadData()
         }))
-        
-        refreshAlert.addAction(UIAlertAction(title: "Delete and remove from boards", style: .Default, handler: { (action: UIAlertAction!) in
-            self.allSymbols.removeAtIndex(index)
-            self.symbolsList.reloadData()
-        }))
         refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
             print("Cancelled")
         }))
@@ -108,6 +98,8 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         presentViewController(refreshAlert, animated: true, completion: nil)
         
     }
+    
+    // MARK: - Actions
     
     func addSymbolToBoard (sender:UIButton) {
         let index = sender.tag
@@ -156,6 +148,52 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         searchActive = false;
     }
     
+    
+    @IBAction func DismissCancel(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    @IBAction func DismissSave(sender: AnyObject) {
+        saveSymbols()
+        saveBoards()
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    @IBAction func newSymbol(sender: AnyObject) {
+        performSegueWithIdentifier("AddSymbol", sender: self)
+    }
+    
+    // MARK: - Navigation
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if segue.identifier == "EditSymbol" {
+            print("Editing symbol")
+            let symbolDetailViewController = segue.destinationViewController as! DetailViewController
+            if let selectedSymbolCell = selectedRow {
+                let indexPath = symbolsList.indexPathForCell(selectedSymbolCell)!
+                let selectedSymbol = allSymbols[indexPath.row]
+                print("Symbol passed: " + selectedSymbol.word)
+                symbolDetailViewController.symbol = selectedSymbol
+            }
+        } else if segue.identifier == "AddSymbol" {
+            print("Adding new symbol.")
+        }
+    }
+    
+    @IBAction func unwindToSymbolList(sender: UIStoryboardSegue) {
+        if let sourceViewController = sender.sourceViewController as? DetailViewController, editedSymbol = sourceViewController.symbol {
+            if let selectedIndexPath = symbolsList.indexPathForSelectedRow {
+                allSymbols[selectedIndexPath.row] = editedSymbol
+                symbolsList.reloadRowsAtIndexPaths([selectedIndexPath], withRowAnimation: .None)
+            } else {
+                let newIndexPath = NSIndexPath(forRow: allSymbols.count, inSection: 0)
+                allSymbols.append(editedSymbol)
+                symbolsList.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
+            }
+        }
+    }
+    
+    // MARK: NSCoding
+    
     func saveSymbols() {
         let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(allSymbols, toFile: Symbol.ArchiveURL.path!)
         if !isSuccessfulSave {
@@ -179,68 +217,5 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     func loadBoards() -> Array<Board>? {
         return (NSKeyedUnarchiver.unarchiveObjectWithFile(Board.ArchiveURL.path!) as? [Board])!
     }
-    
-    @IBAction func DismissCancel(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    @IBAction func DismissSave(sender: AnyObject) {
-        saveSymbols()
-        saveBoards()
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-        if segue.identifier == "editSymbol" {
-            
-            let index = self.symbolsList.indexPathForSelectedRow! as NSIndexPath
-            let viewController:DetailViewController = segue.destinationViewController as! DetailViewController
-            viewController.currentSymbol = self.allSymbols[index.row] as Symbol
-            self.symbolsList.deselectRowAtIndexPath(index, animated: true)
-            
-        }
-        
-    }
-    
-//    @IBAction func unwindToSymbolsList(sender: UIStoryboardSegue) {
-//        if let sourceViewController = sender.sourceViewController as? MealViewController, meal = sourceViewController.meal {
-//            if let selectedIndexPath = tableView.indexPathForSelectedRow {
-//                // Update an existing meal.
-//                meals[selectedIndexPath.row] = meal
-//                tableView.reloadRowsAtIndexPaths([selectedIndexPath], withRowAnimation: .None)
-//            } else {
-//                // Add a new meal.
-//                let newIndexPath = NSIndexPath(forRow: meals.count, inSection: 0)
-//                meals.append(meal)
-//                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
-//            }
-//        }
-//    }
-
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

@@ -8,10 +8,12 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var detailImage: UIImageView!
     @IBOutlet weak var detailWord: UITextField!
     @IBOutlet weak var detailTextToSpeak: UITextField!
+    
+    @IBOutlet weak var doneButton: UIBarButtonItem!
     
     @IBOutlet weak var detailRedButton: UIButton!
     @IBOutlet weak var detailYellowButton: UIButton!
@@ -19,11 +21,25 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var detailBlueButton: UIButton!
     @IBOutlet weak var detailOrangeButton: UIButton!
     @IBOutlet weak var detailWhiteButton: UIButton!
+    
     var colourArray = [UIButton]()
-    var currentSymbol: Symbol?
+    var symbol: Symbol?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // Handle the text field’s user input through delegate callbacks.
+        detailWord.delegate = self
+        
+        // Set up views if editing an existing Meal.
+        if let symbol = symbol {
+            detailWord.text = symbol.word
+            detailImage.image = symbol.photo
+            //detailTextToSpeak.text = symbol.word
+        }
+        
+        // Enable the Save button only if the text field has a valid Meal name.
+        checkValidSymbolName()
         
         detailBlueButton.layer.borderColor = UIColor.blackColor().CGColor
         detailBlueButton.layer.borderWidth = 0.8
@@ -37,7 +53,6 @@ class DetailViewController: UIViewController {
         detailOrangeButton.layer.borderWidth = 0.8
         detailYellowButton.layer.borderColor = UIColor.blackColor().CGColor
         detailYellowButton.layer.borderWidth = 0.8
-        
         colourArray.append(detailRedButton)
         colourArray.append(detailBlueButton)
         colourArray.append(detailGreenButton)
@@ -45,38 +60,53 @@ class DetailViewController: UIViewController {
         colourArray.append(detailOrangeButton)
         colourArray.append(detailYellowButton)
         
-        if currentSymbol != nil {
-            self.title = self.currentSymbol!.word
-            self.detailImage.image = self.currentSymbol?.photo
-            self.detailWord.text = self.currentSymbol?.word
-            for button in colourArray {
-                if button.backgroundColor == currentSymbol?.bgColor {
-                    button.highlighted == true
-                }
-                else {
-                    button.highlighted == false
-                }
-            }
-        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    @IBAction func saveSymbolDetail(sender: AnyObject) {
+    
+    // MARK: UITextFieldDelegate
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        // Hide the keyboard.
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        checkValidSymbolName()
+        navigationItem.title = textField.text
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        // Disable the Save button while editing.
+        doneButton.enabled = false
+    }
+    
+    func checkValidSymbolName() {
+        // Disable the Save button if the text field is empty.
+        let text = detailWord.text ?? ""
+        doneButton.enabled = !text.isEmpty
+    }
+    
+    // MARK: - Navigation
+    
+    @IBAction func cancel(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if sender === doneButton {
+            let word = detailWord.text
+            let image = detailImage.image
+            //let speak = detailTextToSpeak.text
+            let colour = UIColor.whiteColor()
+            
+            symbol = Symbol(word: word!, photo: image, bgColor: colour)
+        }
+        
     }
-    */
 
-}
+} // End DetailViewController
