@@ -70,7 +70,14 @@ class ColourControl: UIView {
     func colourButtonTapped(button: UIButton) {
         selectedIndex = colourButtons.indexOf(button)!
         colour = colours[selectedIndex]
+        makeButtonsUnselected()
         button.selected = true
+    }
+    
+    func makeButtonsUnselected() {
+        for c in colourButtons {
+            c.selected = false
+        }
     }
     
 

@@ -32,6 +32,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UINavigationC
             detailWord.text = symbol.word
             detailImage.image = symbol.photo
             colourPicker.colour = symbol.bgColor
+            detailImage.layer.backgroundColor = symbol.bgColor.CGColor
         }
         
         // Enable the Save button only if the text field has a valid Meal name.
