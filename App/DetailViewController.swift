@@ -12,8 +12,8 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UINavigationC
     @IBOutlet weak var detailImage: UIImageView!
     @IBOutlet weak var detailWord: UITextField!
     @IBOutlet weak var detailTextToSpeak: UITextField!
-    
-    @IBOutlet weak var doneButton: UIBarButtonItem!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var navBar: UINavigationItem!
     
     @IBOutlet weak var detailRedButton: UIButton!
     @IBOutlet weak var detailYellowButton: UIButton!
@@ -33,6 +33,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UINavigationC
         
         // Set up views if editing an existing Meal.
         if let symbol = symbol {
+            navBar.title = symbol.word
             detailWord.text = symbol.word
             detailImage.image = symbol.photo
             //detailTextToSpeak.text = symbol.word
@@ -80,15 +81,10 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UINavigationC
         navigationItem.title = textField.text
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
-        // Disable the Save button while editing.
-        doneButton.enabled = false
-    }
-    
     func checkValidSymbolName() {
         // Disable the Save button if the text field is empty.
         let text = detailWord.text ?? ""
-        doneButton.enabled = !text.isEmpty
+        saveButton.enabled = !text.isEmpty
     }
     
     // MARK: - Navigation
@@ -98,7 +94,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UINavigationC
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if sender === doneButton {
+        if sender === saveButton {
             let word = detailWord.text
             let image = detailImage.image
             //let speak = detailTextToSpeak.text

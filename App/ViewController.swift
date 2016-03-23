@@ -34,7 +34,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let manager = NSFileManager.defaultManager()
         if (manager.fileExistsAtPath(myFilePath)) {
             self.categories = loadBoards()!
-            print(categories.count.description + " boards loaded from archive")
+            print(categories.count.description + " boards loaded from archive for homescreen")
         }
         currentBoard = self.categories[0]
         self.boardCollection.reloadData()
@@ -65,10 +65,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let manager = NSFileManager.defaultManager()
         if (manager.fileExistsAtPath(myFilePath)) {
             self.categories = loadBoards()!
-            print(categories.count.description + " loaded boards from archive")
+            print(categories.count.description + " loaded boards from archive for home")
         } else {
             self.categories = loadSampleBoards()!
-            print("Loaded sample boards")
+            print("Loaded sample boards for home")
             saveBoards()
         }
         currentBoard = self.categories[0]
@@ -76,10 +76,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         myFilePath = Symbol.ArchiveURL.path!
         if (manager.fileExistsAtPath(myFilePath)) {
             self.allSymbols = loadSymbols()
-            print(self.allSymbols.count.description + " symbols loaded from archive")
+            print(self.allSymbols.count.description + " symbols loaded from archive for home")
         } else {
             loadSampleSymbols()
-            print("Loaded sample symbols")
+            print("Loaded sample symbols for home")
             saveSymbols()
         }
         currentBoard = self.categories[0]
@@ -157,7 +157,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         if !isSuccessfulSave {
             print("Failed to save meals...")
         }
-        print("Saved boards")
+        print("Saved boards from homescreen")
     }
     
     func saveSymbols() {
@@ -165,7 +165,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         if !isSuccessfulSave {
             print("Failed to save meals...")
         }
-        print("Saved symbols")
+        print("Saved symbols from homescreen")
     }
     
     func loadSymbols() -> Array<Symbol> {

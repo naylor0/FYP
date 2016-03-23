@@ -8,27 +8,28 @@
 
 import UIKit
 
-class TableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
+class TableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     // MARK: - Properties
     
-    @IBOutlet weak var addButton: UIBarButtonItem!
-    @IBOutlet var symbolsList: UITableView!
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
-    var allSymbols = [Symbol]()
     var allBoards = [Board]()
+    var allSymbols = [Symbol]()
     var filteredResults = [Symbol]()
+    var symbolSelected: Symbol?
     var searchActive : Bool = false
     var selectedRow: TableViewCell?
+    var dataLoaded: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-        navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem()
-        navigationItem.leftItemsSupplementBackButton = true
         
         allSymbols = loadSymbols()
         allBoards = loadBoards()!
+        print("Loaded data from viewDidLoad")
+        dataLoaded = true
     }
 
 
@@ -48,49 +49,66 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = TableViewCell()
-        if tableView == symbolsList {
-            if (searchActive) {
-                cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! TableViewCell
-                cell.word.text = filteredResults[indexPath.row].word
-                cell.photo.image = filteredResults[indexPath.row].photo
-                cell.colourButton.layer.backgroundColor = filteredResults[indexPath.row].bgColor.CGColor
-                cell.colourButton.layer.borderColor = UIColor.blackColor().CGColor
-                cell.colourButton.layer.borderWidth = 0.6
-                cell.deleteSymbol.tag = indexPath.row
-                cell.deleteSymbol.addTarget(self, action: #selector(TableViewController.deleteSymbol(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-                cell.addToBoard.tag = indexPath.row
-                cell.addToBoard.addTarget(self, action: #selector(TableViewController.addSymbolToBoard(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        if (searchActive) {
+            cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! TableViewCell
+            cell.word.text = filteredResults[indexPath.row].word
+            cell.photo.image = filteredResults[indexPath.row].photo
+            cell.colourButton.layer.backgroundColor = filteredResults[indexPath.row].bgColor.CGColor
+            cell.colourButton.layer.borderColor = UIColor.blackColor().CGColor
+            cell.colourButton.layer.borderWidth = 0.6
+            cell.deleteSymbol.tag = indexPath.row
+            cell.deleteSymbol.addTarget(self, action: #selector(TableViewController.deleteSymbol(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            cell.addToBoard.tag = indexPath.row
+            cell.addToBoard.addTarget(self, action: #selector(TableViewController.addSymbolToBoard(_:)), forControlEvents: UIControlEvents.TouchUpInside)
 
-            } else{
-                cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! TableViewCell
-                cell.word.text = allSymbols[indexPath.row].word
-                cell.photo.image = allSymbols[indexPath.row].photo
-                cell.colourButton.layer.backgroundColor = allSymbols[indexPath.row].bgColor.CGColor
-                cell.colourButton.layer.borderColor = UIColor.blackColor().CGColor
-                cell.colourButton.layer.borderWidth = 0.6
-                cell.deleteSymbol.tag = indexPath.row
-                cell.deleteSymbol.addTarget(self, action: #selector(TableViewController.deleteSymbol(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-                cell.addToBoard.tag = indexPath.row
-                cell.addToBoard.addTarget(self, action: #selector(TableViewController.addSymbolToBoard(_:)), forControlEvents: UIControlEvents.TouchUpInside)
 
-            }
+        } else{
+            cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! TableViewCell
+            cell.word.text = allSymbols[indexPath.row].word
+            cell.photo.image = allSymbols[indexPath.row].photo
+            cell.colourButton.layer.backgroundColor = allSymbols[indexPath.row].bgColor.CGColor
+            cell.colourButton.layer.borderColor = UIColor.blackColor().CGColor
+            cell.colourButton.layer.borderWidth = 0.6
+            cell.deleteSymbol.tag = indexPath.row
+            cell.deleteSymbol.addTarget(self, action: #selector(TableViewController.deleteSymbol(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            cell.addToBoard.tag = indexPath.row
+            cell.addToBoard.addTarget(self, action: #selector(TableViewController.addSymbolToBoard(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+
         }
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        selectedRow = symbolsList.cellForRowAtIndexPath(indexPath) as! TableViewCell
-        performSegueWithIdentifier("EditSymbol", sender: self)
+        if searchActive {
+            symbolSelected = filteredResults[indexPath.row]
+            performSegueWithIdentifier("EditSymbol", sender: self)
+        } else {
+            symbolSelected = allSymbols[indexPath.row]
+            performSegueWithIdentifier("EditSymbol", sender: self)
+        }
+        
     }
+    // MARK: - Actions
+    
     
     func deleteSymbol (sender:UIButton) {
         let index = sender.tag
         let refreshAlert = UIAlertController(title: "Delete", message: "Symbol will be removed from library.", preferredStyle: UIAlertControllerStyle.Alert)
         
-        refreshAlert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: { (action: UIAlertAction!) in
-            self.allSymbols.removeAtIndex(index)
-            self.symbolsList.reloadData()
-        }))
+        if searchActive {
+            refreshAlert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: { (action: UIAlertAction!) in
+                self.removeFromDataSource(self.filteredResults[index])
+                self.searchActive = false
+                self.searchBar.text = ""
+                self.tableView.reloadData()
+            }))
+        } else {
+            refreshAlert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: { (action: UIAlertAction!) in
+                self.allSymbols.removeAtIndex(index)
+                self.tableView.reloadData()
+            }))
+        }
+        
         refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
             print("Cancelled")
         }))
@@ -99,7 +117,24 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         
     }
     
-    // MARK: - Actions
+    func removeFromDataSource (symbol: Symbol) {
+        var count = 0
+        for item in allSymbols {
+            if item.word == symbol.word {
+                allSymbols.removeAtIndex(count)
+            }
+            count = count + 1
+        }
+    }
+    func updateDataSource (symbol: Symbol) {
+        var count = 0
+        for item in allSymbols {
+            if item.word == symbol.word {
+                allSymbols[count] = symbol
+            }
+            count = count + 1
+        }
+    }
     
     func addSymbolToBoard (sender:UIButton) {
         let index = sender.tag
@@ -111,7 +146,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             }))
         }
         refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
-            print("Cancelled")
+            print("Cancelled adding to board.")
         }))
         presentViewController(refreshAlert, animated: true, completion: nil)
         
@@ -124,37 +159,32 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             let range = tmp.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
             return range.location != NSNotFound
         })
-        if(filteredResults.count == 0){
+        if(filteredResults.count <= 0){
             searchActive = false;
         } else {
             searchActive = true;
         }
-        self.symbolsList.reloadData()
+        self.tableView.reloadData()
     }
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         searchActive = true;
     }
     
-    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-        searchActive = false;
-    }
-    
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         searchActive = false;
+        searchBar.text = ""
+        self.tableView.reloadData()
     }
-    
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        searchActive = false;
-    }
-    
     
     @IBAction func DismissCancel(sender: AnyObject) {
+        dataLoaded = false
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     @IBAction func DismissSave(sender: AnyObject) {
         saveSymbols()
         saveBoards()
+        dataLoaded = false
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     @IBAction func newSymbol(sender: AnyObject) {
@@ -168,26 +198,34 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         if segue.identifier == "EditSymbol" {
             print("Editing symbol")
             let symbolDetailViewController = segue.destinationViewController as! DetailViewController
-            if let selectedSymbolCell = selectedRow {
-                let indexPath = symbolsList.indexPathForCell(selectedSymbolCell)!
-                let selectedSymbol = allSymbols[indexPath.row]
-                print("Symbol passed: " + selectedSymbol.word)
-                symbolDetailViewController.symbol = selectedSymbol
-            }
+            print("Symbol passed: " + symbolSelected!.word)
+            symbolDetailViewController.symbol = symbolSelected
         } else if segue.identifier == "AddSymbol" {
-            print("Adding new symbol.")
+            print("Adding symbol.")
         }
     }
     
     @IBAction func unwindToSymbolList(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.sourceViewController as? DetailViewController, editedSymbol = sourceViewController.symbol {
-            if let selectedIndexPath = symbolsList.indexPathForSelectedRow {
-                allSymbols[selectedIndexPath.row] = editedSymbol
-                symbolsList.reloadRowsAtIndexPaths([selectedIndexPath], withRowAnimation: .None)
+            if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                if searchActive {
+                    updateDataSource(editedSymbol)
+                    filteredResults[selectedIndexPath.row] = editedSymbol
+                    tableView.reloadRowsAtIndexPaths([selectedIndexPath], withRowAnimation: .None)
+                } else {
+                    allSymbols[selectedIndexPath.row] = editedSymbol
+                    tableView.reloadRowsAtIndexPaths([selectedIndexPath], withRowAnimation: .None)
+                }
             } else {
-                let newIndexPath = NSIndexPath(forRow: allSymbols.count, inSection: 0)
-                allSymbols.append(editedSymbol)
-                symbolsList.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
+                if searchActive {
+                    let newIndexPath = NSIndexPath(forRow: allSymbols.count, inSection: 0)
+                    allSymbols.append(editedSymbol)
+                    tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
+                } else {
+                    let newIndexPath = NSIndexPath(forRow: filteredResults.count, inSection: 0)
+                    allSymbols.append(editedSymbol)
+                    tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
+                }
             }
         }
     }
@@ -199,7 +237,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         if !isSuccessfulSave {
             print("Failed to save meals...")
         }
-        print("Saved symbols")
+        print("Saved symbols from table view")
     }
     
     func saveBoards() {
@@ -207,7 +245,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         if !isSuccessfulSave {
             print("Failed to save meals...")
         }
-        print("Saved boards")
+        print("Saved boards from table view")
     }
     
     func loadSymbols() -> Array<Symbol> {

@@ -16,7 +16,7 @@ class TableViewCell: UITableViewCell {
     @IBOutlet weak var textToSpeak: UILabel!
     @IBOutlet weak var addToBoard: UIButton!
     @IBOutlet weak var deleteSymbol: UIButton!
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
