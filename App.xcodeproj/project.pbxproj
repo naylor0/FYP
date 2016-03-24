@@ -13,6 +13,11 @@
 		EF22904F1CA077F10052F0C6 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF22904E1CA077F10052F0C6 /* TableViewCell.swift */; };
 		EF2290521CA07B990052F0C6 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2290511CA07B990052F0C6 /* DetailViewController.swift */; };
 		EF43DC2B1C9EBA9400BBB091 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF43DC2A1C9EBA9400BBB091 /* SettingsViewController.swift */; };
+		EF5A7D961CA472C6007D2158 /* Bigram.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5A7D951CA472C6007D2158 /* Bigram.swift */; };
+		EF5A7D981CA473B3007D2158 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5A7D971CA473B3007D2158 /* DataModel.swift */; };
+		EF5A7D9A1CA475A0007D2158 /* BigramModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5A7D991CA475A0007D2158 /* BigramModel.swift */; };
+		EF6308941CA407AF000189BB /* AddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6308931CA407AF000189BB /* AddTableViewCell.swift */; };
+		EF6308961CA408DC000189BB /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6308951CA408DC000189BB /* PopUpViewController.swift */; };
 		EF6FE81D1CA0008700770D4F /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6FE81C1CA0008700770D4F /* EditViewController.swift */; };
 		EF9CC5C71C94776300EAB475 /* Symbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9CC5C61C94776300EAB475 /* Symbol.swift */; };
 		EFA7AEC11C91C0DD001D1311 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA7AEC01C91C0DD001D1311 /* AppDelegate.swift */; };
@@ -50,6 +55,11 @@
 		EF2290511CA07B990052F0C6 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		EF43DC2A1C9EBA9400BBB091 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		EF4767D91CA1B7B600512CC7 /* App-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "App-Bridging-Header.h"; sourceTree = "<group>"; };
+		EF5A7D951CA472C6007D2158 /* Bigram.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bigram.swift; sourceTree = "<group>"; };
+		EF5A7D971CA473B3007D2158 /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		EF5A7D991CA475A0007D2158 /* BigramModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BigramModel.swift; sourceTree = "<group>"; };
+		EF6308931CA407AF000189BB /* AddTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTableViewCell.swift; sourceTree = "<group>"; };
+		EF6308951CA408DC000189BB /* PopUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
 		EF6FE81C1CA0008700770D4F /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		EF9CC5C61C94776300EAB475 /* Symbol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Symbol.swift; path = ../Symbol.swift; sourceTree = "<group>"; };
 		EFA7AEBD1C91C0DD001D1311 /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,9 +110,11 @@
 				EF43DC2A1C9EBA9400BBB091 /* SettingsViewController.swift */,
 				EF22904C1CA075970052F0C6 /* TableViewController.swift */,
 				EF6FE81C1CA0008700770D4F /* EditViewController.swift */,
+				EF6308951CA408DC000189BB /* PopUpViewController.swift */,
 				EF2290511CA07B990052F0C6 /* DetailViewController.swift */,
 				EFA7AEF11C91C233001D1311 /* CollectionViewCell.swift */,
 				EF22904E1CA077F10052F0C6 /* TableViewCell.swift */,
+				EF6308931CA407AF000189BB /* AddTableViewCell.swift */,
 				EF116DBC1CA317BA002773CF /* ColourControl.swift */,
 			);
 			name = "View Controllers";
@@ -124,6 +136,9 @@
 			isa = PBXGroup;
 			children = (
 				EF9CC5C61C94776300EAB475 /* Symbol.swift */,
+				EF5A7D951CA472C6007D2158 /* Bigram.swift */,
+				EF5A7D971CA473B3007D2158 /* DataModel.swift */,
+				EF5A7D991CA475A0007D2158 /* BigramModel.swift */,
 				EF196F641C96CE2A003CD29E /* Board.swift */,
 			);
 			name = Model;
@@ -319,10 +334,15 @@
 				EF196F651C96CE2A003CD29E /* Board.swift in Sources */,
 				EF22904D1CA075970052F0C6 /* TableViewController.swift in Sources */,
 				EF22904F1CA077F10052F0C6 /* TableViewCell.swift in Sources */,
+				EF6308961CA408DC000189BB /* PopUpViewController.swift in Sources */,
 				EFA7AEF21C91C233001D1311 /* CollectionViewCell.swift in Sources */,
 				EF116DBD1CA317BA002773CF /* ColourControl.swift in Sources */,
+				EF6308941CA407AF000189BB /* AddTableViewCell.swift in Sources */,
+				EF5A7D961CA472C6007D2158 /* Bigram.swift in Sources */,
+				EF5A7D981CA473B3007D2158 /* DataModel.swift in Sources */,
 				EFA7AEC11C91C0DD001D1311 /* AppDelegate.swift in Sources */,
 				EF43DC2B1C9EBA9400BBB091 /* SettingsViewController.swift in Sources */,
+				EF5A7D9A1CA475A0007D2158 /* BigramModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

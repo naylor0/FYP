@@ -1,5 +1,5 @@
 //
-//  HomeModel.swift
+//  DataModel.swift
 //  App
 //
 //  Created by Mark Naylor on 24/03/2016.
@@ -7,16 +7,16 @@
 
 import Foundation
 
-protocol HomeModelProtocal: class {
+protocol DataModelProtocol: class {
     func itemsDownloaded(items: NSArray)
 }
 
 
-class HomeModel: NSObject, NSURLSessionDataDelegate {
+class DataModel: NSObject, NSURLSessionDataDelegate {
     
     //properties
     
-    weak var delegate: HomeModelProtocal!
+    weak var delegate: DataModelProtocol!
     
     var data : NSMutableData = NSMutableData()
     
@@ -56,7 +56,7 @@ class HomeModel: NSObject, NSURLSessionDataDelegate {
         
         var jsonResult: NSMutableArray = NSMutableArray()
         
-        do{
+        do {
             jsonResult = try NSJSONSerialization.JSONObjectWithData(self.data, options:NSJSONReadingOptions.AllowFragments) as! NSMutableArray
             
         } catch let error as NSError {
@@ -67,16 +67,14 @@ class HomeModel: NSObject, NSURLSessionDataDelegate {
         var jsonElement: NSDictionary = NSDictionary()
         let bigrams: NSMutableArray = NSMutableArray()
         
-        for(var i = 0; i < jsonResult.count; i++)
-        {
+        for(var i = 0; i < jsonResult.count; i++) {
             
             jsonElement = jsonResult[i] as! NSDictionary
             
             let bigram = BigramModel()
             
             //the following insures none of the JsonElement values are nil through optional binding
-            if let word1 = jsonElement["word1"] as? String, let word2 = jsonElement["word2"] as? String
-            {
+            if let word1 = jsonElement["word1"] as? String, let word2 = jsonElement["word2"] as? String {
             
                 bigram.word1 = word1
                 bigram.word2 = word2
