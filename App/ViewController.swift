@@ -10,12 +10,15 @@ import UIKit
 import AVFoundation
 import CoreData
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, DataModelProtocol {
     
     var categories = [Board]()
     var sentence = [Symbol]()
     var currentBoard: Board?
     var allSymbols = [Symbol]()
+    
+    // Testing data connection
+    var feedItems = [BigramModel]()
     
     @IBOutlet weak var boardCollection: UICollectionView!
     @IBOutlet weak var sentenceCollection: UICollectionView!
@@ -95,6 +98,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         currentBoard = self.categories[0]
         
+        let dataModel = DataModel()
+        dataModel.delegate = self
+        dataModel.downloadItems()
+        
+    }
+    func itemsDownloaded(items: NSArray) {
+        feedItems = items as! [BigramModel]
+        for item in feedItems {
+            print(item.description)
+        }
     }
 
     override func didReceiveMemoryWarning() {

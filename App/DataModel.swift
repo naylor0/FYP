@@ -21,7 +21,7 @@ class DataModel: NSObject, NSURLSessionDataDelegate {
     var data : NSMutableData = NSMutableData()
     
     // this will be changed to the path where service.php lives
-    let urlPath: String = "prepict.cloudapp.net/bigrams.php"
+    let urlPath: String = "http://prepict.cloudapp.net/bigram.php"
     func downloadItems() {
         
         let url: NSURL = NSURL(string: urlPath)!
@@ -67,7 +67,7 @@ class DataModel: NSObject, NSURLSessionDataDelegate {
         var jsonElement: NSDictionary = NSDictionary()
         let bigrams: NSMutableArray = NSMutableArray()
         
-        for(var i = 0; i < jsonResult.count; i++) {
+        for(var i = 0; i < jsonResult.count; i = i + 1) {
             
             jsonElement = jsonResult[i] as! NSDictionary
             

@@ -49,8 +49,8 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
         boardCollection.layer.borderWidth = 1.0
         boardCollection.layer.borderColor = UIColor.blackColor().CGColor
         
-        longPressGesture1 = UILongPressGestureRecognizer(target: self, action: "handleLongGesture1:")
-        longPressGesture2 = UILongPressGestureRecognizer(target: self, action: "handleLongGesture2:")
+        longPressGesture1 = UILongPressGestureRecognizer(target: self, action: #selector(EditViewController.handleLongGesture1(_:)))
+        longPressGesture2 = UILongPressGestureRecognizer(target: self, action: #selector(EditViewController.handleLongGesture2(_:)))
         self.boardCollection.addGestureRecognizer(longPressGesture1)
         self.categoryCollection.addGestureRecognizer(longPressGesture2)
     }

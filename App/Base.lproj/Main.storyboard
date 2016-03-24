@@ -848,6 +848,9 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="2" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ApO-4X-CV2" userLabel="categoryCollection">
                                 <rect key="frame" x="0.0" y="64" width="130" height="660"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="RaI-Ax-ALc"/>
+                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="WCT-hI-tVU">
                                     <size key="itemSize" width="100" height="100"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -898,8 +901,16 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="RaI-Ax-ALc"/>
+                                    </mask>
+                                </variation>
                                 <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="0.0" y="64" width="120" height="660"/>
+                                    <mask key="constraints">
+                                        <include reference="RaI-Ax-ALc"/>
+                                    </mask>
                                 </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="5eh-Gh-Ucp" id="Dcu-yx-j7G"/>
@@ -986,12 +997,34 @@
                             <constraint firstItem="cg7-NX-0Xm" firstAttribute="top" secondItem="hxv-wj-NF2" secondAttribute="bottom" id="FSc-SZ-gS7"/>
                             <constraint firstItem="lWf-X6-kg0" firstAttribute="top" secondItem="cg7-NX-0Xm" secondAttribute="bottom" id="Ibi-Ep-z2L"/>
                             <constraint firstItem="lWf-X6-kg0" firstAttribute="top" secondItem="ApO-4X-CV2" secondAttribute="bottom" id="V0o-ja-ILf"/>
+                            <constraint firstItem="lWf-X6-kg0" firstAttribute="leading" secondItem="a6N-Vs-D7b" secondAttribute="leadingMargin" constant="-20" id="Wgx-q4-ddM"/>
                             <constraint firstItem="ApO-4X-CV2" firstAttribute="top" secondItem="hxv-wj-NF2" secondAttribute="bottom" id="a7J-3Z-j4K"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="hxv-wj-NF2" secondAttribute="trailing" constant="-20" id="bJc-pL-nGU"/>
                             <constraint firstItem="cg7-NX-0Xm" firstAttribute="leading" secondItem="ApO-4X-CV2" secondAttribute="trailing" constant="-1" id="dv0-if-tvJ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="hxv-wj-NF2" secondAttribute="trailing" constant="-20" id="mkc-1v-chq"/>
+                            <constraint firstItem="hxv-wj-NF2" firstAttribute="top" secondItem="4bq-L0-Iff" secondAttribute="bottom" id="kIq-Di-W90"/>
+                            <constraint firstItem="ApO-4X-CV2" firstAttribute="top" secondItem="hxv-wj-NF2" secondAttribute="bottom" id="t0P-TZ-mJV"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="lWf-X6-kg0" secondAttribute="trailing" constant="-20" id="u4D-NM-9WT"/>
                             <constraint firstItem="hxv-wj-NF2" firstAttribute="leading" secondItem="a6N-Vs-D7b" secondAttribute="leadingMargin" constant="-20" id="wnp-Q2-sBx"/>
                             <constraint firstItem="ApO-4X-CV2" firstAttribute="leading" secondItem="a6N-Vs-D7b" secondAttribute="leadingMargin" constant="-20" id="wxS-jk-hfs"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="bJc-pL-nGU"/>
+                                <exclude reference="kIq-Di-W90"/>
+                                <exclude reference="t0P-TZ-mJV"/>
+                                <exclude reference="Wgx-q4-ddM"/>
+                                <exclude reference="u4D-NM-9WT"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=regular">
+                            <mask key="constraints">
+                                <include reference="bJc-pL-nGU"/>
+                                <include reference="kIq-Di-W90"/>
+                                <include reference="t0P-TZ-mJV"/>
+                                <include reference="Wgx-q4-ddM"/>
+                                <include reference="u4D-NM-9WT"/>
+                            </mask>
+                        </variation>
                     </view>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
