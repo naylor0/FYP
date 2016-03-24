@@ -15,24 +15,24 @@ class ColourControl: UIView {
     var colour = UIColor(){
         didSet {
             setNeedsLayout()
+            setSelection()
         }
     }
     var selected = UIButton()
     var selectedIndex = 0
     
-    var bgRed = UIColor(netHex:0xFFCCCC)
-    var bgGreen = UIColor(netHex:0xCCFF99)
-    var bgYellow = UIColor(netHex: 0xFFFF66)
-    var bgWhite = UIColor(netHex: 0xFFFFFF)
-    var bgOrange = UIColor(netHex: 0xFFCC66)
-    var bgBlue = UIColor(netHex: 0x99CCFF)
-    
     var colourButtons = [UIButton]()
     var colours = [UIColor]()
-    var spacing = 50
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        
+        let bgRed = UIColor(netHex:0xFFCCCC)
+        let bgGreen = UIColor(netHex:0xCCFF99)
+        let bgYellow = UIColor(netHex: 0xFFFF66)
+        let bgWhite = UIColor(netHex: 0xFFFFFF)
+        let bgOrange = UIColor(netHex: 0xFFCC66)
+        let bgBlue = UIColor(netHex: 0x99CCFF)
         
         colours.append(bgRed)
         colours.append(bgGreen)
@@ -42,7 +42,7 @@ class ColourControl: UIView {
         colours.append(bgBlue)
         
         for i in 0..<6 {
-            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+            let button = UIButton()
             button.setImage(UIImage(named: "correct"), forState: [.Selected])
             button.adjustsImageWhenHighlighted = false
             button.backgroundColor = colours[i]
@@ -58,10 +58,11 @@ class ColourControl: UIView {
         // Set the button's width and height to a square the size of the frame's height.
         let buttonSize = Int(frame.size.height)
         var buttonFrame = CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize)
+        let spacing = 50
         
         // Offset each button's origin by the length of the button plus some spacing.
         for (index, button) in colourButtons.enumerate() {
-            buttonFrame.origin.x = CGFloat(index * (buttonSize + 5))
+            buttonFrame.origin.x = CGFloat(index * (buttonSize + spacing))
             button.frame = buttonFrame
         }
         
@@ -70,16 +71,18 @@ class ColourControl: UIView {
     func colourButtonTapped(button: UIButton) {
         selectedIndex = colourButtons.indexOf(button)!
         colour = colours[selectedIndex]
-        makeButtonsUnselected()
-        button.selected = true
+        setSelection()
     }
     
-    func makeButtonsUnselected() {
-        for c in colourButtons {
-            c.selected = false
+    
+    func setSelection() {
+        for i in 0..<6 {
+            if colours[i].toHexString() == colour.toHexString()  {
+                colourButtons[i].selected = true
+            }
+            else {
+                colourButtons[i].selected = false
+            }
         }
     }
-    
-
-
 }

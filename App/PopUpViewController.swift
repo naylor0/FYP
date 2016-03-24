@@ -23,7 +23,6 @@ class PopUpViewController: UIViewController, UITableViewDataSource, UITableViewD
         super.viewDidLoad()
         searchBar.delegate = self
         allSymbols = loadSymbols()
-        print("Loaded " + allSymbols.count.description + " symbols from archive")
         symbolsTable.reloadData()
     }
     
@@ -35,10 +34,8 @@ class PopUpViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(searchActive) {
-            print(filteredResults.count.description + " search active for number of table rows")
             return filteredResults.count
         }
-        print(allSymbols.count.description + " is number of table rows")
         return allSymbols.count;
     }
     
@@ -79,7 +76,6 @@ class PopUpViewController: UIViewController, UITableViewDataSource, UITableViewD
             }
             toAdd.append(allSymbols[index])
         }
-        print("Symbol added")
     }
     
     // MARK: - Navigation
