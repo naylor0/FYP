@@ -273,7 +273,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fTj-AV-17B">
                                 <rect key="frame" x="0.0" y="64" width="1024" height="120"/>
                                 <connections>
-                                    <segue destination="5eh-Gh-Ucp" kind="presentation" modalTransitionStyle="flipHorizontal" id="foF-0N-NV9"/>
+                                    <segue destination="5eh-Gh-Ucp" kind="presentation" modalTransitionStyle="coverVertical" id="foF-0N-NV9"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Edit Boards" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x0H-8N-Xx4">
@@ -306,7 +306,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vbo-TP-L5A">
                                 <rect key="frame" x="0.0" y="184" width="1024" height="120"/>
                                 <connections>
-                                    <segue destination="0pR-iu-XHM" kind="presentation" modalTransitionStyle="flipHorizontal" id="znM-IS-Pav"/>
+                                    <segue destination="0pR-iu-XHM" kind="presentation" modalTransitionStyle="coverVertical" id="znM-IS-Pav"/>
                                 </connections>
                             </button>
                         </subviews>
