@@ -12,7 +12,15 @@ class SettingsViewController: UIViewController {
     
     let titleList = ["Rearrange boards", "Add to board", "Create new board", "Create new symbol"]
     let descriptionList = ["Rearrange the order of boards or symbols on them", "Add new symbols to boards", "Add or delete a board", "Add, edit or delete a symbol"]
-
+    
+    override func shouldAutorotate() -> Bool {
+        return true
+    }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return [UIInterfaceOrientationMask.LandscapeLeft ,UIInterfaceOrientationMask.LandscapeRight]
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

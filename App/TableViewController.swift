@@ -31,6 +31,14 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         print("Loaded data from viewDidLoad")
         dataLoaded = true
     }
+    
+    override func shouldAutorotate() -> Bool {
+        return true
+    }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return [UIInterfaceOrientationMask.LandscapeLeft ,UIInterfaceOrientationMask.LandscapeRight]
+    }
 
 
     // MARK: - Table view data source

@@ -687,9 +687,10 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="0R7-9r-JOU">
+                            <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="0R7-9r-JOU">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="EEE-4p-GHC"/>
                                     <constraint firstAttribute="height" constant="300" id="rrO-0a-Bkd"/>
@@ -706,6 +707,9 @@
                                         <include reference="rrO-0a-Bkd"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="5cZ-S1-oLJ" appends="YES" id="bws-VU-jhC"/>
+                                </connections>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aOw-dJ-oQZ" customClass="ColourControl" customModule="App" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="500" height="128"/>
@@ -743,24 +747,24 @@
                                 <exclude reference="aOw-dJ-oQZ"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="hqf-1c-8kr"/>
+                                <exclude reference="2EH-kf-BGG"/>
+                                <exclude reference="GTz-dN-RJ7"/>
+                                <exclude reference="sER-NS-j2b"/>
+                                <exclude reference="k3A-ci-0oO"/>
+                                <exclude reference="vtd-I7-D7v"/>
+                                <exclude reference="6pN-zg-yLF"/>
+                                <exclude reference="HWW-DW-yC0"/>
+                                <exclude reference="ens-OM-Rz1"/>
+                                <exclude reference="gKQ-4Z-pMG"/>
                                 <exclude reference="jNI-tr-mYL"/>
                                 <exclude reference="mJN-Zv-nuq"/>
                                 <exclude reference="nHV-7t-epI"/>
                                 <exclude reference="tkH-UO-crQ"/>
                                 <exclude reference="PPW-so-Gld"/>
                                 <exclude reference="Tjw-og-Izh"/>
-                                <exclude reference="6pN-zg-yLF"/>
-                                <exclude reference="HWW-DW-yC0"/>
-                                <exclude reference="ens-OM-Rz1"/>
-                                <exclude reference="gKQ-4Z-pMG"/>
-                                <exclude reference="2EH-kf-BGG"/>
-                                <exclude reference="GTz-dN-RJ7"/>
-                                <exclude reference="sER-NS-j2b"/>
-                                <exclude reference="k3A-ci-0oO"/>
-                                <exclude reference="vtd-I7-D7v"/>
                                 <exclude reference="3cP-bw-FgT"/>
                                 <exclude reference="yfk-v9-4A5"/>
-                                <exclude reference="hqf-1c-8kr"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=regular">
@@ -773,24 +777,24 @@
                                 <include reference="aOw-dJ-oQZ"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="hqf-1c-8kr"/>
+                                <include reference="2EH-kf-BGG"/>
+                                <include reference="GTz-dN-RJ7"/>
+                                <include reference="sER-NS-j2b"/>
+                                <include reference="k3A-ci-0oO"/>
+                                <include reference="vtd-I7-D7v"/>
+                                <include reference="6pN-zg-yLF"/>
+                                <include reference="HWW-DW-yC0"/>
+                                <include reference="ens-OM-Rz1"/>
+                                <include reference="gKQ-4Z-pMG"/>
                                 <include reference="jNI-tr-mYL"/>
                                 <include reference="mJN-Zv-nuq"/>
                                 <include reference="nHV-7t-epI"/>
                                 <include reference="tkH-UO-crQ"/>
                                 <include reference="PPW-so-Gld"/>
                                 <include reference="Tjw-og-Izh"/>
-                                <include reference="6pN-zg-yLF"/>
-                                <include reference="HWW-DW-yC0"/>
-                                <include reference="ens-OM-Rz1"/>
-                                <include reference="gKQ-4Z-pMG"/>
-                                <include reference="2EH-kf-BGG"/>
-                                <include reference="GTz-dN-RJ7"/>
-                                <include reference="sER-NS-j2b"/>
-                                <include reference="k3A-ci-0oO"/>
-                                <include reference="vtd-I7-D7v"/>
                                 <include reference="3cP-bw-FgT"/>
                                 <include reference="yfk-v9-4A5"/>
-                                <include reference="hqf-1c-8kr"/>
                             </mask>
                         </variation>
                     </view>
@@ -804,6 +808,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f0H-TH-qOG" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="gD0-Pb-OFM" userLabel="Exit" sceneMemberID="exit"/>
+                <tapGestureRecognizer id="5cZ-S1-oLJ">
+                    <connections>
+                        <action selector="selectImage:" destination="d4k-z0-SzQ" id="dfu-nN-MKj"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1696.5" y="2481"/>
         </scene>

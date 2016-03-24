@@ -8,21 +8,39 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate {
+extension UIImagePickerController
+{
+    override public func shouldAutorotate() -> Bool {
+        return false
+    }
+    public override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.Landscape
+    }
+}
+
+class DetailViewController: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     @IBOutlet weak var detailImage: UIImageView!
     @IBOutlet weak var detailWord: UITextField!
-    @IBOutlet weak var detailTextToSpeak: UITextField!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var navBar: UINavigationItem!
     @IBOutlet weak var colourPicker: ColourControl!
+    var isPresented = true
     
     
     var colourArray = [UIButton]()
     var symbol: Symbol?
+    
+    override func shouldAutorotate() -> Bool {
+        return false
+    }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return [UIInterfaceOrientationMask.LandscapeLeft ,UIInterfaceOrientationMask.LandscapeRight, UIInterfaceOrientationMask.Portrait]
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Handle the text field’s user input through delegate callbacks.
         detailWord.delegate = self
         
@@ -38,10 +56,30 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UINavigationC
         checkValidSymbolName()
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: - Image picker methods
+    
+    @IBAction func selectImage(sender: UITapGestureRecognizer) {
+        detailWord.resignFirstResponder()
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = .PhotoLibrary
+        imagePickerController.delegate = self
+        presentViewController(imagePickerController, animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        let selectedImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        detailImage.image = selectedImage
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     // MARK: UITextFieldDelegate
@@ -66,11 +104,13 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UINavigationC
     // MARK: - Navigation
     
     @IBAction func cancel(sender: AnyObject) {
+        isPresented = false
         dismissViewControllerAnimated(true, completion: nil)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if sender === saveButton {
+            isPresented = false
             let word = detailWord.text
             let image = detailImage.image
             //let speak = detailTextToSpeak.text

@@ -44,9 +44,18 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         self.categoryCollection.reloadData()
         self.categoryCollection.setNeedsDisplay()
     }
+    
+    override func shouldAutorotate() -> Bool {
+        return true
+    }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return [UIInterfaceOrientationMask.LandscapeLeft ,UIInterfaceOrientationMask.LandscapeRight]
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Do any additional setup after loading the view, typically from a nib.
         self.view.addSubview(boardCollection)
         self.view.addSubview(categoryCollection)

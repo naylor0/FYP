@@ -26,6 +26,14 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
     let bgWhite = UIColor(netHex: 0xFFFFFF)
     let bgOrange = UIColor(netHex: 0xFFCC66)
     let bgBlue = UIColor(netHex: 0x99CCFF)
+    
+    override func shouldAutorotate() -> Bool {
+        return true
+    }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return [UIInterfaceOrientationMask.LandscapeLeft ,UIInterfaceOrientationMask.LandscapeRight]
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
