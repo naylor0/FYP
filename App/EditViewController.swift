@@ -184,15 +184,23 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
             categoryCollection.cancelInteractiveMovement()
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func addItem(sender: AnyObject) {
+        self.performSegueWithIdentifier("ShowList", sender: self)
     }
-    */
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ShowList" {
+            print("Opening popup view")
+        }
+    }
+    
+    @IBAction func unwindToSymbolList(sender: UIStoryboardSegue) {
+        let sourceViewController = sender.sourceViewController as? PopUpViewController
+        let addedSymbols = sourceViewController!.addedSymbols
+        if addedSymbols.count > 0 {
+            currentBoard?.symbols += addedSymbols
+            boardCollection.reloadData()
+        }
+    }
 
 }
