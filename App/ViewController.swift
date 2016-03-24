@@ -98,9 +98,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         currentBoard = self.categories[0]
         
-        let dataModel = DataModel()
-        dataModel.delegate = self
-        dataModel.downloadItems()
+        let hasConnection = Reachability.isConnectedToNetwork()
+        if hasConnection {
+            let dataModel = DataModel()
+            dataModel.delegate = self
+            dataModel.downloadItems()
+        }
         
     }
     func itemsDownloaded(items: NSArray) {
