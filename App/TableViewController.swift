@@ -33,7 +33,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     override func shouldAutorotate() -> Bool {
-        return true
+        return false
     }
     
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {

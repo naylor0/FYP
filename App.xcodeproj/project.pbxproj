@@ -114,13 +114,13 @@
 				EF43DC2A1C9EBA9400BBB091 /* SettingsViewController.swift */,
 				EF22904C1CA075970052F0C6 /* TableViewController.swift */,
 				EF6FE81C1CA0008700770D4F /* EditViewController.swift */,
-				EF5A7D9E1CA49810007D2158 /* Reachability.swift */,
 				EF6308951CA408DC000189BB /* PopUpViewController.swift */,
 				EF2290511CA07B990052F0C6 /* DetailViewController.swift */,
 				EFA7AEF11C91C233001D1311 /* CollectionViewCell.swift */,
 				EF22904E1CA077F10052F0C6 /* TableViewCell.swift */,
 				EF6308931CA407AF000189BB /* AddTableViewCell.swift */,
 				EF116DBC1CA317BA002773CF /* ColourControl.swift */,
+				EF5A7D9E1CA49810007D2158 /* Reachability.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";

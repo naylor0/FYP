@@ -46,10 +46,10 @@ class Settings: NSObject, NSCoding {
         self.init(readingLevel: readingLevel, name: name, backgroundColour: backgroundColour, predictionLearning: predictionLearning, corpusPrediction: corpusPrediction)
     }
     func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(readingLevel, forKey: PropertyKey.readingLevelKey)
+        aCoder.encodeObject (readingLevel, forKey: PropertyKey.readingLevelKey)
         aCoder.encodeObject(name, forKey: PropertyKey.nameKey)
-        aCoder.encodeObject(name, forKey: PropertyKey.backgroundColourKey)
-        aCoder.encodeObject(name, forKey: PropertyKey.predictionLearningKey)
-        aCoder.encodeObject(name, forKey: PropertyKey.corpusPredictionKey)
+        aCoder.encodeObject(backgroundColour, forKey: PropertyKey.backgroundColourKey)
+        aCoder.encodeBool(predictionLearning, forKey: PropertyKey.predictionLearningKey)
+        aCoder.encodeBool(corpusPrediction, forKey: PropertyKey.corpusPredictionKey)
     }
 }

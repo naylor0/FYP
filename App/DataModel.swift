@@ -32,7 +32,7 @@ class DataModel: NSObject, NSURLSessionDataDelegate {
         session = NSURLSession(configuration: configuration, delegate: self, delegateQueue: nil)
         
         let task = session.dataTaskWithURL(url)
-        
+
         task.resume()
         
     }

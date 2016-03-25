@@ -27,7 +27,7 @@ class PopUpViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     override func shouldAutorotate() -> Bool {
-        return true
+        return false
     }
     
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {

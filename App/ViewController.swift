@@ -16,21 +16,17 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var sentence = [Symbol]()
     var currentBoard: Board?
     var allSymbols = [Symbol]()
+    var settings: Settings?
     
     // Testing data connection
     var feedItems = [BigramModel]()
     
+    // Outlets for collection views used for boards, their symbols and the current sentence
     @IBOutlet weak var boardCollection: UICollectionView!
     @IBOutlet weak var sentenceCollection: UICollectionView!
     @IBOutlet weak var categoryCollection: UICollectionView!
     
-    let bgRed = UIColor(netHex:0xFFCCCC)
-    let bgGreen = UIColor(netHex:0xCCFF99)
-    let bgYellow = UIColor(netHex: 0xFFFF66)
-    let bgWhite = UIColor(netHex: 0xFFFFFF)
-    let bgOrange = UIColor(netHex: 0xFFCC66)
-    let bgBlue = UIColor(netHex: 0x99CCFF)
-    
+    // Set up speech synth for speeking words when symbols are tapped
     let synth = AVSpeechSynthesizer()
     var speech = AVSpeechUtterance(string: "")
     
@@ -49,7 +45,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     override func shouldAutorotate() -> Bool {
-        return true
+        return false
     }
     
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
@@ -98,10 +94,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         currentBoard = self.categories[0]
         
+        settings = loadSettings()
+        
         let hasConnection = Reachability.isConnectedToNetwork()
         if hasConnection {
             let dataModel = DataModel()
             dataModel.delegate = self
+            let stringToSend = "readingAge=" + (settings?.readingLevel.description)!
             dataModel.downloadItems()
         }
         
@@ -238,6 +237,26 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         self.sentenceCollection.setNeedsDisplay()
     }
     
+    func saveSettings() {
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(settings!, toFile: Settings.ArchiveURL.path!)
+        if !isSuccessfulSave {
+            print("Failed to save settings...")
+        }
+        print("Saved settings")
+    }
+    
+    func loadSettings() -> Settings {
+        return (NSKeyedUnarchiver.unarchiveObjectWithFile(Settings.ArchiveURL.path!) as? Settings)!
+    }
+    
+    // Set up colours to be passed to each preloaded symbol
+    
+    let bgRed = UIColor(netHex:0xFFCCCC)
+    let bgGreen = UIColor(netHex:0xCCFF99)
+    let bgYellow = UIColor(netHex: 0xFFFF66)
+    let bgWhite = UIColor(netHex: 0xFFFFFF)
+    let bgOrange = UIColor(netHex: 0xFFCC66)
+    let bgBlue = UIColor(netHex: 0x99CCFF)
     
     func loadSampleSymbols() {
         allSymbols.append(Symbol(word: "activities", photo: UIImage(named: "activities"), bgColor: bgWhite)!)
@@ -319,6 +338,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 } // End View Controller
 
 // Taken from: http://stackoverflow.com/questions/24263007/how-to-use-hex-colour-values-in-swift-ios
+// Returns a UIColor object when passed a hex value
 extension UIColor {
     convenience init(red: Int, green: Int, blue: Int) {
         assert(red >= 0 && red <= 255, "Invalid red component")
