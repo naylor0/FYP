@@ -10,16 +10,13 @@ import UIKit
 import AVFoundation
 import CoreData
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, DataModelProtocol {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     var categories = [Board]()
     var sentence = [Symbol]()
     var currentBoard: Board?
     var allSymbols = [Symbol]()
     var settings: Settings?
-    
-    // Testing data connection
-    var feedItems = [BigramModel]()
     
     // Outlets for collection views used for boards, their symbols and the current sentence
     @IBOutlet weak var boardCollection: UICollectionView!
@@ -101,24 +98,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             settings = loadSampleSettings()
             saveSettings()
         }
-
-        settings = loadSettings()
-        
-        let hasConnection = Reachability.isConnectedToNetwork()
-        if hasConnection {
-            let dataModel = DataModel()
-            dataModel.delegate = self
-            let stringToSend = "readingAge=" + (settings?.readingLevel.description)!
-            dataModel.downloadItems(stringToSend)
-        }
-        
     }
-    func itemsDownloaded(items: NSArray) {
-        feedItems = items as! [BigramModel]
-        for item in feedItems {
-            print(item.description)
-        }
-    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

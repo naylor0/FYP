@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Xcode 7.0">
-    <entity name="Corpus" syncable="YES">
+    <entity name="Corpus" representedClassName=".Corpus" syncable="YES">
         <attribute name="word1" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="word2" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="History" syncable="YES">
+    <entity name="History" representedClassName=".History" syncable="YES">
         <attribute name="word1" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="word2" optional="YES" attributeType="String" syncable="YES"/>
     </entity>

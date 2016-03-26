@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import CoreData
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: UIViewController, DataModelProtocol {
     @IBOutlet weak var editView: UIView!
     @IBOutlet weak var editButton: UIButton!
     
@@ -24,6 +25,9 @@ class SettingsViewController: UIViewController {
     
     @IBOutlet weak var colourView: UIView!
     @IBOutlet weak var colourButton: UIButton!
+    
+    // Testing data connection
+    var feedItems = [BigramModel]()
     
     var settings: Settings?
     
@@ -58,7 +62,14 @@ class SettingsViewController: UIViewController {
         corpusSwitch.on = (settings?.corpusPrediction)!
         historySwitch.addTarget(self, action: #selector(SettingsViewController.switchChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
         corpusSwitch.addTarget(self, action: #selector(SettingsViewController.switchChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
-
+        
+        let hasConnection = Reachability.isConnectedToNetwork()
+        if hasConnection {
+            let dataModel = DataModel()
+            dataModel.delegate = self
+            let stringToSend = "readingAge=" + (settings?.readingLevel.description)!
+            dataModel.downloadItems(stringToSend)
+        }
 
     }
     
@@ -97,6 +108,40 @@ class SettingsViewController: UIViewController {
     
     func loadSampleSettings() -> Settings {
         return Settings(readingLevel: 5, name: "Sophie", backgroundColour: UIColor.darkGrayColor(), predictionLearning: true, corpusPrediction: true)!
+    }
+    
+    func itemsDownloaded(items: NSArray) {
+        feedItems = items as! [BigramModel]
+        let appDelegate =
+            UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+        let entity =  NSEntityDescription.entityForName("Corpus", inManagedObjectContext:managedContext)
+        let newRow = NSManagedObject(entity: entity!,
+                                     insertIntoManagedObjectContext: managedContext)
+        for item in feedItems {
+            newRow.setValue(item.word1, forKey: "word1")
+            newRow.setValue(item.word2, forKey: "word2")
+            do {
+                try managedContext.save()
+            } catch let error as NSError  {
+                print("Could not save \(error), \(error.userInfo)")
+            }
+        }
+    }
+    
+    @IBAction func unwindToComprehensionSelector(sender: UIStoryboardSegue) {
+        let sourceViewController = sender.sourceViewController as? ComprehensionSelector
+        settings?.readingLevel = sourceViewController!.readingAge
+    }
+    @IBAction func changeLevel(sender: AnyObject) {
+        performSegueWithIdentifier("editLevel", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "editLevel" {
+            let editLevelViewController = segue.destinationViewController as! ComprehensionSelector
+            editLevelViewController.readingAge = (settings?.readingLevel)!
+        }
     }
     
 }

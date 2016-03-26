@@ -576,7 +576,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y9I-kr-U3t">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                         <connections>
-                                            <segue destination="Bg7-wT-kTX" kind="presentation" id="u8J-iW-dzv"/>
+                                            <action selector="changeLevel:" destination="JFc-iz-JUH" eventType="touchUpInside" id="naF-dG-Xhs"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comprehension Level" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z4I-pd-FLX">
@@ -907,7 +907,7 @@
                     <connections>
                         <outlet property="colourButton" destination="vbX-SI-Wz6" id="52Y-Gc-1sB"/>
                         <outlet property="colourView" destination="AW3-fx-JAW" id="K5i-7g-vVj"/>
-                        <outlet property="comprehensionButton" destination="Y9I-kr-U3t" id="tLc-Tf-EkE"/>
+                        <outlet property="comprehensionButton" destination="Y9I-kr-U3t" id="RV3-zf-1Lk"/>
                         <outlet property="comprehensionView" destination="vwh-eR-3fE" id="5TL-Wf-xdd"/>
                         <outlet property="corpusSwitch" destination="Bbz-9T-8S4" id="349-S1-ML6"/>
                         <outlet property="editButton" destination="b9z-rB-znH" id="WWi-Ar-xEu"/>
@@ -916,6 +916,7 @@
                         <outlet property="libraryButton" destination="PVr-nn-GNt" id="uCp-7H-vYn"/>
                         <outlet property="libraryView" destination="0Wu-fZ-6yT" id="TSq-kv-YrJ"/>
                         <outlet property="predictionView" destination="fCf-rd-aWC" id="Nij-qW-r9b"/>
+                        <segue destination="Bg7-wT-kTX" kind="presentation" identifier="editLevel" id="1RO-jT-8tK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ft2-H9-Ybt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -938,8 +939,16 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <items>
                                     <navigationItem title="Comprehension Level" id="EhR-oc-wtu">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="pky-lB-LfV"/>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="CGq-NF-nGr"/>
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="pky-lB-LfV">
+                                            <connections>
+                                                <action selector="dismissCancel:" destination="Bg7-wT-kTX" id="xOf-IT-htx"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="CGq-NF-nGr">
+                                            <connections>
+                                                <segue destination="ej2-KD-Ynl" kind="unwind" unwindAction="unwindToComprehensionSelector:" id="XRm-ar-uuH"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                                 <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
@@ -960,41 +969,40 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2D8-Tk-L1v">
                                                     <rect key="frame" x="68" y="19" width="110" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="110" id="Kx8-Tq-iuj"/>
+                                                        <constraint firstAttribute="width" constant="300" id="CvE-MJ-4bq"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="Kx8-Tq-iuj"/>
+                                                            <exclude reference="CvE-MJ-4bq"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=regular" misplaced="YES">
-                                                        <rect key="frame" x="68" y="19" width="300" height="21"/>
+                                                    <variation key="heightClass=regular-widthClass=regular">
                                                         <mask key="constraints">
-                                                            <include reference="Kx8-Tq-iuj"/>
+                                                            <include reference="CvE-MJ-4bq"/>
                                                         </mask>
                                                     </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="2D8-Tk-L1v" firstAttribute="leading" secondItem="hN9-Pb-pkO" secondAttribute="leadingMargin" constant="60" id="eGw-kS-v7u"/>
-                                                <constraint firstItem="2D8-Tk-L1v" firstAttribute="top" secondItem="hN9-Pb-pkO" secondAttribute="topMargin" constant="11" id="egA-CN-YXy"/>
-                                                <constraint firstItem="2D8-Tk-L1v" firstAttribute="centerY" secondItem="hN9-Pb-pkO" secondAttribute="centerY" id="eii-5Y-eA3"/>
+                                                <constraint firstItem="2D8-Tk-L1v" firstAttribute="leading" secondItem="hN9-Pb-pkO" secondAttribute="leadingMargin" constant="60" id="MRR-ul-MOR"/>
+                                                <constraint firstItem="2D8-Tk-L1v" firstAttribute="centerY" secondItem="hN9-Pb-pkO" secondAttribute="centerY" id="ihy-xF-BsB"/>
+                                                <constraint firstItem="2D8-Tk-L1v" firstAttribute="top" secondItem="hN9-Pb-pkO" secondAttribute="topMargin" constant="11" id="veB-cZ-KhS"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="eGw-kS-v7u"/>
-                                                    <exclude reference="egA-CN-YXy"/>
-                                                    <exclude reference="eii-5Y-eA3"/>
+                                                    <exclude reference="MRR-ul-MOR"/>
+                                                    <exclude reference="ihy-xF-BsB"/>
+                                                    <exclude reference="veB-cZ-KhS"/>
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=regular">
                                                 <mask key="constraints">
-                                                    <include reference="eGw-kS-v7u"/>
-                                                    <include reference="egA-CN-YXy"/>
-                                                    <include reference="eii-5Y-eA3"/>
+                                                    <include reference="MRR-ul-MOR"/>
+                                                    <include reference="ihy-xF-BsB"/>
+                                                    <include reference="veB-cZ-KhS"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -1031,8 +1039,9 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TcO-Wg-koW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="ej2-KD-Ynl" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2029.5" y="1136.25"/>
+            <point key="canvasLocation" x="2133.75" y="1111.5"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="qa1-4P-PBa">
