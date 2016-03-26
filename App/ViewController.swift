@@ -221,6 +221,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     @IBAction func deleteSentence(sender: AnyObject) {
+        //generateBigrams()
+        //insertToCoreData()
         sentence.removeAll()
         self.sentenceCollection.reloadData()
         self.sentenceCollection.setNeedsDisplay()

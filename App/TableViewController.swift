@@ -180,7 +180,6 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        searchActive = false;
         searchBar.text = ""
         self.tableView.reloadData()
     }
