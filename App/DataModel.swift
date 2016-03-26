@@ -22,16 +22,20 @@ class DataModel: NSObject, NSURLSessionDataDelegate {
     
     // this will be changed to the path where service.php lives
     let urlPath: String = "http://prepict.cloudapp.net/bigram.php"
-    func downloadItems() {
+    func downloadItems(readingAge: String) {
         
         let url: NSURL = NSURL(string: urlPath)!
+        var request:NSMutableURLRequest = NSMutableURLRequest(URL:url)
+        request.HTTPMethod = "POST"
+        var bodyData = readingAge
+        request.HTTPBody = bodyData.dataUsingEncoding(NSUTF8StringEncoding)
         var session: NSURLSession!
         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
         
         
         session = NSURLSession(configuration: configuration, delegate: self, delegateQueue: nil)
         
-        let task = session.dataTaskWithURL(url)
+        let task = session.dataTaskWithRequest(request)
 
         task.resume()
         
@@ -70,8 +74,7 @@ class DataModel: NSObject, NSURLSessionDataDelegate {
         for(var i = 0; i < jsonResult.count; i = i + 1) {
             
             jsonElement = jsonResult[i] as! NSDictionary
-            
-            let bigram = BigramModel()
+            let bigram = BigramModel(word1: "", word2: "")
             
             //the following insures none of the JsonElement values are nil through optional binding
             if let word1 = jsonElement["word1"] as? String, let word2 = jsonElement["word2"] as? String {

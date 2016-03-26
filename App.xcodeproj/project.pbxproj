@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		EF116DBD1CA317BA002773CF /* ColourControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF116DBC1CA317BA002773CF /* ColourControl.swift */; };
 		EF196F651C96CE2A003CD29E /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF196F641C96CE2A003CD29E /* Board.swift */; };
+		EF19C7D41CA6D6D500418610 /* ComprehensionSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF19C7D31CA6D6D500418610 /* ComprehensionSelector.swift */; };
+		EF19C7D61CA6DC8900418610 /* SelectorTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF19C7D51CA6DC8900418610 /* SelectorTableCell.swift */; };
 		EF22904D1CA075970052F0C6 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF22904C1CA075970052F0C6 /* TableViewController.swift */; };
 		EF22904F1CA077F10052F0C6 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF22904E1CA077F10052F0C6 /* TableViewCell.swift */; };
 		EF2290521CA07B990052F0C6 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2290511CA07B990052F0C6 /* DetailViewController.swift */; };
@@ -52,6 +54,8 @@
 /* Begin PBXFileReference section */
 		EF116DBC1CA317BA002773CF /* ColourControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColourControl.swift; sourceTree = "<group>"; };
 		EF196F641C96CE2A003CD29E /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		EF19C7D31CA6D6D500418610 /* ComprehensionSelector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComprehensionSelector.swift; sourceTree = "<group>"; };
+		EF19C7D51CA6DC8900418610 /* SelectorTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectorTableCell.swift; sourceTree = "<group>"; };
 		EF22904C1CA075970052F0C6 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		EF22904E1CA077F10052F0C6 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableViewCell.swift; path = ../TableViewCell.swift; sourceTree = "<group>"; };
 		EF2290511CA07B990052F0C6 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -116,9 +120,11 @@
 				EF6FE81C1CA0008700770D4F /* EditViewController.swift */,
 				EF6308951CA408DC000189BB /* PopUpViewController.swift */,
 				EF2290511CA07B990052F0C6 /* DetailViewController.swift */,
+				EF19C7D31CA6D6D500418610 /* ComprehensionSelector.swift */,
 				EFA7AEF11C91C233001D1311 /* CollectionViewCell.swift */,
 				EF22904E1CA077F10052F0C6 /* TableViewCell.swift */,
 				EF6308931CA407AF000189BB /* AddTableViewCell.swift */,
+				EF19C7D51CA6DC8900418610 /* SelectorTableCell.swift */,
 				EF116DBC1CA317BA002773CF /* ColourControl.swift */,
 				EF5A7D9E1CA49810007D2158 /* Reachability.swift */,
 			);
@@ -336,6 +342,8 @@
 				EF2290521CA07B990052F0C6 /* DetailViewController.swift in Sources */,
 				EF6FE81D1CA0008700770D4F /* EditViewController.swift in Sources */,
 				EFA7AEC31C91C0DD001D1311 /* ViewController.swift in Sources */,
+				EF19C7D61CA6DC8900418610 /* SelectorTableCell.swift in Sources */,
+				EF19C7D41CA6D6D500418610 /* ComprehensionSelector.swift in Sources */,
 				EF9CC5C71C94776300EAB475 /* Symbol.swift in Sources */,
 				EF196F651C96CE2A003CD29E /* Board.swift in Sources */,
 				EF22904D1CA075970052F0C6 /* TableViewController.swift in Sources */,

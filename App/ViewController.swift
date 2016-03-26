@@ -94,6 +94,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         currentBoard = self.categories[0]
         
+        myFilePath = Settings.ArchiveURL.path!
+        if (manager.fileExistsAtPath(myFilePath)) {
+            self.settings = loadSettings()
+        } else {
+            settings = loadSampleSettings()
+            saveSettings()
+        }
+
         settings = loadSettings()
         
         let hasConnection = Reachability.isConnectedToNetwork()
@@ -101,7 +109,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             let dataModel = DataModel()
             dataModel.delegate = self
             let stringToSend = "readingAge=" + (settings?.readingLevel.description)!
-            dataModel.downloadItems()
+            dataModel.downloadItems(stringToSend)
         }
         
     }
@@ -247,6 +255,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func loadSettings() -> Settings {
         return (NSKeyedUnarchiver.unarchiveObjectWithFile(Settings.ArchiveURL.path!) as? Settings)!
+    }
+    
+    func loadSampleSettings() -> Settings {
+        return Settings(readingLevel: 5, name: "Sophie", backgroundColour: UIColor.darkGrayColor(), predictionLearning: true, corpusPrediction: true)!
     }
     
     // Set up colours to be passed to each preloaded symbol
