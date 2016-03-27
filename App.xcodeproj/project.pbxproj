@@ -36,6 +36,8 @@
 		EFA7AED91C91C0DD001D1311 /* AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA7AED81C91C0DD001D1311 /* AppTests.swift */; };
 		EFA7AEE41C91C0DD001D1311 /* AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA7AEE31C91C0DD001D1311 /* AppUITests.swift */; };
 		EFA7AEF21C91C233001D1311 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA7AEF11C91C233001D1311 /* CollectionViewCell.swift */; };
+		EFF7D9D91CA7E02D0005F23A /* DataAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF7D9D81CA7E02D0005F23A /* DataAccess.swift */; };
+		EFF7D9DB1CA7F1F10005F23A /* ArchiveAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF7D9DA1CA7F1F10005F23A /* ArchiveAccess.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +94,8 @@
 		EFA7AEE31C91C0DD001D1311 /* AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUITests.swift; sourceTree = "<group>"; };
 		EFA7AEE51C91C0DD001D1311 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EFA7AEF11C91C233001D1311 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		EFF7D9D81CA7E02D0005F23A /* DataAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataAccess.swift; sourceTree = "<group>"; };
+		EFF7D9DA1CA7F1F10005F23A /* ArchiveAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveAccess.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,16 +158,18 @@
 		EF43DC291C9EB63100BBB091 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EF196F641C96CE2A003CD29E /* Board.swift */,
+				EF9CC5C61C94776300EAB475 /* Symbol.swift */,
+				EF5450DF1CA599EA002FCD4A /* Settings.swift */,
 				EF19C7D71CA6FBB900418610 /* History+CoreDataProperties.swift */,
 				EF19C7D81CA6FBB900418610 /* History.swift */,
 				EF19C7D91CA6FBB900418610 /* Corpus+CoreDataProperties.swift */,
 				EF19C7DA1CA6FBB900418610 /* Corpus.swift */,
-				EF9CC5C61C94776300EAB475 /* Symbol.swift */,
-				EF5450DF1CA599EA002FCD4A /* Settings.swift */,
 				EF5A7D971CA473B3007D2158 /* DataModel.swift */,
 				EF5A7D9B1CA4962E007D2158 /* App.xcdatamodeld */,
 				EF5A7D991CA475A0007D2158 /* BigramModel.swift */,
-				EF196F641C96CE2A003CD29E /* Board.swift */,
+				EFF7D9D81CA7E02D0005F23A /* DataAccess.swift */,
+				EFF7D9DA1CA7F1F10005F23A /* ArchiveAccess.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -359,12 +365,14 @@
 				EF19C7DD1CA6FBB900418610 /* Corpus+CoreDataProperties.swift in Sources */,
 				EF9CC5C71C94776300EAB475 /* Symbol.swift in Sources */,
 				EF196F651C96CE2A003CD29E /* Board.swift in Sources */,
+				EFF7D9DB1CA7F1F10005F23A /* ArchiveAccess.swift in Sources */,
 				EF22904D1CA075970052F0C6 /* TableViewController.swift in Sources */,
 				EF5450E01CA599EA002FCD4A /* Settings.swift in Sources */,
 				EF22904F1CA077F10052F0C6 /* TableViewCell.swift in Sources */,
 				EF6308961CA408DC000189BB /* PopUpViewController.swift in Sources */,
 				EFA7AEF21C91C233001D1311 /* CollectionViewCell.swift in Sources */,
 				EF116DBD1CA317BA002773CF /* ColourControl.swift in Sources */,
+				EFF7D9D91CA7E02D0005F23A /* DataAccess.swift in Sources */,
 				EF6308941CA407AF000189BB /* AddTableViewCell.swift in Sources */,
 				EF19C7DC1CA6FBB900418610 /* History.swift in Sources */,
 				EF19C7DB1CA6FBB900418610 /* History+CoreDataProperties.swift in Sources */,

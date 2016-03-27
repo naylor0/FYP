@@ -22,8 +22,7 @@ class PopUpViewController: UIViewController, UITableViewDataSource, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-        allSymbols = loadSymbols()
-        symbolsTable.reloadData()
+        allSymbols = ArchiveAccess.loadSymbols()
     }
     
     override func shouldAutorotate() -> Bool {
@@ -119,12 +118,8 @@ class PopUpViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        searchActive = false;
         searchBar.text = ""
         self.symbolsTable.reloadData()
-    }
-    func loadSymbols() -> Array<Symbol> {
-        return (NSKeyedUnarchiver.unarchiveObjectWithFile(Symbol.ArchiveURL.path!) as? [Symbol])!
     }
     
 }

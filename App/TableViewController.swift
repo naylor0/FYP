@@ -26,8 +26,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         super.viewDidLoad()
         searchBar.delegate = self
         
-        allSymbols = loadSymbols()
-        allBoards = loadBoards()!
+        allSymbols = ArchiveAccess.loadSymbols()
+        allBoards = ArchiveAccess.loadBoards()!
         print("Loaded data from viewDidLoad")
         dataLoaded = true
     }
@@ -189,8 +189,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     @IBAction func DismissSave(sender: AnyObject) {
-        saveSymbols()
-        saveBoards()
+        ArchiveAccess.saveSymbols(allSymbols)
+        ArchiveAccess.saveBoards(allBoards)
         dataLoaded = false
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -236,31 +236,4 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
         }
     }
-    
-    // MARK: NSCoding
-    
-    func saveSymbols() {
-        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(allSymbols, toFile: Symbol.ArchiveURL.path!)
-        if !isSuccessfulSave {
-            print("Failed to save meals...")
-        }
-        print("Saved symbols from table view")
-    }
-    
-    func saveBoards() {
-        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(allBoards, toFile: Board.ArchiveURL.path!)
-        if !isSuccessfulSave {
-            print("Failed to save meals...")
-        }
-        print("Saved boards from table view")
-    }
-    
-    func loadSymbols() -> Array<Symbol> {
-        return (NSKeyedUnarchiver.unarchiveObjectWithFile(Symbol.ArchiveURL.path!) as? [Symbol])!
-    }
-    
-    func loadBoards() -> Array<Board>? {
-        return (NSKeyedUnarchiver.unarchiveObjectWithFile(Board.ArchiveURL.path!) as? [Board])!
-    }
-
 }

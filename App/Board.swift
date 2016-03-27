@@ -12,6 +12,7 @@ class Board: NSObject, NSCoding {
     var symbols = [Symbol]()
     var icon: Symbol
     var name: String
+    var cellSize: Int
     
     static let DocumentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.URLByAppendingPathComponent("boards")
@@ -25,36 +26,29 @@ class Board: NSObject, NSCoding {
         static let symbolsKey = "symbols"
         static let iconKey = "icon"
         static let nameKey = "name"
+        static let cellSizeKey = "cellSize"
     }
     
-    init?(symbols: Array<Symbol>, icon: Symbol, name: String) {
+    init?(symbols: Array<Symbol>, icon: Symbol, name: String, cellSize: Int) {
         self.symbols = symbols
         self.icon = icon
         self.name = name
-        
+        self.cellSize = cellSize
         super.init()
-    }
-    
-    func loadSampleBoard() {
-        symbols.append(Symbol(word: "hi", photo: UIImage(named: "hi"), bgColor: bgRed)!)
-        symbols.append(Symbol(word: "hello", photo: UIImage(named: "hello"), bgColor: bgRed)!)
-        symbols.append(Symbol(word: "how", photo: UIImage(named: "how"), bgColor: bgGreen)!)
-        symbols.append(Symbol(word: "is", photo: UIImage(named: "is"), bgColor: bgGreen)!)
-        symbols.append(Symbol(word: "weather", photo: UIImage(named: "weather"), bgColor: bgRed)!)
-        symbols.append(Symbol(word: "good", photo: UIImage(named: "good"), bgColor: bgRed)!)
-        symbols.append(Symbol(word: "bad", photo: UIImage(named: "bad"), bgColor: bgRed)!)
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
         let symbols = aDecoder.decodeObjectForKey(PropertyKey.symbolsKey) as! Array<Symbol>
         let icon = aDecoder.decodeObjectForKey(PropertyKey.iconKey) as! Symbol
         let name = aDecoder.decodeObjectForKey(PropertyKey.nameKey) as! String
-        self.init(symbols: symbols, icon: icon, name: name)
+        let cellSize = aDecoder.decodeObjectForKey(PropertyKey.cellSizeKey) as! Int
+        self.init(symbols: symbols, icon: icon, name: name, cellSize: cellSize)
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(symbols, forKey: PropertyKey.symbolsKey)
         aCoder.encodeObject(icon, forKey: PropertyKey.iconKey)
         aCoder.encodeObject(name, forKey: PropertyKey.nameKey)
+        aCoder.encodeObject(cellSize, forKey: PropertyKey.cellSizeKey)
     }
 }

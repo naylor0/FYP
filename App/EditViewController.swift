@@ -41,7 +41,7 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.view.addSubview(boardCollection)
         self.view.addSubview(categoryCollection)
         
-        self.categories = loadBoards()!
+        self.categories = ArchiveAccess.loadBoards()!
         currentBoard = self.categories[0]
         
         categoryCollection.layer.borderWidth = 1.0
@@ -132,18 +132,6 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.categoryCollection.reloadData()
         self.categoryCollection.setNeedsDisplay()
     }
-    
-    func loadBoards() -> Array<Board>? {
-        return (NSKeyedUnarchiver.unarchiveObjectWithFile(Board.ArchiveURL.path!) as? [Board])!
-    }
-    
-    func saveBoards() {
-        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(categories, toFile: Board.ArchiveURL.path!)
-        if !isSuccessfulSave {
-            print("Failed to save meals...")
-        }
-        print("Saved Data")
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -151,7 +139,7 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     @IBAction func DismissSaveEdit(sender: AnyObject) {
-        saveBoards()
+        ArchiveAccess.saveBoards(self.categories)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     @IBAction func DismissCancelEdit(sender: AnyObject) {

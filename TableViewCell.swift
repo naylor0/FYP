@@ -13,7 +13,6 @@ class TableViewCell: UITableViewCell {
     @IBOutlet weak var photo: UIImageView!
     @IBOutlet weak var word: UILabel!
     @IBOutlet weak var colourButton: UIButton!
-    @IBOutlet weak var textToSpeak: UILabel!
     @IBOutlet weak var addToBoard: UIButton!
     @IBOutlet weak var deleteSymbol: UIButton!
     

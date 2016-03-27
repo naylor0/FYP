@@ -47,15 +47,13 @@ class SettingsViewController: UIViewController, DataModelProtocol {
         predictionView.layer.cornerRadius = 6
         colourView.layer.cornerRadius = 6
         
-        let myFilePath = Settings.ArchiveURL.path!
-        let manager = NSFileManager.defaultManager()
-        if (manager.fileExistsAtPath(myFilePath)) {
-            self.settings = loadSettings()
+        if (ArchiveAccess.checkForFile("settings")) {
+            self.settings = ArchiveAccess.loadSettings()
             print("Loaded settings from archive")
         } else {
-            self.settings = loadSampleSettings()
+            self.settings = ArchiveAccess.loadSampleSettings()
             print("Loaded sample settings")
-            saveSettings()
+            ArchiveAccess.saveSettings(settings!)
         }
         
         historySwitch.on = (settings?.predictionLearning)!
@@ -85,7 +83,7 @@ class SettingsViewController: UIViewController, DataModelProtocol {
     }
     
     @IBAction func DismissView(sender: AnyObject) {
-        saveSettings()
+        ArchiveAccess.saveSettings(settings!)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -94,39 +92,36 @@ class SettingsViewController: UIViewController, DataModelProtocol {
         // Dispose of any resources that can be recreated.
     }
     
-    func saveSettings() {
-        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(settings!, toFile: Settings.ArchiveURL.path!)
-        if !isSuccessfulSave {
-            print("Failed to save settings...")
-        }
-        print("Saved settings")
-    }
-    
     func loadSettings() -> Settings {
         return (NSKeyedUnarchiver.unarchiveObjectWithFile(Settings.ArchiveURL.path!) as? Settings)!
     }
+    @IBAction func deleteCorpus(sender: AnyObject) {
+        let refreshAlert = UIAlertController(title: "Clear Corpus Data", message: "Are you sure you want to clear the data?", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "Continue", style: .Default, handler: { (action: UIAlertAction!) in
+            DataAccess.clearCoreData("Corpus")
+        }))
+        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
+            print("Cancelled deleting corpus data")
+        }))
+        presentViewController(refreshAlert, animated: true, completion: nil)
+    }
     
-    func loadSampleSettings() -> Settings {
-        return Settings(readingLevel: 5, name: "Sophie", backgroundColour: UIColor.darkGrayColor(), predictionLearning: true, corpusPrediction: true)!
+    @IBAction func deleteHistory(sender: AnyObject) {
+        let refreshAlert = UIAlertController(title: "Clear User History Data", message: "Are you sure you want to clear the data?", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "Continue", style: .Default, handler: { (action: UIAlertAction!) in
+            DataAccess.clearCoreData("History")
+        }))
+        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
+            print("Cancelled deleting corpus data")
+        }))
+        presentViewController(refreshAlert, animated: true, completion: nil)
     }
     
     func itemsDownloaded(items: NSArray) {
         feedItems = items as! [BigramModel]
-        let appDelegate =
-            UIApplication.sharedApplication().delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext
-        let entity =  NSEntityDescription.entityForName("Corpus", inManagedObjectContext:managedContext)
-        let newRow = NSManagedObject(entity: entity!,
-                                     insertIntoManagedObjectContext: managedContext)
-        for item in feedItems {
-            newRow.setValue(item.word1, forKey: "word1")
-            newRow.setValue(item.word2, forKey: "word2")
-            do {
-                try managedContext.save()
-            } catch let error as NSError  {
-                print("Could not save \(error), \(error.userInfo)")
-            }
-        }
+        DataAccess.insertToCoreData(feedItems, table: "Corpus")
     }
     
     @IBAction func unwindToComprehensionSelector(sender: UIStoryboardSegue) {
