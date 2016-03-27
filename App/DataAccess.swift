@@ -45,14 +45,27 @@ public class DataAccess {
             print("Detele all data in \(table) error : \(error) \(error.userInfo)")
         }
     }
-    class func selectCoreData(word: String, table: String) -> Array<BigramModel> {
-        var results = [BigramModel]()
+    class func selectCoreDataCorpus(word: String) -> Array<Corpus> {
+        var results = [Corpus]()
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
-        let fetchRequest = NSFetchRequest(entityName: table)
+        let fetchRequest = NSFetchRequest(entityName: "Corpus")
         fetchRequest.predicate = NSPredicate(format: "word1 == %@", word)
         do {
-            results = try managedContext.executeFetchRequest(fetchRequest) as! [BigramModel]
+            results = try managedContext.executeFetchRequest(fetchRequest) as! [Corpus]
+        } catch {
+            fatalError("Failed to fetch employees: \(error)")
+        }
+        return results
+    }
+    class func selectCoreDataHistory(word: String) -> Array<History> {
+        var results = [History]()
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+        let fetchRequest = NSFetchRequest(entityName: "History")
+        fetchRequest.predicate = NSPredicate(format: "word1 == %@", word)
+        do {
+            results = try managedContext.executeFetchRequest(fetchRequest) as! [History]
         } catch {
             fatalError("Failed to fetch employees: \(error)")
         }

@@ -14,7 +14,7 @@ public class ArchiveAccess {
     
     class func checkForFile(fileName: String) -> Bool {
         let DocumentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
-        var myFilePath = DocumentsDirectory.URLByAppendingPathComponent(fileName).path
+        let myFilePath = DocumentsDirectory.URLByAppendingPathComponent(fileName).path
         let manager = NSFileManager.defaultManager()
         if (manager.fileExistsAtPath(myFilePath!)) {
             return true

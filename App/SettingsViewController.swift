@@ -60,14 +60,6 @@ class SettingsViewController: UIViewController, DataModelProtocol {
         corpusSwitch.on = (settings?.corpusPrediction)!
         historySwitch.addTarget(self, action: #selector(SettingsViewController.switchChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
         corpusSwitch.addTarget(self, action: #selector(SettingsViewController.switchChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
-        
-        let hasConnection = Reachability.isConnectedToNetwork()
-        if hasConnection {
-            let dataModel = DataModel()
-            dataModel.delegate = self
-            let stringToSend = "readingAge=" + (settings?.readingLevel.description)!
-            dataModel.downloadItems(stringToSend)
-        }
 
     }
     
@@ -126,7 +118,16 @@ class SettingsViewController: UIViewController, DataModelProtocol {
     
     @IBAction func unwindToComprehensionSelector(sender: UIStoryboardSegue) {
         let sourceViewController = sender.sourceViewController as? ComprehensionSelector
-        settings?.readingLevel = sourceViewController!.readingAge
+        if settings?.readingLevel != sourceViewController?.readingAge {
+            let hasConnection = Reachability.isConnectedToNetwork()
+            if hasConnection {
+                let dataModel = DataModel()
+                dataModel.delegate = self
+                let stringToSend = "readingAge=" + (settings?.readingLevel.description)!
+                dataModel.downloadItems(stringToSend)
+            }
+            settings?.readingLevel = sourceViewController!.readingAge
+        }
     }
     @IBAction func changeLevel(sender: AnyObject) {
         performSegueWithIdentifier("editLevel", sender: self)

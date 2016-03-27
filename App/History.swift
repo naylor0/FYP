@@ -13,5 +13,6 @@ import CoreData
 class History: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
-
+    @NSManaged var word1: String?
+    @NSManaged var word2: String?
 }

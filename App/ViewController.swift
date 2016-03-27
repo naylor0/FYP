@@ -14,11 +14,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     var categories = [Board]()
     var sentence = [Symbol]()
+    var suggestions = [Symbol]()
     var currentBoard: Board?
     var allSymbols = [Symbol]()
     var settings: Settings?
     
     // Outlets for collection views used for boards, their symbols and the current sentence
+    @IBOutlet weak var suggestionCollection: UICollectionView!
     @IBOutlet weak var boardCollection: UICollectionView!
     @IBOutlet weak var sentenceCollection: UICollectionView!
     @IBOutlet weak var categoryCollection: UICollectionView!
@@ -58,6 +60,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         self.view.addSubview(boardCollection)
         self.view.addSubview(categoryCollection)
         self.view.addSubview(sentenceCollection)
+        self.view.addSubview(suggestionCollection)
         
         categoryCollection.layer.borderWidth = 1.0
         categoryCollection.layer.borderColor = UIColor.blackColor().CGColor
@@ -65,10 +68,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         sentenceCollection.layer.borderColor = UIColor.blackColor().CGColor
         boardCollection.layer.borderWidth = 1.0
         boardCollection.layer.borderColor = UIColor.blackColor().CGColor
+        suggestionCollection.layer.borderWidth = 1.0
+        suggestionCollection.layer.borderColor = UIColor.blackColor().CGColor
         
         boardCollection.layer.backgroundColor = UIColor.darkGrayColor().CGColor
         sentenceCollection.layer.backgroundColor = UIColor.whiteColor().CGColor
         categoryCollection.layer.backgroundColor = UIColor.darkGrayColor().CGColor
+        suggestionCollection.layer.backgroundColor = UIColor.darkGrayColor().CGColor
+        
         
         if (ArchiveAccess.checkForFile("boards")) {
             self.categories = ArchiveAccess.loadBoards()!
@@ -111,6 +118,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             noCells = self.categories.count
         } else if collectionView == self.sentenceCollection {
             noCells = self.sentence.count
+        } else if collectionView == self.suggestionCollection {
+            noCells = self.suggestions.count
         }
         return noCells
     }
@@ -127,7 +136,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             //cell.layer.shadowColor
             cell.layer.masksToBounds = true;
             cell.layer.cornerRadius = 4
-            
         } else if collectionView == self.categoryCollection {
             cell = collectionView.dequeueReusableCellWithReuseIdentifier("cat", forIndexPath: indexPath) as! CollectionViewCell
             cell.image?.image = self.categories[indexPath.row].icon.photo
@@ -135,7 +143,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             cell.backgroundColor = UIColor.whiteColor()
             cell.layer.masksToBounds = true;
             cell.layer.cornerRadius = 4
-            
         } else if collectionView == self.sentenceCollection {
             cell = collectionView.dequeueReusableCellWithReuseIdentifier("sen", forIndexPath: indexPath) as! CollectionViewCell
             cell.image?.image = self.sentence[indexPath.row].photo
@@ -143,7 +150,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             cell.backgroundColor = self.sentence[indexPath.row].bgColor
             cell.layer.masksToBounds = true;
             cell.layer.cornerRadius = 4
-            
+        } else if collectionView == self.suggestionCollection {
+            cell = collectionView.dequeueReusableCellWithReuseIdentifier("sug", forIndexPath: indexPath) as! CollectionViewCell
+            cell.image?.image = self.suggestions[indexPath.row].photo
+            cell.word?.text = self.suggestions[indexPath.row].word
+            cell.backgroundColor = self.suggestions[indexPath.row].bgColor
+            cell.layer.masksToBounds = true;
+            cell.layer.cornerRadius = 4
         }
         return cell
     }
@@ -151,20 +164,22 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if collectionView == self.boardCollection {
             sentence.append(self.currentBoard!.symbols[indexPath.row])
+            generateSuggestion(self.currentBoard!.symbols[indexPath.row].word)
             self.speech = AVSpeechUtterance(string: self.currentBoard!.symbols[indexPath.row].word)
             self.speech.rate = 0.4
             self.synth.speakUtterance(speech)
             self.sentenceCollection.reloadData()
             self.sentenceCollection.setNeedsDisplay()
-        }
-        else if collectionView == self.categoryCollection {
+        } else if collectionView == self.categoryCollection {
             currentBoard = self.categories[indexPath.row]
             self.boardCollection.reloadData()
             self.boardCollection.setNeedsDisplay()
+        } else if collectionView == self.suggestionCollection {
+            sentence.append(self.suggestions[indexPath.row])
+            self.sentenceCollection.reloadData()
+            self.sentenceCollection.setNeedsDisplay()
         }
     }
-    
-    
 
     @IBAction func speakSentence(sender: AnyObject) {
         for part in sentence {
@@ -192,5 +207,44 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         DataAccess.insertToCoreData(insert, table: "History")
     } // End generate bigrams method
+    
+    func generateSuggestion(word: String)
+    {
+        let results1 = DataAccess.selectCoreDataCorpus(word)
+        let results2 = DataAccess.selectCoreDataHistory(word)
+        var resultsSet = [BigramModel]()
+        for item in results1 {
+            resultsSet.append(BigramModel(word1: item.word1!, word2: item.word2!))
+        }
+        for item in results2 {
+            resultsSet.append(BigramModel(word1: item.word1!, word2: item.word2!))
+        }
+        var counts = [Int](count: resultsSet.count, repeatedValue: 0)
+        for (index, object) in resultsSet.enumerate() {
+            for j in resultsSet {
+                if object.word2 == j.word2 {
+                    counts[index] = counts[index] + 1
+                }
+            }
+        }
+        let largest = counts.indexOf(counts.maxElement()!)
+        if largest > 0 {
+            let i = checkSymbols(resultsSet[largest!].word2)
+            if i > -1 {
+                self.suggestions[0] = allSymbols[i]
+                suggestionCollection.reloadData()
+            }
+        }
+    }
+    
+    func checkSymbols(word: String) -> Int {
+        var result: Int = -1
+        for (i, sym) in allSymbols.enumerate() {
+            if sym.word == word{
+                result = i
+            }
+        }
+        return result
+    }
 
 } // End View Controller
