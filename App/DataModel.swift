@@ -25,9 +25,9 @@ class DataModel: NSObject, NSURLSessionDataDelegate {
     func downloadItems(readingAge: String) {
         
         let url: NSURL = NSURL(string: urlPath)!
-        var request:NSMutableURLRequest = NSMutableURLRequest(URL:url)
+        let request:NSMutableURLRequest = NSMutableURLRequest(URL:url)
         request.HTTPMethod = "POST"
-        var bodyData = readingAge
+        let bodyData = readingAge
         request.HTTPBody = bodyData.dataUsingEncoding(NSUTF8StringEncoding)
         var session: NSURLSession!
         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
@@ -71,7 +71,7 @@ class DataModel: NSObject, NSURLSessionDataDelegate {
         var jsonElement: NSDictionary = NSDictionary()
         let bigrams: NSMutableArray = NSMutableArray()
         
-        for(var i = 0; i < jsonResult.count; i = i + 1) {
+        for i in 0...jsonResult.count {
             
             jsonElement = jsonResult[i] as! NSDictionary
             let bigram = BigramModel(word1: "", word2: "")

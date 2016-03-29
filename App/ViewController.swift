@@ -140,7 +140,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             cell = collectionView.dequeueReusableCellWithReuseIdentifier("cat", forIndexPath: indexPath) as! CollectionViewCell
             cell.image?.image = self.categories[indexPath.row].icon.photo
             cell.word?.text = self.categories[indexPath.row].name
-            cell.backgroundColor = UIColor.whiteColor()
+            if currentBoard == self.categories[indexPath.row] {
+                cell.layer.borderColor = UIColor.blueColor().CGColor
+                cell.layer.borderWidth = 2.0
+            } else {
+                cell.layer.borderWidth = 0.2
+                cell.layer.borderColor = UIColor.blackColor().CGColor
+            }
             cell.layer.masksToBounds = true;
             cell.layer.cornerRadius = 4
         } else if collectionView == self.sentenceCollection {
@@ -164,7 +170,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if collectionView == self.boardCollection {
             sentence.append(self.currentBoard!.symbols[indexPath.row])
-            generateSuggestion(self.currentBoard!.symbols[indexPath.row].word)
+            //generateSuggestion(self.currentBoard!.symbols[indexPath.row].word)
             self.speech = AVSpeechUtterance(string: self.currentBoard!.symbols[indexPath.row].word)
             self.speech.rate = 0.4
             self.synth.speakUtterance(speech)
@@ -172,6 +178,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             self.sentenceCollection.setNeedsDisplay()
         } else if collectionView == self.categoryCollection {
             currentBoard = self.categories[indexPath.row]
+            self.categoryCollection.reloadData()
             self.boardCollection.reloadData()
             self.boardCollection.setNeedsDisplay()
         } else if collectionView == self.suggestionCollection {
@@ -213,27 +220,31 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let results1 = DataAccess.selectCoreDataCorpus(word)
         let results2 = DataAccess.selectCoreDataHistory(word)
         var resultsSet = [BigramModel]()
-        for item in results1 {
-            resultsSet.append(BigramModel(word1: item.word1!, word2: item.word2!))
-        }
-        for item in results2 {
-            resultsSet.append(BigramModel(word1: item.word1!, word2: item.word2!))
-        }
-        var counts = [Int](count: resultsSet.count, repeatedValue: 0)
-        for (index, object) in resultsSet.enumerate() {
-            for j in resultsSet {
-                if object.word2 == j.word2 {
-                    counts[index] = counts[index] + 1
+        if results1.count > 0 || results2.count > 0 {
+            for item in results1 {
+                resultsSet.append(BigramModel(word1: item.word1!, word2: item.word2!))
+            }
+            for item in results2 {
+                resultsSet.append(BigramModel(word1: item.word1!, word2: item.word2!))
+            }
+            var counts = [Int](count: resultsSet.count, repeatedValue: 0)
+            for (index, object) in resultsSet.enumerate() {
+                for j in resultsSet {
+                    if object.word2 == j.word2 {
+                        counts[index] = counts[index] + 1
+                    }
                 }
             }
-        }
-        let largest = counts.indexOf(counts.maxElement()!)
-        if largest > 0 {
-            let i = checkSymbols(resultsSet[largest!].word2)
-            if i > -1 {
-                self.suggestions[0] = allSymbols[i]
-                suggestionCollection.reloadData()
+            if let largest = counts.indexOf(counts.maxElement()!) {
+                if largest > 0 {
+                    let i = checkSymbols(resultsSet[largest].word2)
+                    if i > -1 {
+                        self.suggestions[0] = allSymbols[i]
+                        suggestionCollection.reloadData()
+                    }
+                }
             }
+
         }
     }
     

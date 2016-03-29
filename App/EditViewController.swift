@@ -83,11 +83,16 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
             cell = collectionView.dequeueReusableCellWithReuseIdentifier("cat", forIndexPath: indexPath) as! CollectionViewCell
             cell.image?.image = self.categories[indexPath.row].icon.photo
             cell.word?.text = self.categories[indexPath.row].name
-            cell.backgroundColor = bgWhite
+            if currentBoard == self.categories[indexPath.row] {
+                cell.layer.borderColor = UIColor.blueColor().CGColor
+                cell.layer.borderWidth = 2.0
+            } else {
+                cell.layer.borderColor = UIColor.blackColor().CGColor
+                cell.layer.borderWidth = 0.6
+            }
+            cell.backgroundColor = UIColor.whiteColor()
             cell.layer.masksToBounds = true;
             cell.layer.cornerRadius = 4
-            cell.layer.borderColor = UIColor.blackColor().CGColor
-            cell.layer.borderWidth = 0.6
             cell.delete.tag = indexPath.row
             cell.delete.addTarget(self, action: #selector(EditViewController.deleteCat(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             
@@ -99,6 +104,7 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
         if collectionView == self.categoryCollection {
             currentBoard = self.categories[indexPath.row]
             currentBoardPos = indexPath.row
+            self.categoryCollection.reloadData()
             self.boardCollection.reloadData()
             self.boardCollection.setNeedsDisplay()
         }
@@ -182,6 +188,9 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     @IBAction func addItem(sender: AnyObject) {
         self.performSegueWithIdentifier("ShowList", sender: self)
+    }
+    @IBAction func addBoard(sender: AnyObject) {
+        self.performSegueWithIdentifier("AddBoard", sender: self)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

@@ -21,7 +21,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="2" contentMode="scaleToFill" misplaced="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="W0b-dH-TwB" userLabel="categoryCollection">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="2" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="W0b-dH-TwB" userLabel="categoryCollection">
                                 <rect key="frame" x="0.0" y="20" width="130" height="704"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -77,7 +77,7 @@
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="spA-eY-aVR"/>
                                 </connections>
                             </collectionView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="02Q-nP-ygV" userLabel="mainCollection">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="02Q-nP-ygV" userLabel="mainCollection">
                                 <rect key="frame" x="130" y="130" width="894" height="594"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="6L1-d8-Yr4">
@@ -129,7 +129,7 @@
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="2P0-HE-cF8"/>
                                 </connections>
                             </collectionView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" misplaced="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Ulr-CP-X3q" userLabel="sentenceCollection">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Ulr-CP-X3q" userLabel="sentenceCollection">
                                 <rect key="frame" x="130" y="20" width="708" height="110"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -184,31 +184,31 @@
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="WRh-pe-vfl"/>
                                 </connections>
                             </collectionView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="speaker" translatesAutoresizingMaskIntoConstraints="NO" id="S4U-5E-GOY">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="speaker" translatesAutoresizingMaskIntoConstraints="NO" id="S4U-5E-GOY">
                                 <rect key="frame" x="850" y="28" width="80" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="BcN-tv-QAb"/>
                                 </constraints>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="delete" translatesAutoresizingMaskIntoConstraints="NO" id="ZRJ-Ds-aNo">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="delete" translatesAutoresizingMaskIntoConstraints="NO" id="ZRJ-Ds-aNo">
                                 <rect key="frame" x="938" y="28" width="80" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="4vC-6e-4z6"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Icw-wg-xjN">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Icw-wg-xjN">
                                 <rect key="frame" x="850" y="28" width="80" height="80"/>
                                 <connections>
                                     <action selector="speakSentence:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="sV6-7Q-Gou"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fQM-KB-0OM">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fQM-KB-0OM">
                                 <rect key="frame" x="938" y="28" width="80" height="80"/>
                                 <connections>
                                     <action selector="deleteSentence:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="TRN-cH-oS3"/>
                                 </connections>
                             </button>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vBr-Gf-JnH">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vBr-Gf-JnH">
                                 <rect key="frame" x="0.0" y="724" width="1024" height="44"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="9xU-4j-Uec"/>
@@ -265,13 +265,13 @@
                                                 <exclude reference="I03-sm-IF9"/>
                                             </mask>
                                             <mask key="constraints">
+                                                <exclude reference="3Mo-aD-hLX"/>
                                                 <exclude reference="9zD-EX-cEx"/>
                                                 <exclude reference="CuM-eB-lr6"/>
                                                 <exclude reference="OGS-7E-huo"/>
                                                 <exclude reference="V1Y-nO-4jz"/>
                                                 <exclude reference="XAp-Ko-v8A"/>
                                                 <exclude reference="bV6-cd-kKw"/>
-                                                <exclude reference="3Mo-aD-hLX"/>
                                             </mask>
                                         </variation>
                                         <variation key="heightClass=regular-widthClass=regular">
@@ -280,13 +280,13 @@
                                                 <include reference="I03-sm-IF9"/>
                                             </mask>
                                             <mask key="constraints">
+                                                <include reference="3Mo-aD-hLX"/>
                                                 <include reference="9zD-EX-cEx"/>
                                                 <include reference="CuM-eB-lr6"/>
                                                 <include reference="OGS-7E-huo"/>
                                                 <include reference="V1Y-nO-4jz"/>
                                                 <include reference="XAp-Ko-v8A"/>
                                                 <include reference="bV6-cd-kKw"/>
-                                                <include reference="3Mo-aD-hLX"/>
                                             </mask>
                                         </variation>
                                         <connections>
@@ -300,8 +300,7 @@
                                         <exclude reference="X1w-Bp-aoW"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=regular" misplaced="YES">
-                                    <rect key="frame" x="110" y="130" width="914" height="110"/>
+                                <variation key="heightClass=regular-widthClass=regular">
                                     <mask key="constraints">
                                         <include reference="X1w-Bp-aoW"/>
                                     </mask>
@@ -352,17 +351,17 @@
                                 <exclude reference="tul-zr-Kwn"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="BJC-wu-6Sy"/>
+                                <exclude reference="JAe-3Q-uwG"/>
+                                <exclude reference="OYM-2t-Dpa"/>
+                                <exclude reference="rWG-Ic-pCv"/>
+                                <exclude reference="zSh-d5-jJT"/>
                                 <exclude reference="FwV-cQ-4nQ"/>
                                 <exclude reference="Sau-de-L2a"/>
                                 <exclude reference="UuY-E1-YAw"/>
                                 <exclude reference="gca-Q8-lmY"/>
                                 <exclude reference="9iF-TU-SH1"/>
                                 <exclude reference="XGg-Ut-rxg"/>
-                                <exclude reference="BJC-wu-6Sy"/>
-                                <exclude reference="JAe-3Q-uwG"/>
-                                <exclude reference="OYM-2t-Dpa"/>
-                                <exclude reference="rWG-Ic-pCv"/>
-                                <exclude reference="zSh-d5-jJT"/>
                                 <exclude reference="0pU-jQ-nbm"/>
                                 <exclude reference="cpX-7Z-ZBR"/>
                                 <exclude reference="BNB-Oe-B9h"/>
@@ -391,17 +390,17 @@
                                 <include reference="tul-zr-Kwn"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="BJC-wu-6Sy"/>
+                                <include reference="JAe-3Q-uwG"/>
+                                <include reference="OYM-2t-Dpa"/>
+                                <include reference="rWG-Ic-pCv"/>
+                                <include reference="zSh-d5-jJT"/>
                                 <include reference="FwV-cQ-4nQ"/>
                                 <include reference="Sau-de-L2a"/>
                                 <include reference="UuY-E1-YAw"/>
                                 <include reference="gca-Q8-lmY"/>
                                 <include reference="9iF-TU-SH1"/>
                                 <include reference="XGg-Ut-rxg"/>
-                                <include reference="BJC-wu-6Sy"/>
-                                <include reference="JAe-3Q-uwG"/>
-                                <include reference="OYM-2t-Dpa"/>
-                                <include reference="rWG-Ic-pCv"/>
-                                <include reference="zSh-d5-jJT"/>
                                 <include reference="0pU-jQ-nbm"/>
                                 <include reference="cpX-7Z-ZBR"/>
                                 <include reference="BNB-Oe-B9h"/>
@@ -1854,6 +1853,14 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lWf-X6-kg0">
                                 <rect key="frame" x="0.0" y="724" width="1024" height="44"/>
                                 <items>
+                                    <barButtonItem title="Add Board" id="yIU-CN-8nd">
+                                        <connections>
+                                            <segue destination="C84-E2-xKf" kind="popoverPresentation" identifier="AddBoard" popoverAnchorBarButtonItem="yIU-CN-8nd" id="yv4-lQ-cJ1">
+                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                            </segue>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="5cr-mX-Vz8"/>
                                     <barButtonItem systemItem="add" id="WUY-tW-X1b">
                                         <connections>
                                             <action selector="addItem:" destination="5eh-Gh-Ucp" id="aQq-TG-UgL"/>
@@ -2040,5 +2047,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="ZBd-Ar-oKn"/>
+        <segue reference="yv4-lQ-cJ1"/>
     </inferredMetricsTieBreakers>
 </document>

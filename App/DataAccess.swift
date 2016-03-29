@@ -54,7 +54,7 @@ public class DataAccess {
         do {
             results = try managedContext.executeFetchRequest(fetchRequest) as! [Corpus]
         } catch {
-            fatalError("Failed to fetch employees: \(error)")
+            fatalError("Failed to fetch corpus \(error)")
         }
         return results
     }
@@ -67,8 +67,9 @@ public class DataAccess {
         do {
             results = try managedContext.executeFetchRequest(fetchRequest) as! [History]
         } catch {
-            fatalError("Failed to fetch employees: \(error)")
+            fatalError("Failed to fetch history \(error)")
         }
+        print(results.description)
         return results
     }
 }
