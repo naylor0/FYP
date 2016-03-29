@@ -133,7 +133,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             cell.image?.image = self.currentBoard!.symbols[indexPath.row].photo
             cell.word?.text = self.currentBoard!.symbols[indexPath.row].word
             cell.backgroundColor = self.currentBoard!.symbols[indexPath.row].bgColor
-            //cell.layer.shadowColor
             cell.layer.masksToBounds = true;
             cell.layer.cornerRadius = 4
         } else if collectionView == self.categoryCollection {
@@ -170,7 +169,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if collectionView == self.boardCollection {
             sentence.append(self.currentBoard!.symbols[indexPath.row])
-            //generateSuggestion(self.currentBoard!.symbols[indexPath.row].word)
+            suggestions.removeAll()
+            generateSuggestion((self.sentence.last?.word)!)
             self.speech = AVSpeechUtterance(string: self.currentBoard!.symbols[indexPath.row].word)
             self.speech.rate = 0.4
             self.synth.speakUtterance(speech)
@@ -183,6 +183,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             self.boardCollection.setNeedsDisplay()
         } else if collectionView == self.suggestionCollection {
             sentence.append(self.suggestions[indexPath.row])
+            self.speech = AVSpeechUtterance(string: self.suggestions[indexPath.row].word)
+            self.speech.rate = 0.4
+            self.synth.speakUtterance(speech)
+            suggestions.removeAll()
+            generateSuggestion((self.sentence.last?.word)!)
             self.sentenceCollection.reloadData()
             self.sentenceCollection.setNeedsDisplay()
         }
@@ -199,6 +204,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBAction func deleteSentence(sender: AnyObject) {
         generateBigrams(sentence)
         sentence.removeAll()
+        suggestions.removeAll()
+        suggestionCollection.reloadData()
         self.sentenceCollection.reloadData()
         self.sentenceCollection.setNeedsDisplay()
     }
@@ -217,6 +224,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func generateSuggestion(word: String)
     {
+        
         let results1 = DataAccess.selectCoreDataCorpus(word)
         let results2 = DataAccess.selectCoreDataHistory(word)
         var resultsSet = [BigramModel]()
@@ -227,23 +235,23 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             for item in results2 {
                 resultsSet.append(BigramModel(word1: item.word1!, word2: item.word2!))
             }
-            var counts = [Int](count: resultsSet.count, repeatedValue: 0)
-            for (index, object) in resultsSet.enumerate() {
+            for object in resultsSet {
                 for j in resultsSet {
-                    if object.word2 == j.word2 {
-                        counts[index] = counts[index] + 1
+                    if object.word2 == j.word2 && object != j {
+                        object.count = object.count + 1
                     }
                 }
             }
-            if let largest = counts.indexOf(counts.maxElement()!) {
-                if largest > 0 {
-                    let i = checkSymbols(resultsSet[largest].word2)
-                    if i > -1 {
-                        self.suggestions[0] = allSymbols[i]
-                        suggestionCollection.reloadData()
-                    }
+            resultsSet.sort { $0.count < $1.count }
+            
+            for item in resultsSet {
+                print(item.word1 + item.word2 + item.count.description)
+                let i = checkSymbols(item.word2)
+                if !suggestions.contains(allSymbols[i]) {
+                    suggestions.append(allSymbols[i])
                 }
             }
+            suggestionCollection.reloadData()
 
         }
     }
