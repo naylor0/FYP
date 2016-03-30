@@ -71,7 +71,7 @@ class DataModel: NSObject, NSURLSessionDataDelegate {
         var jsonElement: NSDictionary = NSDictionary()
         let bigrams: NSMutableArray = NSMutableArray()
         
-        for i in 0...jsonResult.count {
+        for i in 0..<jsonResult.count {
             
             jsonElement = jsonResult[i] as! NSDictionary
             let bigram = BigramModel(word1: "", word2: "")

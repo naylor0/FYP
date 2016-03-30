@@ -41,6 +41,5 @@ class ComprehensionSelector: UIViewController, UITableViewDataSource, UITableVie
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         readingAge = indexPath.row + 1
-        print("Selected row " + indexPath.row.description)
     }
 }

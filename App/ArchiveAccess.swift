@@ -36,7 +36,7 @@ public class ArchiveAccess {
     }
     
     class func loadSampleSettings() -> Settings {
-        return Settings(readingLevel: 5, name: "Sophie", backgroundColour: UIColor.darkGrayColor(), predictionLearning: true, corpusPrediction: true)!
+        return Settings(readingLevel: 5, name: "Sophie", backgroundColour: UIColor.darkGrayColor(), predictionLearning: true, corpusPrediction: true, password: 0)!
     }
     
     class func saveBoards(categories: Array<Board>) {

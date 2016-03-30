@@ -13,7 +13,7 @@ class BigramModel: NSObject {
     
     var word1: String
     var word2: String
-    var count: Int
+    var count: Int?
     
     //constructor
     

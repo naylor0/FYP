@@ -26,9 +26,7 @@ class SettingsViewController: UIViewController, DataModelProtocol {
     @IBOutlet weak var colourView: UIView!
     @IBOutlet weak var colourButton: UIButton!
     
-    // Testing data connection
     var feedItems = [BigramModel]()
-    
     var settings: Settings?
     
     override func shouldAutorotate() -> Bool {

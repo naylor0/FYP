@@ -107,6 +107,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             ArchiveAccess.saveSettings(self.settings!)
         }
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -243,16 +244,17 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             for object in resultsSet {
                 for j in resultsSet {
                     if object.word2.lowercaseString == j.word2.lowercaseString && object != j {
-                        object.count = object.count + 1
+                        object.count = object.count! + 1
                     }
                 }
             }
             resultsSet = resultsSet.sort { $0.count > $1.count }
             
             for item in resultsSet {
-                if let i = getSymbol(item.word2) {
-                    if !suggestions.contains(i) {
-                        suggestions.append(i)
+                let i = getSymbol(item.word2)
+                if i > -1 {
+                    if !suggestions.contains(allSymbols[i!]) {
+                        suggestions.append(allSymbols[i!])
                     }
                 }
             }
@@ -262,14 +264,18 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     
-    func getSymbol(word: String) -> Symbol? {
-        var result: Symbol?
-        for sym in allSymbols {
-            if sym.word == word{
+    @IBAction func launchSettings (sender: AnyObject) {
+        performSegueWithIdentifier("showSettings", sender: self)
+    }
+    
+    func getSymbol(word: String) -> Int? {
+        var result: Int = -1
+        for (sym, i) in allSymbols.enumerate() {
+            if i.word == word{
                 result = sym
             }
         }
-        return result!
+        return result
     }
 
 } // End View Controller
