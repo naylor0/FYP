@@ -16,10 +16,10 @@ public class DataAccess {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
         let entity =  NSEntityDescription.entityForName(table, inManagedObjectContext:managedContext)
-        let newRow = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
         for item in items {
-            newRow.setValue(item.word1, forKey: "word1")
-            newRow.setValue(item.word2, forKey: "word2")
+            let newRow = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
+            newRow.setValue(item.word1.lowercaseString, forKey: "word1")
+            newRow.setValue(item.word2.lowercaseString, forKey: "word2")
             do {
                 try managedContext.save()
             } catch let error as NSError  {
@@ -50,7 +50,7 @@ public class DataAccess {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
         let fetchRequest = NSFetchRequest(entityName: "Corpus")
-        fetchRequest.predicate = NSPredicate(format: "word1 == %@", word)
+        fetchRequest.predicate = NSPredicate(format: "word1 == %@", word.lowercaseString)
         do {
             results = try managedContext.executeFetchRequest(fetchRequest) as! [Corpus]
         } catch {
@@ -63,7 +63,7 @@ public class DataAccess {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
         let fetchRequest = NSFetchRequest(entityName: "History")
-        fetchRequest.predicate = NSPredicate(format: "word1 == %@", word)
+        fetchRequest.predicate = NSPredicate(format: "word1 == %@", word.lowercaseString)
         do {
             results = try managedContext.executeFetchRequest(fetchRequest) as! [History]
         } catch {

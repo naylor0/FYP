@@ -169,13 +169,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if collectionView == self.boardCollection {
             sentence.append(self.currentBoard!.symbols[indexPath.row])
-            suggestions.removeAll()
             generateSuggestion((self.sentence.last?.word)!)
             self.speech = AVSpeechUtterance(string: self.currentBoard!.symbols[indexPath.row].word)
             self.speech.rate = 0.4
             self.synth.speakUtterance(speech)
             self.sentenceCollection.reloadData()
             self.sentenceCollection.setNeedsDisplay()
+            self.suggestionCollection.reloadData()
+            self.suggestionCollection.setNeedsDisplay()
         } else if collectionView == self.categoryCollection {
             currentBoard = self.categories[indexPath.row]
             self.categoryCollection.reloadData()
@@ -186,10 +187,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             self.speech = AVSpeechUtterance(string: self.suggestions[indexPath.row].word)
             self.speech.rate = 0.4
             self.synth.speakUtterance(speech)
-            suggestions.removeAll()
             generateSuggestion((self.sentence.last?.word)!)
             self.sentenceCollection.reloadData()
             self.sentenceCollection.setNeedsDisplay()
+            self.suggestionCollection.reloadData()
+            self.suggestionCollection.setNeedsDisplay()
         }
     }
 
@@ -214,7 +216,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         var insert = [BigramModel]()
         if sentence.count > 1 {
             for (i, item) in sentence.enumerate() {
-                if sentence.indices.contains(i + 1) {
+                if i != sentence.endIndex - 1 {
                     insert.append(BigramModel(word1:item.word, word2: sentence[i + 1].word))
                 }
             }
@@ -224,7 +226,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func generateSuggestion(word: String)
     {
-        
+        suggestions.removeAll()
         let results1 = DataAccess.selectCoreDataCorpus(word)
         let results2 = DataAccess.selectCoreDataHistory(word)
         var resultsSet = [BigramModel]()
@@ -237,33 +239,34 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             }
             for object in resultsSet {
                 for j in resultsSet {
-                    if object.word2 == j.word2 && object != j {
+                    if object.word2.lowercaseString == j.word2.lowercaseString && object != j {
                         object.count = object.count + 1
                     }
                 }
             }
-            resultsSet.sort { $0.count < $1.count }
+            resultsSet = resultsSet.sort { $0.count > $1.count }
             
             for item in resultsSet {
-                print(item.word1 + item.word2 + item.count.description)
-                let i = checkSymbols(item.word2)
-                if !suggestions.contains(allSymbols[i]) {
-                    suggestions.append(allSymbols[i])
+                if let i = getSymbol(item.word2) {
+                    if !suggestions.contains(i) {
+                        suggestions.append(i)
+                    }
                 }
             }
             suggestionCollection.reloadData()
+            suggestionCollection.setNeedsDisplay()
 
         }
     }
     
-    func checkSymbols(word: String) -> Int {
-        var result: Int = -1
-        for (i, sym) in allSymbols.enumerate() {
+    func getSymbol(word: String) -> Symbol? {
+        var result: Symbol?
+        for sym in allSymbols {
             if sym.word == word{
-                result = i
+                result = sym
             }
         }
-        return result
+        return result!
     }
 
 } // End View Controller
