@@ -183,6 +183,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             self.suggestionCollection.setNeedsDisplay()
         } else if collectionView == self.categoryCollection {
             currentBoard = self.categories[indexPath.row]
+            self.speech = AVSpeechUtterance(string: self.categories[indexPath.row].name)
+            self.speech.rate = 0.5
+            self.synth.speakUtterance(speech)
             self.categoryCollection.reloadData()
             self.boardCollection.reloadData()
             self.boardCollection.setNeedsDisplay()
