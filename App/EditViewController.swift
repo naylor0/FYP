@@ -186,7 +186,7 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
             categoryCollection.cancelInteractiveMovement()
         }
     }
-    @IBAction func addItem(sender: AnyObject) {
+    @IBAction func addSymbol(sender: AnyObject) {
         self.performSegueWithIdentifier("ShowList", sender: self)
     }
     @IBAction func addBoard(sender: AnyObject) {
@@ -200,12 +200,21 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     @IBAction func unwindToSymbolList(sender: UIStoryboardSegue) {
-        let sourceViewController = sender.sourceViewController as? PopUpViewController
+        let sourceViewController = sender.sourceViewController as? AddSymbolController
         let addedSymbols = sourceViewController!.addedSymbols
         if addedSymbols.count > 0 {
             currentBoard?.symbols += addedSymbols
             boardCollection.reloadData()
         }
     }
-
+    
+    @IBAction func unwindToBoardList(sender: UIStoryboardSegue) {
+        let sourceViewController = sender.sourceViewController as? AddBoardController
+        let addedBoards = sourceViewController!.addedBoards
+        for board in addedBoards {
+            let symbols = [Symbol]()
+            categories.append(Board(symbols: symbols, icon: board, name: board.word, cellSize: 100)!)
+        }
+        categoryCollection.reloadData()
+    }
 }

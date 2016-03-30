@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import CoreData
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate {
     
     var categories = [Board]()
     var sentence = [Symbol]()
@@ -61,6 +61,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         self.view.addSubview(categoryCollection)
         self.view.addSubview(sentenceCollection)
         self.view.addSubview(suggestionCollection)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.speakSentence(_:)))
+        tap.delegate = self
+        sentenceCollection.addGestureRecognizer(tap)
+        
         
         categoryCollection.layer.borderWidth = 1.0
         categoryCollection.layer.borderColor = UIColor.blackColor().CGColor
@@ -103,7 +107,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             ArchiveAccess.saveSettings(self.settings!)
         }
     }
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

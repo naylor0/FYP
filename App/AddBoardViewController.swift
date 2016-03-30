@@ -1,5 +1,13 @@
 //
-//  PopUpViewController.swift
+//  AddBoardViewController.swift
+//  App
+//
+//  Created by Mark Naylor on 30/03/2016.
+//  Copyright © 2016 Mark Naylor. All rights reserved.
+//
+
+//
+//  AddBoardController.swift
 //  App
 //
 //  Created by Mark Naylor on 24/03/2016.
@@ -8,14 +16,14 @@
 
 import UIKit
 
-class PopUpViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
-    @IBOutlet weak var symbolsTable: UITableView!
+class AddBoardController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
+    @IBOutlet weak var boardsTable: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
     var allSymbols = [Symbol]()
     var toAdd = [Symbol]()
-    var addedSymbols = [Symbol]()
+    var addedBoards = [Symbol]()
     var filteredResults = [Symbol]()
     var searchActive : Bool = false
     
@@ -50,19 +58,19 @@ class PopUpViewController: UIViewController, UITableViewDataSource, UITableViewD
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = AddTableViewCell()
         if (searchActive) {
-            cell = symbolsTable.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! AddTableViewCell
+            cell = boardsTable.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! AddTableViewCell
             cell.word.text = filteredResults[indexPath.row].word
             cell.photo.image = filteredResults[indexPath.row].photo
             cell.addButton.tag = indexPath.row
-            cell.addButton.addTarget(self, action: #selector(PopUpViewController.addSymbol(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            cell.addButton.addTarget(self, action: #selector(AddBoardController.addBoard(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             cell.layer.backgroundColor = filteredResults[indexPath.row].bgColor.CGColor
             
         } else{
-            cell = symbolsTable.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! AddTableViewCell
+            cell = boardsTable.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! AddTableViewCell
             cell.word.text = allSymbols[indexPath.row].word
             cell.photo.image = allSymbols[indexPath.row].photo
             cell.addButton.tag = indexPath.row
-            cell.addButton.addTarget(self, action: #selector(PopUpViewController.addSymbol(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            cell.addButton.addTarget(self, action: #selector(AddBoardController.addBoard(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             cell.layer.backgroundColor = allSymbols[indexPath.row].bgColor.CGColor
         }
         return cell
@@ -70,7 +78,7 @@ class PopUpViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     // MARK: - Actions
     
-    func addSymbol (sender:UIButton) {
+    func addBoard (sender:UIButton) {
         let index = sender.tag
         if(searchActive) {
             if sender.enabled {
@@ -94,7 +102,7 @@ class PopUpViewController: UIViewController, UITableViewDataSource, UITableViewD
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if sender === saveButton {
             for symbol in toAdd {
-                addedSymbols.append(symbol)
+                addedBoards.append(symbol)
             }
         }
         
@@ -114,12 +122,12 @@ class PopUpViewController: UIViewController, UITableViewDataSource, UITableViewD
         } else {
             searchActive = true;
         }
-        self.symbolsTable.reloadData()
+        self.boardsTable.reloadData()
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         searchBar.text = ""
-        self.symbolsTable.reloadData()
+        self.boardsTable.reloadData()
     }
     
 }
