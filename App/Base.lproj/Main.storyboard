@@ -428,6 +428,7 @@
                         <outlet property="categoryCollection" destination="W0b-dH-TwB" id="SdG-j4-Fjb"/>
                         <outlet property="sentenceCollection" destination="Ulr-CP-X3q" id="hzi-ok-atz"/>
                         <outlet property="suggestionCollection" destination="tul-zr-Kwn" id="Gj6-Xm-KUx"/>
+                        <segue destination="JFc-iz-JUH" kind="presentation" identifier="showSettings" modalTransitionStyle="coverVertical" id="NGx-aj-Weu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -1472,7 +1473,7 @@
                                             </connections>
                                         </barButtonItem>
                                         <rightBarButtonItems>
-                                            <barButtonItem title="Save" id="Z3l-p5-yE7">
+                                            <barButtonItem title="       Save" id="Z3l-p5-yE7">
                                                 <connections>
                                                     <action selector="DismissSave:" destination="0pR-iu-XHM" id="Xjq-vd-fVw"/>
                                                 </connections>
