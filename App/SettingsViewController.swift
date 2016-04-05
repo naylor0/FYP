@@ -142,6 +142,12 @@ class SettingsViewController: UIViewController, DataModelProtocol {
             settings?.readingLevel = sourceViewController!.readingAge
         }
     }
+    @IBAction func unwindToColourSelector(sender: UIStoryboardSegue) {
+        let sourceViewController = sender.sourceViewController as? ColourTableController
+        if settings?.backgroundColour != sourceViewController?.backgroundColour {
+            settings?.backgroundColour = sourceViewController!.backgroundColour!
+        }
+    }
     @IBAction func changeLevel(sender: AnyObject) {
         performSegueWithIdentifier("editLevel", sender: self)
     }

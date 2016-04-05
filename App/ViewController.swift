@@ -44,6 +44,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         if categories.count > 0 {
             currentBoard = self.categories[0]
         }
+        if (ArchiveAccess.checkForFile("settings")) {
+            self.settings = ArchiveAccess.loadSettings()
+        } else {
+            settings = ArchiveAccess.loadSampleSettings()
+            ArchiveAccess.saveSettings(self.settings!)
+        }
+        self.boardCollection.backgroundColor = settings?.backgroundColour
+        self.suggestionCollection.backgroundColor = settings?.backgroundColour
+        self.categoryCollection.backgroundColor = settings?.backgroundColour
         self.boardCollection.reloadData()
         self.boardCollection.setNeedsDisplay()
         self.categoryCollection.reloadData()

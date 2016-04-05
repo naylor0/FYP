@@ -93,6 +93,36 @@ public class ArchiveAccess {
         return symbols
     }
     
+    class func tagWord(word:String) -> UIColor {
+        
+        let bgRed = UIColor(netHex:0xFFCCCC)
+        let bgGreen = UIColor(netHex:0xCCFF99)
+        let bgYellow = UIColor(netHex: 0xFFFF66)
+        let bgWhite = UIColor(netHex: 0xFFFFFF)
+        let bgOrange = UIColor(netHex: 0xFFCC66)
+        let bgBlue = UIColor(netHex: 0x99CCFF)
+        var colour: UIColor = bgWhite
+        
+        let options: NSLinguisticTaggerOptions = [.OmitWhitespace, .OmitPunctuation, .JoinNames]
+        let schemes = NSLinguisticTagger.availableTagSchemesForLanguage("en")
+        let tagger = NSLinguisticTagger(tagSchemes: schemes, options: Int(options.rawValue))
+        tagger.string = word
+        tagger.enumerateTagsInRange(NSMakeRange(0, (word as NSString).length), scheme: NSLinguisticTagSchemeNameTypeOrLexicalClass, options: options) { (tag, tokenRange, _, _) in
+            let token = (word as NSString).substringWithRange(tokenRange)
+            if tag == "Noun" {
+            colour = bgOrange
+            } else if tag == "Verb" {
+                colour = bgBlue
+            } else if tag == "Pronoun" {
+                colour == bgYellow
+            } else {
+                colour = bgWhite
+            }
+        }
+        return colour
+    }
+    
+    
     class func loadSampleSymbols() -> Array<Symbol> {
         let bgRed = UIColor(netHex:0xFFCCCC)
         let bgGreen = UIColor(netHex:0xCCFF99)
@@ -108,7 +138,8 @@ public class ArchiveAccess {
         let myText = try! String(contentsOfURL: myFileURL, encoding: NSUTF8StringEncoding)
         let myStrings = myText.componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet())
         for obj in myStrings {
-            allSymbols.append(Symbol(word: obj, photo: UIImage(named: obj), bgColor: bgWhite)!)
+            let colour = ArchiveAccess.tagWord(obj)
+            allSymbols.append(Symbol(word: obj, photo: UIImage(named: obj), bgColor: colour)!)
         }
         
         return allSymbols

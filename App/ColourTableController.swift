@@ -48,6 +48,6 @@ class ColourTableController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        backgroundColour = colours[indexPath.row + 1]
+        backgroundColour = colours[indexPath.row]
     }
 }
