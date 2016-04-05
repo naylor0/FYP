@@ -8,7 +8,6 @@
 
 import UIKit
 import AVFoundation
-import CoreData
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate {
     
@@ -18,6 +17,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var currentBoard: Board?
     var allSymbols = [Symbol]()
     var settings: Settings?
+    var hasBoard: Bool = false
     
     // Outlets for collection views used for boards, their symbols and the current sentence
     @IBOutlet weak var suggestionCollection: UICollectionView!
@@ -28,17 +28,22 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     // Set up speech synth for speeking words when symbols are tapped
     let synth = AVSpeechSynthesizer()
     var speech = AVSpeechUtterance(string: "")
+
     
     override func viewWillAppear(animated: Bool) {
         if (ArchiveAccess.checkForFile("boards")) {
             self.categories = ArchiveAccess.loadBoards()!
-            print(categories.count.description + " loaded boards from archive for home")
+            if self.categories.count == 0 {
+                self.categories = ArchiveAccess.loadSampleBoards()!
+                ArchiveAccess.saveBoards(self.categories)
+            }
         } else {
             self.categories = ArchiveAccess.loadSampleBoards()!
-            print("Loaded sample boards for home")
             ArchiveAccess.saveBoards(self.categories)
         }
-        currentBoard = self.categories[0]
+        if categories.count > 0 {
+            currentBoard = self.categories[0]
+        }
         self.boardCollection.reloadData()
         self.boardCollection.setNeedsDisplay()
         self.categoryCollection.reloadData()
@@ -55,6 +60,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.speech.voice = AVSpeechSynthesisVoice(language: "en-IE")
         
         // Do any additional setup after loading the view, typically from a nib.
         self.view.addSubview(boardCollection)
@@ -89,14 +96,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             print("Loaded sample boards for home")
             ArchiveAccess.saveBoards(self.categories)
         }
-        currentBoard = self.categories[0]
+        if categories.count > 0 {
+            currentBoard = self.categories[0]
+        }
         
         if (ArchiveAccess.checkForFile("symbols")) {
             self.allSymbols = ArchiveAccess.loadSymbols()
             print(self.allSymbols.count.description + " symbols loaded from archive for home")
         } else {
             self.allSymbols = ArchiveAccess.loadSampleSymbols()
-            print("Loaded sample symbols for home")
+            print("Loaded sample symbols for home: " + allSymbols.count.description)
             ArchiveAccess.saveSymbols(self.allSymbols)
         }
         
@@ -228,14 +237,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 }
             }
         }
-        DataAccess.insertToCoreData(insert, table: "History")
+        CoreDataAccess.insertToCoreData(insert, table: "History")
     } // End generate bigrams method
     
     func generateSuggestion(word: String)
     {
         suggestions.removeAll()
-        let results1 = DataAccess.selectCoreDataCorpus(word)
-        let results2 = DataAccess.selectCoreDataHistory(word)
+        let results1 = CoreDataAccess.selectCoreDataCorpus(word)
+        let results2 = CoreDataAccess.selectCoreDataHistory(word)
         var resultsSet = [BigramModel]()
         if results1.count > 0 || results2.count > 0 {
             for item in results1 {
@@ -276,6 +285,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         for (sym, i) in allSymbols.enumerate() {
             if i.word == word{
                 result = sym
+                break
             }
         }
         return result

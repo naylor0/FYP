@@ -13,6 +13,8 @@
 		EF19C7D61CA6DC8900418610 /* SelectorTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF19C7D51CA6DC8900418610 /* SelectorTableCell.swift */; };
 		EF19C7DC1CA6FBB900418610 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF19C7D81CA6FBB900418610 /* History.swift */; };
 		EF19C7DE1CA6FBB900418610 /* Corpus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF19C7DA1CA6FBB900418610 /* Corpus.swift */; };
+		EF20DF871CAD1B2300B99F50 /* ColourTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF20DF861CAD1B2300B99F50 /* ColourTableCell.swift */; };
+		EF20DF891CAD1B7500B99F50 /* ColourTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF20DF881CAD1B7500B99F50 /* ColourTableController.swift */; };
 		EF22904D1CA075970052F0C6 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF22904C1CA075970052F0C6 /* TableViewController.swift */; };
 		EF22904F1CA077F10052F0C6 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF22904E1CA077F10052F0C6 /* TableViewCell.swift */; };
 		EF2290521CA07B990052F0C6 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2290511CA07B990052F0C6 /* DetailViewController.swift */; };
@@ -26,6 +28,7 @@
 		EF6308961CA408DC000189BB /* AddSymbolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6308951CA408DC000189BB /* AddSymbolViewController.swift */; };
 		EF6FE81D1CA0008700770D4F /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6FE81C1CA0008700770D4F /* EditViewController.swift */; };
 		EF7867151CABE4C200EBF6AB /* AddBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7867141CABE4C200EBF6AB /* AddBoardViewController.swift */; };
+		EF8CF5AF1CB43A89008189F0 /* images.txt in Resources */ = {isa = PBXBuildFile; fileRef = EF8CF5AE1CB43A89008189F0 /* images.txt */; };
 		EF9CC5C71C94776300EAB475 /* Symbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9CC5C61C94776300EAB475 /* Symbol.swift */; };
 		EFA7AEC11C91C0DD001D1311 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA7AEC01C91C0DD001D1311 /* AppDelegate.swift */; };
 		EFA7AEC31C91C0DD001D1311 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA7AEC21C91C0DD001D1311 /* ViewController.swift */; };
@@ -35,7 +38,7 @@
 		EFA7AED91C91C0DD001D1311 /* AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA7AED81C91C0DD001D1311 /* AppTests.swift */; };
 		EFA7AEE41C91C0DD001D1311 /* AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA7AEE31C91C0DD001D1311 /* AppUITests.swift */; };
 		EFA7AEF21C91C233001D1311 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA7AEF11C91C233001D1311 /* CollectionViewCell.swift */; };
-		EFF7D9D91CA7E02D0005F23A /* DataAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF7D9D81CA7E02D0005F23A /* DataAccess.swift */; };
+		EFF7D9D91CA7E02D0005F23A /* CoreDataAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF7D9D81CA7E02D0005F23A /* CoreDataAccess.swift */; };
 		EFF7D9DB1CA7F1F10005F23A /* ArchiveAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF7D9DA1CA7F1F10005F23A /* ArchiveAccess.swift */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +66,8 @@
 		EF19C7D51CA6DC8900418610 /* SelectorTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectorTableCell.swift; sourceTree = "<group>"; };
 		EF19C7D81CA6FBB900418610 /* History.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		EF19C7DA1CA6FBB900418610 /* Corpus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Corpus.swift; sourceTree = "<group>"; };
+		EF20DF861CAD1B2300B99F50 /* ColourTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColourTableCell.swift; sourceTree = "<group>"; };
+		EF20DF881CAD1B7500B99F50 /* ColourTableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColourTableController.swift; sourceTree = "<group>"; };
 		EF22904C1CA075970052F0C6 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		EF22904E1CA077F10052F0C6 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableViewCell.swift; path = ../TableViewCell.swift; sourceTree = "<group>"; };
 		EF2290511CA07B990052F0C6 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -77,6 +82,7 @@
 		EF6308951CA408DC000189BB /* AddSymbolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSymbolViewController.swift; sourceTree = "<group>"; };
 		EF6FE81C1CA0008700770D4F /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		EF7867141CABE4C200EBF6AB /* AddBoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBoardViewController.swift; sourceTree = "<group>"; };
+		EF8CF5AE1CB43A89008189F0 /* images.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = images.txt; sourceTree = "<group>"; usesTabs = 0; };
 		EF9CC5C61C94776300EAB475 /* Symbol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Symbol.swift; path = ../Symbol.swift; sourceTree = "<group>"; };
 		EFA7AEBD1C91C0DD001D1311 /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFA7AEC01C91C0DD001D1311 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -92,7 +98,7 @@
 		EFA7AEE31C91C0DD001D1311 /* AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUITests.swift; sourceTree = "<group>"; };
 		EFA7AEE51C91C0DD001D1311 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EFA7AEF11C91C233001D1311 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
-		EFF7D9D81CA7E02D0005F23A /* DataAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataAccess.swift; sourceTree = "<group>"; };
+		EFF7D9D81CA7E02D0005F23A /* CoreDataAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataAccess.swift; sourceTree = "<group>"; };
 		EFF7D9DA1CA7F1F10005F23A /* ArchiveAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveAccess.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -132,10 +138,12 @@
 				EF7867141CABE4C200EBF6AB /* AddBoardViewController.swift */,
 				EF2290511CA07B990052F0C6 /* DetailViewController.swift */,
 				EF19C7D31CA6D6D500418610 /* ComprehensionSelector.swift */,
+				EF20DF881CAD1B7500B99F50 /* ColourTableController.swift */,
 				EFA7AEF11C91C233001D1311 /* CollectionViewCell.swift */,
 				EF22904E1CA077F10052F0C6 /* TableViewCell.swift */,
 				EF6308931CA407AF000189BB /* AddTableViewCell.swift */,
 				EF19C7D51CA6DC8900418610 /* SelectorTableCell.swift */,
+				EF20DF861CAD1B2300B99F50 /* ColourTableCell.swift */,
 				EF116DBC1CA317BA002773CF /* ColourControl.swift */,
 				EF5A7D9E1CA49810007D2158 /* Reachability.swift */,
 			);
@@ -149,6 +157,7 @@
 				EFA7AEC01C91C0DD001D1311 /* AppDelegate.swift */,
 				EFA7AECA1C91C0DD001D1311 /* Assets.xcassets */,
 				EFA7AECC1C91C0DD001D1311 /* LaunchScreen.storyboard */,
+				EF8CF5AE1CB43A89008189F0 /* images.txt */,
 				EFA7AECF1C91C0DD001D1311 /* Info.plist */,
 			);
 			name = Resources;
@@ -162,10 +171,10 @@
 				EF5450DF1CA599EA002FCD4A /* Settings.swift */,
 				EF19C7D81CA6FBB900418610 /* History.swift */,
 				EF19C7DA1CA6FBB900418610 /* Corpus.swift */,
-				EF5A7D971CA473B3007D2158 /* DataModel.swift */,
-				EF5A7D9B1CA4962E007D2158 /* App.xcdatamodeld */,
 				EF5A7D991CA475A0007D2158 /* BigramModel.swift */,
-				EFF7D9D81CA7E02D0005F23A /* DataAccess.swift */,
+				EF5A7D9B1CA4962E007D2158 /* App.xcdatamodeld */,
+				EF5A7D971CA473B3007D2158 /* DataModel.swift */,
+				EFF7D9D81CA7E02D0005F23A /* CoreDataAccess.swift */,
 				EFF7D9DA1CA7F1F10005F23A /* ArchiveAccess.swift */,
 			);
 			name = Model;
@@ -329,6 +338,7 @@
 			files = (
 				EFA7AECE1C91C0DD001D1311 /* LaunchScreen.storyboard in Resources */,
 				EFA7AECB1C91C0DD001D1311 /* Assets.xcassets in Resources */,
+				EF8CF5AF1CB43A89008189F0 /* images.txt in Resources */,
 				EFA7AEC61C91C0DD001D1311 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -358,10 +368,12 @@
 				EF6FE81D1CA0008700770D4F /* EditViewController.swift in Sources */,
 				EFA7AEC31C91C0DD001D1311 /* ViewController.swift in Sources */,
 				EF19C7D61CA6DC8900418610 /* SelectorTableCell.swift in Sources */,
+				EF20DF871CAD1B2300B99F50 /* ColourTableCell.swift in Sources */,
 				EF19C7D41CA6D6D500418610 /* ComprehensionSelector.swift in Sources */,
 				EF9CC5C71C94776300EAB475 /* Symbol.swift in Sources */,
 				EF196F651C96CE2A003CD29E /* Board.swift in Sources */,
 				EFF7D9DB1CA7F1F10005F23A /* ArchiveAccess.swift in Sources */,
+				EF20DF891CAD1B7500B99F50 /* ColourTableController.swift in Sources */,
 				EF22904D1CA075970052F0C6 /* TableViewController.swift in Sources */,
 				EF5450E01CA599EA002FCD4A /* Settings.swift in Sources */,
 				EF22904F1CA077F10052F0C6 /* TableViewCell.swift in Sources */,
@@ -369,7 +381,7 @@
 				EFA7AEF21C91C233001D1311 /* CollectionViewCell.swift in Sources */,
 				EF7867151CABE4C200EBF6AB /* AddBoardViewController.swift in Sources */,
 				EF116DBD1CA317BA002773CF /* ColourControl.swift in Sources */,
-				EFF7D9D91CA7E02D0005F23A /* DataAccess.swift in Sources */,
+				EFF7D9D91CA7E02D0005F23A /* CoreDataAccess.swift in Sources */,
 				EF6308941CA407AF000189BB /* AddTableViewCell.swift in Sources */,
 				EF19C7DC1CA6FBB900418610 /* History.swift in Sources */,
 				EF5A7D981CA473B3007D2158 /* DataModel.swift in Sources */,

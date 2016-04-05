@@ -15,6 +15,7 @@ class Settings: NSObject, NSCoding {
     var backgroundColour: UIColor
     var predictionLearning : Bool
     var corpusPrediction: Bool
+    var dataDownloaded: Bool
     var password: Int
     
     static let DocumentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
@@ -27,15 +28,17 @@ class Settings: NSObject, NSCoding {
         static let predictionLearningKey = "predictionLearning"
         static let corpusPredictionKey = "corpusPrediction"
         static let passwordKey = "passwordKey"
+        static let dataDownloadedKey = "dataDownloaded"
     }
     
-    init?(readingLevel: Int, name: String, backgroundColour: UIColor, predictionLearning: Bool, corpusPrediction: Bool, password: Int) {
+    init?(readingLevel: Int, name: String, backgroundColour: UIColor, predictionLearning: Bool, corpusPrediction: Bool, password: Int, dataDownloaded: Bool) {
         self.readingLevel = readingLevel
         self.name = name
         self.backgroundColour = backgroundColour
         self.predictionLearning = predictionLearning
         self.corpusPrediction = corpusPrediction
         self.password = password
+        self.dataDownloaded = dataDownloaded
         super.init()
     }
     
@@ -47,7 +50,8 @@ class Settings: NSObject, NSCoding {
         let predictionLearning = aDecoder.decodeBoolForKey(PropertyKey.predictionLearningKey) as Bool
         let corpusPrediction = aDecoder.decodeBoolForKey(PropertyKey.corpusPredictionKey) as Bool
         let password = aDecoder.decodeObjectForKey(PropertyKey.passwordKey) as! Int
-        self.init(readingLevel: readingLevel, name: name, backgroundColour: backgroundColour, predictionLearning: predictionLearning, corpusPrediction: corpusPrediction, password: password)
+        let dataDownloaded = aDecoder.decodeBoolForKey(PropertyKey.dataDownloadedKey) as Bool
+        self.init(readingLevel: readingLevel, name: name, backgroundColour: backgroundColour, predictionLearning: predictionLearning, corpusPrediction: corpusPrediction, password: password, dataDownloaded: dataDownloaded)
     }
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject (readingLevel, forKey: PropertyKey.readingLevelKey)
@@ -56,5 +60,6 @@ class Settings: NSObject, NSCoding {
         aCoder.encodeBool(predictionLearning, forKey: PropertyKey.predictionLearningKey)
         aCoder.encodeBool(corpusPrediction, forKey: PropertyKey.corpusPredictionKey)
         aCoder.encodeObject(password, forKey: PropertyKey.passwordKey)
+        aCoder.encodeBool(dataDownloaded, forKey: PropertyKey.dataDownloadedKey)
     }
 }

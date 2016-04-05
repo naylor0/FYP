@@ -20,7 +20,6 @@ class DataModel: NSObject, NSURLSessionDataDelegate {
     
     var data : NSMutableData = NSMutableData()
     
-    // this will be changed to the path where service.php lives
     let urlPath: String = "http://prepict.cloudapp.net/bigram.php"
     func downloadItems(readingAge: String) {
         

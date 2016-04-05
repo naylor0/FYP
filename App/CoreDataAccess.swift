@@ -1,5 +1,5 @@
 //
-//  DataAccess.swift
+//  CoreDataAccess.swift
 //  App
 //
 //  Created by Mark Naylor on 27/03/2016.
@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreData
 
-public class DataAccess {
+public class CoreDataAccess {
     
     class func insertToCoreData(items: Array<BigramModel>, table: String) {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate

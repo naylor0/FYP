@@ -30,7 +30,7 @@ class SettingsViewController: UIViewController, DataModelProtocol {
     var settings: Settings?
     
     override func shouldAutorotate() -> Bool {
-        return false
+        return true
     }
     
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
@@ -52,6 +52,17 @@ class SettingsViewController: UIViewController, DataModelProtocol {
             self.settings = ArchiveAccess.loadSampleSettings()
             print("Loaded sample settings")
             ArchiveAccess.saveSettings(settings!)
+        }
+        if !(settings?.dataDownloaded)! {
+            let hasConnection = Reachability.isConnectedToNetwork()
+            if hasConnection {
+                let dataModel = DataModel()
+                dataModel.delegate = self
+                let stringToSend = "readingAge=" + (settings?.readingLevel.description)!
+                dataModel.downloadItems(stringToSend)
+                self.settings?.dataDownloaded = true
+            }
+            
         }
         
         historySwitch.on = (settings?.predictionLearning)!
@@ -89,7 +100,7 @@ class SettingsViewController: UIViewController, DataModelProtocol {
         let refreshAlert = UIAlertController(title: "Clear Corpus Data", message: "Are you sure you want to clear the data?", preferredStyle: UIAlertControllerStyle.Alert)
         
         refreshAlert.addAction(UIAlertAction(title: "Continue", style: .Default, handler: { (action: UIAlertAction!) in
-            DataAccess.clearCoreData("Corpus")
+            CoreDataAccess.clearCoreData("Corpus")
         }))
         refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
             print("Cancelled deleting corpus data")
@@ -101,7 +112,7 @@ class SettingsViewController: UIViewController, DataModelProtocol {
         let refreshAlert = UIAlertController(title: "Clear User History Data", message: "Are you sure you want to clear the data?", preferredStyle: UIAlertControllerStyle.Alert)
         
         refreshAlert.addAction(UIAlertAction(title: "Continue", style: .Default, handler: { (action: UIAlertAction!) in
-            DataAccess.clearCoreData("History")
+            CoreDataAccess.clearCoreData("History")
         }))
         refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
             print("Cancelled deleting corpus data")
@@ -111,7 +122,10 @@ class SettingsViewController: UIViewController, DataModelProtocol {
     
     func itemsDownloaded(items: NSArray) {
         feedItems = items as! [BigramModel]
-        DataAccess.insertToCoreData(feedItems, table: "Corpus")
+        CoreDataAccess.insertToCoreData(feedItems, table: "Corpus")
+    }
+    @IBAction func pickBGColour(sender: AnyObject) {
+        performSegueWithIdentifier("chooseColour", sender: self)
     }
     
     @IBAction func unwindToComprehensionSelector(sender: UIStoryboardSegue) {
@@ -122,6 +136,7 @@ class SettingsViewController: UIViewController, DataModelProtocol {
                 let dataModel = DataModel()
                 dataModel.delegate = self
                 let stringToSend = "readingAge=" + (settings?.readingLevel.description)!
+                CoreDataAccess.clearCoreData("Corpus")
                 dataModel.downloadItems(stringToSend)
             }
             settings?.readingLevel = sourceViewController!.readingAge
@@ -135,6 +150,9 @@ class SettingsViewController: UIViewController, DataModelProtocol {
         if segue.identifier == "editLevel" {
             let editLevelViewController = segue.destinationViewController as! ComprehensionSelector
             editLevelViewController.readingAge = (settings?.readingLevel)!
+        } else if segue.identifier == "chooseColour" {
+            let colourViewController = segue.destinationViewController as! ColourTableController
+            colourViewController.backgroundColour = settings?.backgroundColour
         }
     }
     

@@ -36,7 +36,7 @@ class Symbol: NSObject, NSCoding {
         self.bgColor = bgColor
         super.init()
     }
-    
+
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(word, forKey: PropertyKey.wordKey)
         aCoder.encodeObject(photo, forKey: PropertyKey.photoKey)

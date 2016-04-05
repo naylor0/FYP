@@ -17,11 +17,6 @@ class Board: NSObject, NSCoding {
     static let DocumentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.URLByAppendingPathComponent("boards")
     
-    let bgRed = UIColor(netHex:0xFF9999)
-    let bgGreen = UIColor(netHex:0xCCFF99)
-    let bgYellow = UIColor(netHex: 0xFFFF66)
-    let bgWhite = UIColor(netHex: 0xFFFFFF)
-    
     struct PropertyKey {
         static let symbolsKey = "symbols"
         static let iconKey = "icon"

@@ -34,7 +34,7 @@ class AddBoardController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     override func shouldAutorotate() -> Bool {
-        return false
+        return true
     }
     
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {

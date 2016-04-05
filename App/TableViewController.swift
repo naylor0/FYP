@@ -26,6 +26,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         super.viewDidLoad()
         searchBar.delegate = self
         
+        print("trying to load symbols")
         allSymbols = ArchiveAccess.loadSymbols()
         allBoards = ArchiveAccess.loadBoards()!
         print("Loaded data from viewDidLoad")
@@ -33,7 +34,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     override func shouldAutorotate() -> Bool {
-        return false
+        return true
     }
     
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
