@@ -33,14 +33,6 @@ class AddBoardController: UIViewController, UITableViewDataSource, UITableViewDe
         allSymbols = ArchiveAccess.loadSymbols()
     }
     
-    override func shouldAutorotate() -> Bool {
-        return true
-    }
-    
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return [UIInterfaceOrientationMask.LandscapeLeft ,UIInterfaceOrientationMask.LandscapeRight]
-    }
-    
     // MARK: - Table data source methods
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

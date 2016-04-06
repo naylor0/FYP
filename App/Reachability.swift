@@ -7,6 +7,7 @@
 //
 
 // Taken from StackOverFlow: http://stackoverflow.com/questions/30743408/check-for-internet-connection-in-swift-2-ios-9
+// Code checks for a network connection so that the application wont crash while trying to connect to the server
 
 import Foundation
 import SystemConfiguration

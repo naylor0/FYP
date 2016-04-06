@@ -25,13 +25,6 @@ class AddSymbolController: UIViewController, UITableViewDataSource, UITableViewD
         allSymbols = ArchiveAccess.loadSymbols()
     }
     
-    override func shouldAutorotate() -> Bool {
-        return false
-    }
-    
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return [UIInterfaceOrientationMask.LandscapeLeft ,UIInterfaceOrientationMask.LandscapeRight]
-    }
     
     // MARK: - Table data source methods
     

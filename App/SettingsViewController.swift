@@ -122,7 +122,7 @@ class SettingsViewController: UIViewController, DataModelProtocol {
     }
     
     func itemsDownloaded(items: NSArray) {
-        var feedItems = items as! [BigramModel]
+        let feedItems = items as! [BigramModel]
         CoreDataAccess.insertToCoreData(feedItems, table: "Corpus")
     }
     @IBAction func pickBGColour(sender: AnyObject) {
