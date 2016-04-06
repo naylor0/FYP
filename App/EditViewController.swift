@@ -14,6 +14,7 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
     @IBOutlet weak var categoryCollection: UICollectionView!
     
     var currentBoard: Board?
+    var settings: Settings?
     var currentBoardPos = 0
     var categories = [Board]()
     var deleteSender = ""
@@ -26,14 +27,6 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
     let bgWhite = UIColor(netHex: 0xFFFFFF)
     let bgOrange = UIColor(netHex: 0xFFCC66)
     let bgBlue = UIColor(netHex: 0x99CCFF)
-    
-    override func shouldAutorotate() -> Bool {
-        return true
-    }
-    
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return [UIInterfaceOrientationMask.LandscapeLeft ,UIInterfaceOrientationMask.LandscapeRight]
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +36,7 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         self.categories = ArchiveAccess.loadBoards()!
         currentBoard = self.categories[0]
+        self.settings = ArchiveAccess.loadSettings()
         
         categoryCollection.layer.borderWidth = 1.0
         categoryCollection.layer.borderColor = UIColor.blackColor().CGColor
@@ -63,6 +57,20 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
             noCells = self.categories.count
         }
         return noCells
+    }
+    
+    func collectionView(collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                               sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        var size = CGSizeMake(0.0, 0.0)
+        if collectionView == self.boardCollection {
+            size = CGSizeMake((settings?.cellSize)!, (settings?.cellSize)!)
+        } else if collectionView == self.categoryCollection {
+            size = CGSizeMake(100.0, 100.0)
+        }
+        return size
+        
+        
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -213,7 +221,7 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let addedBoards = sourceViewController!.addedBoards
         for board in addedBoards {
             let symbols = [Symbol]()
-            categories.append(Board(symbols: symbols, icon: board, name: board.word, cellSize: 100)!)
+            categories.append(Board(symbols: symbols, icon: board, name: board.word)!)
         }
         categoryCollection.reloadData()
     }

@@ -21,21 +21,18 @@ class SettingsViewController: UIViewController, DataModelProtocol {
     
     @IBOutlet weak var predictionView: UIView!
     @IBOutlet weak var historySwitch: UISwitch!
+    
+    @IBOutlet weak var corpusView: UIView!
     @IBOutlet weak var corpusSwitch: UISwitch!
     
     @IBOutlet weak var colourView: UIView!
     @IBOutlet weak var colourButton: UIButton!
     
-    var feedItems = [BigramModel]()
+    @IBOutlet weak var sizeView: UIView!
+    @IBOutlet weak var sizeButton: UIButton!
+    
+    
     var settings: Settings?
-    
-    override func shouldAutorotate() -> Bool {
-        return true
-    }
-    
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return [UIInterfaceOrientationMask.LandscapeLeft ,UIInterfaceOrientationMask.LandscapeRight]
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +41,10 @@ class SettingsViewController: UIViewController, DataModelProtocol {
         comprehensionView.layer.cornerRadius = 6
         predictionView.layer.cornerRadius = 6
         colourView.layer.cornerRadius = 6
+        corpusView.layer.cornerRadius = 6
+        sizeView.layer.cornerRadius = 6
+        
+        sizeView.layer.backgroundColor = UIColor.lightGrayColor().CGColor
         
         if (ArchiveAccess.checkForFile("settings")) {
             self.settings = ArchiveAccess.loadSettings()
@@ -53,7 +54,7 @@ class SettingsViewController: UIViewController, DataModelProtocol {
             print("Loaded sample settings")
             ArchiveAccess.saveSettings(settings!)
         }
-        if !(settings?.dataDownloaded)! {
+        if !(settings?.dataDownloaded)! && (settings?.corpusPrediction)! {
             let hasConnection = Reachability.isConnectedToNetwork()
             if hasConnection {
                 let dataModel = DataModel()
@@ -121,11 +122,14 @@ class SettingsViewController: UIViewController, DataModelProtocol {
     }
     
     func itemsDownloaded(items: NSArray) {
-        feedItems = items as! [BigramModel]
+        var feedItems = items as! [BigramModel]
         CoreDataAccess.insertToCoreData(feedItems, table: "Corpus")
     }
     @IBAction func pickBGColour(sender: AnyObject) {
         performSegueWithIdentifier("chooseColour", sender: self)
+    }
+    @IBAction func pickCellSize(sender: AnyObject) {
+        performSegueWithIdentifier("chooseCellSize", sender: self)
     }
     
     @IBAction func unwindToComprehensionSelector(sender: UIStoryboardSegue) {
@@ -148,6 +152,12 @@ class SettingsViewController: UIViewController, DataModelProtocol {
             settings?.backgroundColour = sourceViewController!.backgroundColour!
         }
     }
+    @IBAction func unwindToSizeSelector(sender: UIStoryboardSegue) {
+        let sourceViewController = sender.sourceViewController as? CellSizeViewController
+        if settings?.cellSize != sourceViewController?.size {
+            settings?.cellSize = sourceViewController!.size
+        }
+    }
     @IBAction func changeLevel(sender: AnyObject) {
         performSegueWithIdentifier("editLevel", sender: self)
     }
@@ -159,6 +169,9 @@ class SettingsViewController: UIViewController, DataModelProtocol {
         } else if segue.identifier == "chooseColour" {
             let colourViewController = segue.destinationViewController as! ColourTableController
             colourViewController.backgroundColour = settings?.backgroundColour
+        } else if segue.identifier == "chooseCellSize" {
+            let sizeViewController = segue.destinationViewController as! CellSizeViewController
+            sizeViewController.size = (settings?.cellSize)!
         }
     }
     

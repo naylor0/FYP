@@ -13,10 +13,11 @@ class Settings: NSObject, NSCoding {
     var name: String
     var readingLevel: Int
     var backgroundColour: UIColor
+    var dataDownloaded: Bool
+    var cellSize: CGFloat
+    
     var predictionLearning : Bool
     var corpusPrediction: Bool
-    var dataDownloaded: Bool
-    var password: Int
     
     static let DocumentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.URLByAppendingPathComponent("settings")
@@ -27,17 +28,17 @@ class Settings: NSObject, NSCoding {
         static let backgroundColourKey = "backgroundColour"
         static let predictionLearningKey = "predictionLearning"
         static let corpusPredictionKey = "corpusPrediction"
-        static let passwordKey = "passwordKey"
+        static let cellSizeKey = "cellSizeKey"
         static let dataDownloadedKey = "dataDownloaded"
     }
     
-    init?(readingLevel: Int, name: String, backgroundColour: UIColor, predictionLearning: Bool, corpusPrediction: Bool, password: Int, dataDownloaded: Bool) {
+    init?(readingLevel: Int, name: String, backgroundColour: UIColor, predictionLearning: Bool, corpusPrediction: Bool, cellSize: CGFloat, dataDownloaded: Bool) {
         self.readingLevel = readingLevel
         self.name = name
         self.backgroundColour = backgroundColour
         self.predictionLearning = predictionLearning
         self.corpusPrediction = corpusPrediction
-        self.password = password
+        self.cellSize = cellSize
         self.dataDownloaded = dataDownloaded
         super.init()
     }
@@ -49,9 +50,9 @@ class Settings: NSObject, NSCoding {
         let backgroundColour = aDecoder.decodeObjectForKey(PropertyKey.backgroundColourKey) as! UIColor
         let predictionLearning = aDecoder.decodeBoolForKey(PropertyKey.predictionLearningKey) as Bool
         let corpusPrediction = aDecoder.decodeBoolForKey(PropertyKey.corpusPredictionKey) as Bool
-        let password = aDecoder.decodeObjectForKey(PropertyKey.passwordKey) as! Int
+        let cellSize = aDecoder.decodeObjectForKey(PropertyKey.cellSizeKey) as! CGFloat
         let dataDownloaded = aDecoder.decodeBoolForKey(PropertyKey.dataDownloadedKey) as Bool
-        self.init(readingLevel: readingLevel, name: name, backgroundColour: backgroundColour, predictionLearning: predictionLearning, corpusPrediction: corpusPrediction, password: password, dataDownloaded: dataDownloaded)
+        self.init(readingLevel: readingLevel, name: name, backgroundColour: backgroundColour, predictionLearning: predictionLearning, corpusPrediction: corpusPrediction, cellSize: cellSize, dataDownloaded: dataDownloaded)
     }
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject (readingLevel, forKey: PropertyKey.readingLevelKey)
@@ -59,7 +60,7 @@ class Settings: NSObject, NSCoding {
         aCoder.encodeObject(backgroundColour, forKey: PropertyKey.backgroundColourKey)
         aCoder.encodeBool(predictionLearning, forKey: PropertyKey.predictionLearningKey)
         aCoder.encodeBool(corpusPrediction, forKey: PropertyKey.corpusPredictionKey)
-        aCoder.encodeObject(password, forKey: PropertyKey.passwordKey)
+        aCoder.encodeObject(cellSize, forKey: PropertyKey.cellSizeKey)
         aCoder.encodeBool(dataDownloaded, forKey: PropertyKey.dataDownloadedKey)
     }
 }

@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate, DataModelProtocol {
     
     var categories = [Board]()
     var sentence = [Symbol]()
@@ -46,6 +46,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         if (ArchiveAccess.checkForFile("settings")) {
             self.settings = ArchiveAccess.loadSettings()
+            print("Loaded settings")
         } else {
             settings = ArchiveAccess.loadSampleSettings()
             ArchiveAccess.saveSettings(self.settings!)
@@ -57,14 +58,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         self.boardCollection.setNeedsDisplay()
         self.categoryCollection.reloadData()
         self.categoryCollection.setNeedsDisplay()
-    }
-    
-    override func shouldAutorotate() -> Bool {
-        return false
-    }
-    
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return [UIInterfaceOrientationMask.LandscapeLeft ,UIInterfaceOrientationMask.LandscapeRight]
     }
 
     override func viewDidLoad() {
@@ -124,12 +117,28 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             settings = ArchiveAccess.loadSampleSettings()
             ArchiveAccess.saveSettings(self.settings!)
         }
+        if !((settings?.dataDownloaded)!) && (settings?.corpusPrediction)! {
+            let hasConnection = Reachability.isConnectedToNetwork()
+            if hasConnection {
+                let dataModel = DataModel()
+                dataModel.delegate = self
+                let stringToSend = "readingAge=" + (settings?.readingLevel.description)!
+                CoreDataAccess.clearCoreData("Corpus")
+                dataModel.downloadItems(stringToSend)
+            }
+
+        }
     }
     
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func itemsDownloaded(items: NSArray) {
+        var feedItems = items as! [BigramModel]
+        CoreDataAccess.insertToCoreData(feedItems, table: "Corpus")
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -144,6 +153,24 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             noCells = self.suggestions.count
         }
         return noCells
+    }
+    
+    func collectionView(collectionView: UICollectionView,
+                                   layout collectionViewLayout: UICollectionViewLayout,
+                                          sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        var size = CGSizeMake(0.0, 0.0)
+        if collectionView == self.boardCollection {
+            size = CGSizeMake((settings?.cellSize)!, (settings?.cellSize)!)
+        } else if collectionView == self.categoryCollection {
+            size = CGSizeMake(100.0, 100.0)
+        } else if collectionView == self.sentenceCollection {
+            size = CGSizeMake(100.0, 100.0)
+        } else if collectionView == self.suggestionCollection {
+            size = CGSizeMake(100.0, 100.0)
+        }
+        return size
+
+        
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -229,7 +256,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     @IBAction func deleteSentence(sender: AnyObject) {
-        generateBigrams(sentence)
+        if ((settings?.predictionLearning) != nil) {
+            generateBigrams(sentence)
+        }
         sentence.removeAll()
         suggestions.removeAll()
         suggestionCollection.reloadData()
@@ -252,8 +281,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func generateSuggestion(word: String)
     {
         suggestions.removeAll()
-        let results1 = CoreDataAccess.selectCoreDataCorpus(word)
-        let results2 = CoreDataAccess.selectCoreDataHistory(word)
+        var results1 = [Corpus]()
+        if ((settings?.corpusPrediction) == true) {
+            results1 = CoreDataAccess.selectCoreDataCorpus(word)
+        }
+        var results2 = [History]()
+        if ((settings?.predictionLearning) == true) {
+            results2 = CoreDataAccess.selectCoreDataHistory(word)
+        }
         var resultsSet = [BigramModel]()
         if results1.count > 0 || results2.count > 0 {
             for item in results1 {

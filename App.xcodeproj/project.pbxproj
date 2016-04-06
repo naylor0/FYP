@@ -38,6 +38,7 @@
 		EFA7AED91C91C0DD001D1311 /* AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA7AED81C91C0DD001D1311 /* AppTests.swift */; };
 		EFA7AEE41C91C0DD001D1311 /* AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA7AEE31C91C0DD001D1311 /* AppUITests.swift */; };
 		EFA7AEF21C91C233001D1311 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA7AEF11C91C233001D1311 /* CollectionViewCell.swift */; };
+		EFE442BE1CB483F00085C581 /* CellSizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE442BD1CB483F00085C581 /* CellSizeViewController.swift */; };
 		EFF7D9D91CA7E02D0005F23A /* CoreDataAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF7D9D81CA7E02D0005F23A /* CoreDataAccess.swift */; };
 		EFF7D9DB1CA7F1F10005F23A /* ArchiveAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF7D9DA1CA7F1F10005F23A /* ArchiveAccess.swift */; };
 /* End PBXBuildFile section */
@@ -98,6 +99,7 @@
 		EFA7AEE31C91C0DD001D1311 /* AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUITests.swift; sourceTree = "<group>"; };
 		EFA7AEE51C91C0DD001D1311 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EFA7AEF11C91C233001D1311 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		EFE442BD1CB483F00085C581 /* CellSizeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellSizeViewController.swift; sourceTree = "<group>"; };
 		EFF7D9D81CA7E02D0005F23A /* CoreDataAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataAccess.swift; sourceTree = "<group>"; };
 		EFF7D9DA1CA7F1F10005F23A /* ArchiveAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveAccess.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -139,6 +141,7 @@
 				EF2290511CA07B990052F0C6 /* DetailViewController.swift */,
 				EF19C7D31CA6D6D500418610 /* ComprehensionSelector.swift */,
 				EF20DF881CAD1B7500B99F50 /* ColourTableController.swift */,
+				EFE442BD1CB483F00085C581 /* CellSizeViewController.swift */,
 				EFA7AEF11C91C233001D1311 /* CollectionViewCell.swift */,
 				EF22904E1CA077F10052F0C6 /* TableViewCell.swift */,
 				EF6308931CA407AF000189BB /* AddTableViewCell.swift */,
@@ -381,6 +384,7 @@
 				EFA7AEF21C91C233001D1311 /* CollectionViewCell.swift in Sources */,
 				EF7867151CABE4C200EBF6AB /* AddBoardViewController.swift in Sources */,
 				EF116DBD1CA317BA002773CF /* ColourControl.swift in Sources */,
+				EFE442BE1CB483F00085C581 /* CellSizeViewController.swift in Sources */,
 				EFF7D9D91CA7E02D0005F23A /* CoreDataAccess.swift in Sources */,
 				EF6308941CA407AF000189BB /* AddTableViewCell.swift in Sources */,
 				EF19C7DC1CA6FBB900418610 /* History.swift in Sources */,

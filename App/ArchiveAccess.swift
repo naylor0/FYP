@@ -35,7 +35,7 @@ public class ArchiveAccess {
     }
     
     class func loadSampleSettings() -> Settings {
-        return Settings(readingLevel: 5, name: "Sophie", backgroundColour: UIColor.darkGrayColor(), predictionLearning: true, corpusPrediction: true, password: 0, dataDownloaded: false)!
+        return Settings(readingLevel: 5, name: "Sophie", backgroundColour: UIColor.darkGrayColor(), predictionLearning: true, corpusPrediction: true, cellSize: 100.0, dataDownloaded: false)!
     }
     
     class func saveBoards(categories: Array<Board>) {
@@ -66,37 +66,17 @@ public class ArchiveAccess {
         var sampleCategories = [Board]()
         let symbols = ArchiveAccess.loadSampleBoard()
         
-        sampleCategories.append(Board(symbols: symbols, icon: Symbol(word: "talk", photo: UIImage(named: "talk"), bgColor: UIColor.whiteColor())!, name: "talk", cellSize: 100)!)
-        sampleCategories.append(Board(symbols: symbols, icon: Symbol(word: "news", photo: UIImage(named: "news"), bgColor: UIColor.whiteColor())!, name: "news", cellSize: 100)!)
-        sampleCategories.append(Board(symbols: symbols, icon: Symbol(word: "activities", photo: UIImage(named: "activities"), bgColor: UIColor.whiteColor())!, name: "activities", cellSize: 100)!)
-        sampleCategories.append(Board(symbols: symbols, icon: Symbol(word: "weather", photo: UIImage(named: "weather"), bgColor: UIColor.whiteColor())!, name: "weather", cellSize: 100)!)
-        sampleCategories.append(Board(symbols: symbols, icon: Symbol(word: "food", photo: UIImage(named: "food"), bgColor: UIColor.whiteColor())!, name: "food", cellSize: 100)!)
+        sampleCategories.append(Board(symbols: symbols, icon: Symbol(word: "talk", photo: UIImage(named: "talk"), bgColor: UIColor.whiteColor())!, name: "talk")!)
         return sampleCategories
     }
     
     class func loadSampleBoard() -> Array<Symbol> {
-        let bgRed = UIColor(netHex:0xFFCCCC)
-        let bgGreen = UIColor(netHex:0xCCFF99)
-        let bgYellow = UIColor(netHex: 0xFFFF66)
-        let bgWhite = UIColor(netHex: 0xFFFFFF)
-        let bgOrange = UIColor(netHex: 0xFFCC66)
-        let bgBlue = UIColor(netHex: 0x99CCFF)
-        
         var symbols = [Symbol]()
-        symbols.append(Symbol(word: "hi", photo: UIImage(named: "hi"), bgColor: bgRed)!)
-        symbols.append(Symbol(word: "hello", photo: UIImage(named: "hello"), bgColor: bgRed)!)
-        symbols.append(Symbol(word: "how", photo: UIImage(named: "how"), bgColor: bgGreen)!)
-        symbols.append(Symbol(word: "is", photo: UIImage(named: "is"), bgColor: bgGreen)!)
-        symbols.append(Symbol(word: "weather", photo: UIImage(named: "weather"), bgColor: bgRed)!)
-        symbols.append(Symbol(word: "good", photo: UIImage(named: "good"), bgColor: bgRed)!)
-        symbols.append(Symbol(word: "bad", photo: UIImage(named: "bad"), bgColor: bgRed)!)
         return symbols
     }
     
     class func tagWord(word:String) -> UIColor {
         
-        let bgRed = UIColor(netHex:0xFFCCCC)
-        let bgGreen = UIColor(netHex:0xCCFF99)
         let bgYellow = UIColor(netHex: 0xFFFF66)
         let bgWhite = UIColor(netHex: 0xFFFFFF)
         let bgOrange = UIColor(netHex: 0xFFCC66)
@@ -108,13 +88,12 @@ public class ArchiveAccess {
         let tagger = NSLinguisticTagger(tagSchemes: schemes, options: Int(options.rawValue))
         tagger.string = word
         tagger.enumerateTagsInRange(NSMakeRange(0, (word as NSString).length), scheme: NSLinguisticTagSchemeNameTypeOrLexicalClass, options: options) { (tag, tokenRange, _, _) in
-            let token = (word as NSString).substringWithRange(tokenRange)
             if tag == "Noun" {
             colour = bgOrange
             } else if tag == "Verb" {
                 colour = bgBlue
             } else if tag == "Pronoun" {
-                colour == bgYellow
+                colour = bgYellow
             } else {
                 colour = bgWhite
             }
@@ -124,13 +103,6 @@ public class ArchiveAccess {
     
     
     class func loadSampleSymbols() -> Array<Symbol> {
-        let bgRed = UIColor(netHex:0xFFCCCC)
-        let bgGreen = UIColor(netHex:0xCCFF99)
-        let bgYellow = UIColor(netHex: 0xFFFF66)
-        let bgWhite = UIColor(netHex: 0xFFFFFF)
-        let bgOrange = UIColor(netHex: 0xFFCC66)
-        let bgBlue = UIColor(netHex: 0x99CCFF)
-        
         var allSymbols = [Symbol]()
         
         print("Loading samples")

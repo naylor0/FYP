@@ -29,14 +29,6 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UINavigationC
     
     var colourArray = [UIButton]()
     var symbol: Symbol?
-    
-    override func shouldAutorotate() -> Bool {
-        return false
-    }
-    
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return [UIInterfaceOrientationMask.LandscapeLeft ,UIInterfaceOrientationMask.LandscapeRight, UIInterfaceOrientationMask.Portrait]
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,10 +58,29 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UINavigationC
     
     @IBAction func selectImage(sender: UITapGestureRecognizer) {
         detailWord.resignFirstResponder()
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.sourceType = .PhotoLibrary
-        imagePickerController.delegate = self
-        presentViewController(imagePickerController, animated: true, completion: nil)
+        let refreshAlert = UIAlertController(title: "Image", message: "Choose source for image", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "Photo library", style: .Default, handler: { (action: UIAlertAction!) in
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.sourceType = .PhotoLibrary
+            imagePickerController.delegate = self
+            self.presentViewController(imagePickerController, animated: true, completion: nil)
+        }))
+        refreshAlert.addAction(UIAlertAction(title: "Camera", style: .Default, handler: { (action: UIAlertAction!) in
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.sourceType = .Camera
+            imagePickerController.delegate = self
+            self.presentViewController(imagePickerController, animated: true, completion: nil)
+        }))
+        refreshAlert.addAction(UIAlertAction(title: "Saved Photo Album", style: .Default, handler: { (action: UIAlertAction!) in
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.sourceType = .SavedPhotosAlbum
+            imagePickerController.delegate = self
+            self.presentViewController(imagePickerController, animated: true, completion: nil)
+        }))
+        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
+        }))
+        presentViewController(refreshAlert, animated: true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {

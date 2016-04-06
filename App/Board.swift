@@ -12,7 +12,6 @@ class Board: NSObject, NSCoding {
     var symbols = [Symbol]()
     var icon: Symbol
     var name: String
-    var cellSize: Int
     
     static let DocumentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.URLByAppendingPathComponent("boards")
@@ -21,14 +20,12 @@ class Board: NSObject, NSCoding {
         static let symbolsKey = "symbols"
         static let iconKey = "icon"
         static let nameKey = "name"
-        static let cellSizeKey = "cellSize"
     }
     
-    init?(symbols: Array<Symbol>, icon: Symbol, name: String, cellSize: Int) {
+    init?(symbols: Array<Symbol>, icon: Symbol, name: String) {
         self.symbols = symbols
         self.icon = icon
         self.name = name
-        self.cellSize = cellSize
         super.init()
     }
     
@@ -36,14 +33,12 @@ class Board: NSObject, NSCoding {
         let symbols = aDecoder.decodeObjectForKey(PropertyKey.symbolsKey) as! Array<Symbol>
         let icon = aDecoder.decodeObjectForKey(PropertyKey.iconKey) as! Symbol
         let name = aDecoder.decodeObjectForKey(PropertyKey.nameKey) as! String
-        let cellSize = aDecoder.decodeObjectForKey(PropertyKey.cellSizeKey) as! Int
-        self.init(symbols: symbols, icon: icon, name: name, cellSize: cellSize)
+        self.init(symbols: symbols, icon: icon, name: name)
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(symbols, forKey: PropertyKey.symbolsKey)
         aCoder.encodeObject(icon, forKey: PropertyKey.iconKey)
         aCoder.encodeObject(name, forKey: PropertyKey.nameKey)
-        aCoder.encodeObject(cellSize, forKey: PropertyKey.cellSizeKey)
     }
 }
