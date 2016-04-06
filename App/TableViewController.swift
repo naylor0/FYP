@@ -31,6 +31,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         allBoards = ArchiveAccess.loadBoards()!
         print("Loaded data from viewDidLoad")
         dataLoaded = true
+        
+        allSymbols = allSymbols.sort { $0.word > $1.word }
     }
     
     override func shouldAutorotate() -> Bool {

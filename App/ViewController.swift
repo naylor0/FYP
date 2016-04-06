@@ -305,8 +305,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 if i > -1 {
                     if !suggestions.contains(allSymbols[i!]) {
                         suggestions.append(allSymbols[i!])
+                        if resultsSet.count > 10 {
+                            break
+                        }
                     }
                 }
+                
             }
             suggestionCollection.reloadData()
             suggestionCollection.setNeedsDisplay()
