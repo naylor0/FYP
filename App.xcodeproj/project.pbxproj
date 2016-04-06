@@ -18,6 +18,8 @@
 		EF22904D1CA075970052F0C6 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF22904C1CA075970052F0C6 /* TableViewController.swift */; };
 		EF22904F1CA077F10052F0C6 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF22904E1CA077F10052F0C6 /* TableViewCell.swift */; };
 		EF2290521CA07B990052F0C6 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2290511CA07B990052F0C6 /* DetailViewController.swift */; };
+		EF2DB9571CB5738300315357 /* nps.py in Resources */ = {isa = PBXBuildFile; fileRef = EF2DB9561CB5738300315357 /* nps.py */; };
+		EF2DB9591CB5738D00315357 /* childes.py in Resources */ = {isa = PBXBuildFile; fileRef = EF2DB9581CB5738D00315357 /* childes.py */; };
 		EF43DC2B1C9EBA9400BBB091 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF43DC2A1C9EBA9400BBB091 /* SettingsViewController.swift */; };
 		EF5450E01CA599EA002FCD4A /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5450DF1CA599EA002FCD4A /* Settings.swift */; };
 		EF5A7D981CA473B3007D2158 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5A7D971CA473B3007D2158 /* DataModel.swift */; };
@@ -72,6 +74,8 @@
 		EF22904C1CA075970052F0C6 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		EF22904E1CA077F10052F0C6 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableViewCell.swift; path = ../TableViewCell.swift; sourceTree = "<group>"; };
 		EF2290511CA07B990052F0C6 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		EF2DB9561CB5738300315357 /* nps.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = nps.py; sourceTree = "<group>"; };
+		EF2DB9581CB5738D00315357 /* childes.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = childes.py; sourceTree = "<group>"; };
 		EF43DC2A1C9EBA9400BBB091 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		EF4767D91CA1B7B600512CC7 /* App-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "App-Bridging-Header.h"; sourceTree = "<group>"; };
 		EF5450DF1CA599EA002FCD4A /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -169,6 +173,8 @@
 		EF43DC291C9EB63100BBB091 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EF2DB9561CB5738300315357 /* nps.py */,
+				EF2DB9581CB5738D00315357 /* childes.py */,
 				EF196F641C96CE2A003CD29E /* Board.swift */,
 				EF9CC5C61C94776300EAB475 /* Symbol.swift */,
 				EF5450DF1CA599EA002FCD4A /* Settings.swift */,
@@ -339,10 +345,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF2DB9571CB5738300315357 /* nps.py in Resources */,
 				EFA7AECE1C91C0DD001D1311 /* LaunchScreen.storyboard in Resources */,
 				EFA7AECB1C91C0DD001D1311 /* Assets.xcassets in Resources */,
 				EF8CF5AF1CB43A89008189F0 /* images.txt in Resources */,
 				EFA7AEC61C91C0DD001D1311 /* Main.storyboard in Resources */,
+				EF2DB9591CB5738D00315357 /* childes.py in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
