@@ -27,11 +27,11 @@ class ColourControl: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        let bgRed = UIColor(netHex:0xFFCCCC)
+        let bgRed = UIColor(netHex:0xFFB6C1)
         let bgGreen = UIColor(netHex:0xCCFF99)
-        let bgYellow = UIColor(netHex: 0xFFFF66)
+        let bgYellow = UIColor(netHex: 0xFFFF7F)
         let bgWhite = UIColor(netHex: 0xFFFFFF)
-        let bgOrange = UIColor(netHex: 0xFFCC66)
+        let bgOrange = UIColor(netHex: 0xFFA500)
         let bgBlue = UIColor(netHex: 0x99CCFF)
         
         colours.append(bgRed)

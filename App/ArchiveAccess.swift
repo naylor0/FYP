@@ -71,15 +71,15 @@ public class ArchiveAccess {
     }
     
     class func loadSampleBoard() -> Array<Symbol> {
-        var symbols = [Symbol]()
+        let symbols = [Symbol]()
         return symbols
     }
     
     class func tagWord(word:String) -> UIColor {
         
-        let bgYellow = UIColor(netHex: 0xFFFF66)
+        let bgYellow = UIColor(netHex: 0xFFFF7F)
         let bgWhite = UIColor(netHex: 0xFFFFFF)
-        let bgOrange = UIColor(netHex: 0xFFCC66)
+        let bgOrange = UIColor(netHex: 0xFFA500)
         let bgBlue = UIColor(netHex: 0x99CCFF)
         var colour: UIColor = bgWhite
         

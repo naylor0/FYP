@@ -21,16 +21,9 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
     private var longPressGesture1: UILongPressGestureRecognizer!
     private var longPressGesture2: UILongPressGestureRecognizer!
     
-    let bgRed = UIColor(netHex:0xFFCCCC)
-    let bgGreen = UIColor(netHex:0xCCFF99)
-    let bgYellow = UIColor(netHex: 0xFFFF66)
-    let bgWhite = UIColor(netHex: 0xFFFFFF)
-    let bgOrange = UIColor(netHex: 0xFFCC66)
-    let bgBlue = UIColor(netHex: 0x99CCFF)
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
         self.view.addSubview(boardCollection)
         self.view.addSubview(categoryCollection)
         
@@ -145,11 +138,6 @@ class EditViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.categories.removeAtIndex(index)
         self.categoryCollection.reloadData()
         self.categoryCollection.setNeedsDisplay()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func DismissSaveEdit(sender: AnyObject) {

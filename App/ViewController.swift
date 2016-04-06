@@ -25,7 +25,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var sentenceCollection: UICollectionView!
     @IBOutlet weak var categoryCollection: UICollectionView!
     
-    // Set up speech synth for speeking words when symbols are tapped
+    // Set up speech synth for speaking words when symbols are tapped
     let synth = AVSpeechSynthesizer()
     var speech = AVSpeechUtterance(string: "")
 
@@ -130,14 +130,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     func itemsDownloaded(items: NSArray) {
-        var feedItems = items as! [BigramModel]
+        let feedItems = items as! [BigramModel]
         CoreDataAccess.insertToCoreData(feedItems, table: "Corpus")
     }
     

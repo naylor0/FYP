@@ -14,8 +14,6 @@ protocol DataModelProtocol: class {
 
 class DataModel: NSObject, NSURLSessionDataDelegate {
     
-    //properties
-    
     weak var delegate: DataModelProtocol!
     
     var data : NSMutableData = NSMutableData()
